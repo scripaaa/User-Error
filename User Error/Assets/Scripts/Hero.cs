@@ -26,6 +26,7 @@ public class Hero : MonoBehaviour
     private bool canDash = true;
     private Vector2 dashDirection;
     private float originalGravity;
+    private RoomManager roomManager;
 
 
     private void Awake()
@@ -143,6 +144,16 @@ public class Hero : MonoBehaviour
         rb.gravityScale = originalGravity; // ¬осстанавливаем гравитацию
     }
 
+    private void Start()
+    {
+        roomManager = FindObjectOfType<RoomManager>();
+    }
+
+    // смерть
+    public void Die()
+    {
+        roomManager.Respawn(gameObject);
+    }
 
 
 
