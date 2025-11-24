@@ -5,14 +5,14 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float speed = 5f; // скорость движения
-    [SerializeField] private float jumpForce = 11f; // сила прыжка
-    [SerializeField] private float groundCheckRadius = 0.27f; //радиус проверки земли 
-    [SerializeField] private LayerMask whatIsGround; // Маска слоёв, определяющая что считается землёй 
-    public float dashSpeed = 15f; // Всё что связано с рывком 
+    [SerializeField] private float speed = 5f; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] private float jumpForce = 11f; // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    [SerializeField] private float groundCheckRadius = 0.27f; //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 
+    [SerializeField] private LayerMask whatIsGround; // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 
+    public float dashSpeed = 15f; // пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 
     public float dashDuration = 0.2f;
     public float dashCooldown = 1f;
-    public KeyCode dashKey = KeyCode.LeftShift; // рывок нажатие на shift
+    public KeyCode dashKey = KeyCode.LeftShift; // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ shift
 
 
     [Header("References")]
@@ -22,7 +22,7 @@ public class Hero : MonoBehaviour
 
     private bool isGrounded = false;
     private bool jumpPerformedThisFrame = false;
-    private bool isDashing; // Всё что связано с рывком 
+    private bool isDashing; // пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 
     private bool canDash = true;
     private Vector2 dashDirection;
     private float originalGravity;
@@ -40,8 +40,8 @@ public class Hero : MonoBehaviour
         if (isDashing)
         {
             
-            rb.velocity = dashDirection * dashSpeed;
-            return; // Прерываем выполнение остальной логики
+            rb.linearVelocity = dashDirection * dashSpeed;
+            return; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         }
         CheckGround();
 
@@ -81,7 +81,7 @@ public class Hero : MonoBehaviour
         if (jumpPerformedThisFrame && isGrounded)
         {
             
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
         
        
@@ -89,7 +89,7 @@ public class Hero : MonoBehaviour
 
     }
     /// <summary>
-    /// Система проверки земли 
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 
     /// </summary>
     private void CheckGround()
     {
@@ -108,40 +108,40 @@ public class Hero : MonoBehaviour
     }
 
     /// <summary>
-    /// Начало рывка
+    /// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     private void StartDash()
     {
         isDashing = true;
         canDash = false;
 
-        // Определяем направление даша на основе последнего ввода
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         dashDirection = new Vector2(horizontalInput, 0f).normalized;
 
-        // Отключаем гравитацию на время даша
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         rb.gravityScale = 0;
 
-        // Запускаем таймеры
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Invoke(nameof(EndDash), dashDuration);
         Invoke(nameof(ResetDashCooldown), dashCooldown);
     }
 
 
     /// <summary>
-    /// Сброс кулдауна рывка
+    /// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     private void ResetDashCooldown()
     {
         canDash = true;
     }
     /// <summary>
-    /// Завершение рывка
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     /// </summary>
     private void EndDash()
     {
         isDashing = false;
-        rb.gravityScale = originalGravity; // Восстанавливаем гравитацию
+        rb.gravityScale = originalGravity; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     }
 
     private void Start()
@@ -149,7 +149,7 @@ public class Hero : MonoBehaviour
         roomManager = FindObjectOfType<RoomManager>();
     }
 
-    // смерть
+    // пїЅпїЅпїЅпїЅпїЅпїЅ
     public void Die()
     {
         roomManager.Respawn(gameObject);
