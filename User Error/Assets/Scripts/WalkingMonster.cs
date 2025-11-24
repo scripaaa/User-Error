@@ -28,12 +28,26 @@ public class WalkingMonster : Entity
 
     private void Move()
     {
-	    Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + transform.up * 0.1f + transform.right * dir.x * 0.7f, 0.1f);
+	    Collider2D[] colliders = Physics2D.OverlapCircleAll(
+        transform.position + transform.up * 0.1f + transform.right * dir.x * 0.4f,
+        0.1f);
+        bool shouldFlip = false;
+        foreach (var collider in colliders)
+        {
+            if (collider.gameObject == gameObject) continue;
 
-	    if (colliders.Length > 0) dir *= -1f;
-	    // transform.Translate(dir * speed * Time.deltaTime);
+            if (collider.isTrigger) continue;
+
+            if (collider.CompareTag("Player")) continue;
+
+            shouldFlip = true;
+            break;
+        }
+
+        if (shouldFlip) dir *= -1f;
+
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
-        sprite.flipX = dir.x < 0.0f;
+        sprite.flipX = dir.x > 0.0f;
     }
 
 
