@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hero : MonoBehaviour
+public class Hero : Entity
 {
     [Header("Movement Settings")]
     [SerializeField] private float speed = 5f; // �������� ��������
@@ -36,6 +36,11 @@ public class Hero : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         originalGravity = rb.gravityScale;
+
+        if (Instance == null)
+        {
+            Instance = this;
+        }
     }
     private void FixedUpdate()
     {
