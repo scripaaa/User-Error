@@ -30,11 +30,16 @@ public class Hero : Entity
     private float originalGravity;
     private RoomManager roomManager;
 
-    [SerializeField] private float wallJumpForce = 11f; // сила отталкивания от стены
-    [SerializeField] private float wallCheckDistanc = 0.5f; // расстояние проверки стены
-    [SerializeField] private LayerMask whatIsWall;// что считается стеной
-    private bool isTouchingWall; // проверка касания стены
-    private bool canWallJump = true; // возможность отталкивания от стены
+
+    [Header("Wall Jump Settings")]
+    [SerializeField] private float wallJumpForce = 11f;
+    [SerializeField] private float wallJumpHorizontalForce = 8f;
+    [SerializeField] private float wallCheckDistance = 0.5f;
+    [SerializeField] private LayerMask whatIsWall;
+
+    private bool isTouchingWall = false;
+    private int wallDirection = 0;
+    private bool canWallJump = true;
 
     private void Awake()
     {
@@ -56,7 +61,7 @@ public class Hero : Entity
             return; // ��������� ���������� ��������� ������
         }
         CheckGround();
-
+        CheckWall();
         Jump();
     }
     private void Update()
@@ -84,40 +89,50 @@ public class Hero : Entity
 
         sprite.flipX = dir.x < 0.0f;
     }
+
+    private void CheckWall()
+    {
+        isTouchingWall = false;
+        wallDirection = 0;
+
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, wallCheckDistance, whatIsWall);
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position, Vector2.right, wallCheckDistance, whatIsWall);
+
+        if (hitLeft.collider != null)
+        {
+            isTouchingWall = true;
+            wallDirection = -1;
+        }
+        else if (hitRight.collider != null)
+        {
+            isTouchingWall = true;
+            wallDirection = 1;
+        }
+    }
+
     private void Jump()
     {
         if (isDashing) return;
-        CheckGround();
-
-
+        
+        if (jumpPerformedThisFrame && isGrounded)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            jumpPerformedThisFrame = false;
+            return;
+        }
         if (jumpPerformedThisFrame && !isGrounded && isTouchingWall && canWallJump)
         {
             canWallJump = false;
-
-            float direction = sprite.flipX ? 1f : -1f;//направление
-
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            float hor = (wallDirection == -1) ? 1f : -1f;
+            rb.linearVelocity = new Vector2(hor * wallJumpHorizontalForce, wallJumpForce);
 
             jumpPerformedThisFrame = false;
             return;
         }
-
-
         jumpPerformedThisFrame = false;
 
+
     }
-    /// <summary>
-    /// Система проверки стен
-    /// </summary>
-    private void CheckWall()
-    {
-        Vector2 dir = sprite.flipX ? Vector2.right : Vector2.left;
-
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, wallCheckDistanc, whatIsWall);
-
-        isTouchingWall = hit.collider != null;
-    }
-
 
     /// <summary>
     /// ������� �������� ����� 
@@ -133,6 +148,7 @@ public class Hero : Entity
             if (col.gameObject != gameObject) 
             {
                 isGrounded = true;
+                canWallJump = true;
                 break;
             }
         }
