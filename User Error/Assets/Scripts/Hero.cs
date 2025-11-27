@@ -47,7 +47,7 @@ public class Hero : Entity
         if (isDashing)
         {
             
-            rb.velocity = dashDirection * dashSpeed;
+            rb.linearVelocity = dashDirection * dashSpeed;
             return; // ��������� ���������� ��������� ������
         }
         CheckGround();
@@ -88,7 +88,7 @@ public class Hero : Entity
         if (jumpPerformedThisFrame && isGrounded)
         {
             
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
         
        
