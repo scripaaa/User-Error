@@ -90,16 +90,35 @@ public class Hero : Entity
         CheckGround();
 
 
-        if (jumpPerformedThisFrame && isGrounded)
+        if (jumpPerformedThisFrame && !isGrounded && isTouchingWall && canWallJump)
         {
-            
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            canWallJump = false;
+
+            float direction = sprite.flipX ? 1f : -1f;//направление
+
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+
+            jumpPerformedThisFrame = false;
+            return;
         }
-        
-       
+
+
         jumpPerformedThisFrame = false;
 
     }
+    /// <summary>
+    /// Система проверки стен
+    /// </summary>
+    private void CheckWall()
+    {
+        Vector2 dir = sprite.flipX ? Vector2.right : Vector2.left;
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, wallCheckDistanc, whatIsWall);
+
+        isTouchingWall = hit.collider != null;
+    }
+
+
     /// <summary>
     /// ������� �������� ����� 
     /// </summary>
