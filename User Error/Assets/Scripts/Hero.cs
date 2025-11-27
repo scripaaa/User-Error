@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 public class Hero : Entity
 {
@@ -31,16 +31,6 @@ public class Hero : Entity
     private RoomManager roomManager;
 
 
-    [Header("Wall Jump Settings")]
-    [SerializeField] private float wallJumpForce = 11f;
-    [SerializeField] private float wallJumpHorizontalForce = 8f;
-    [SerializeField] private float wallCheckDistance = 0.5f;
-    [SerializeField] private LayerMask whatIsWall;
-
-    private bool isTouchingWall = false;
-    private int wallDirection = 0;
-    private bool canWallJump = true;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -56,12 +46,12 @@ public class Hero : Entity
     {
         if (isDashing)
         {
-            
+
             rb.linearVelocity = dashDirection * dashSpeed;
             return; // ��������� ���������� ��������� ������
         }
         CheckGround();
-        CheckWall();
+
         Jump();
     }
     private void Update()
@@ -73,7 +63,7 @@ public class Hero : Entity
         if (Input.GetButtonDown("Jump"))
         {
             jumpPerformedThisFrame = true;
-            
+
         }
         if (Input.GetKeyDown(dashKey) && canDash && Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f)
         {
@@ -89,51 +79,22 @@ public class Hero : Entity
 
         sprite.flipX = dir.x < 0.0f;
     }
-
-    private void CheckWall()
-    {
-        isTouchingWall = false;
-        wallDirection = 0;
-
-        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, wallCheckDistance, whatIsWall);
-        RaycastHit2D hitRight = Physics2D.Raycast(transform.position, Vector2.right, wallCheckDistance, whatIsWall);
-
-        if (hitLeft.collider != null)
-        {
-            isTouchingWall = true;
-            wallDirection = -1;
-        }
-        else if (hitRight.collider != null)
-        {
-            isTouchingWall = true;
-            wallDirection = 1;
-        }
-    }
-
     private void Jump()
     {
         if (isDashing) return;
-        
+        CheckGround();
+
+
         if (jumpPerformedThisFrame && isGrounded)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            jumpPerformedThisFrame = false;
-            return;
-        }
-        if (jumpPerformedThisFrame && !isGrounded && isTouchingWall && canWallJump)
-        {
-            canWallJump = false;
-            float hor = (wallDirection == -1) ? 1f : -1f;
-            rb.linearVelocity = new Vector2(hor * wallJumpHorizontalForce, wallJumpForce);
 
-            jumpPerformedThisFrame = false;
-            return;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
+
+
         jumpPerformedThisFrame = false;
 
-
     }
-
     /// <summary>
     /// ������� �������� ����� 
     /// </summary>
@@ -141,14 +102,13 @@ public class Hero : Entity
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckRadius, whatIsGround);
 
-       
+
         isGrounded = false;
         foreach (Collider2D col in colliders)
         {
-            if (col.gameObject != gameObject) 
+            if (col.gameObject != gameObject)
             {
                 isGrounded = true;
-                canWallJump = true;
                 break;
             }
         }
