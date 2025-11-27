@@ -30,6 +30,11 @@ public class Hero : Entity
     private float originalGravity;
     private RoomManager roomManager;
 
+    [SerializeField] private float wallJumpForce = 11f; // сила отталкивания от стены
+    [SerializeField] private float wallCheckDistanc = 0.5f; // расстояние проверки стены
+    [SerializeField] private LayerMask whatIsWall;// что считается стеной
+    private bool isTouchingWall; // проверка касания стены
+    private bool canWallJump = true; // возможность отталкивания от стены
 
     private void Awake()
     {
@@ -83,8 +88,8 @@ public class Hero : Entity
     {
         if (isDashing) return;
         CheckGround();
-        
-        
+
+
         if (jumpPerformedThisFrame && isGrounded)
         {
             
