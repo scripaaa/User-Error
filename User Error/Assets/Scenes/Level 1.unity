@@ -2054,6 +2054,7 @@ GameObject:
   - component: {fileID: 699839415}
   - component: {fileID: 699839414}
   - component: {fileID: 699839413}
+  - component: {fileID: 699839416}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2075,7 +2076,6 @@ RectTransform:
   m_Children:
   - {fileID: 141994553}
   - {fileID: 738140273}
-  - {fileID: 1181478215}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2146,6 +2146,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &699839416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699839411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e38051fb2874154c97557be37dc584c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1001 &709266246
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2242,7 +2254,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &738140273
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2256,6 +2268,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1763384731}
+  - {fileID: 1181478215}
   m_Father: {fileID: 699839412}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3397,7 +3410,7 @@ GameObject:
   - component: {fileID: 1181478217}
   - component: {fileID: 1181478216}
   m_Layer: 5
-  m_Name: ContinueButton
+  m_Name: ExitToMenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3415,7 +3428,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 699839412}
+  m_Father: {fileID: 738140273}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
