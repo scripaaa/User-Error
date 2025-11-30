@@ -36,6 +36,16 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         PauseGame = true;
     }
+    public void Restart()
+    {
+        // 1. Устанавливаем нормальную скорость игры, чтобы избежать зависания
+        // (на случай, если кнопка нажата в режиме паузы)
+        Time.timeScale = 1f;
+        
+        // 2. Загружаем текущую сцену заново по её индексу
+        // SceneManager.GetActiveScene().buildIndex возвращает индекс активной сцены
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
     public void LosdMenu()
 {
     Time.timeScale = 1f;
