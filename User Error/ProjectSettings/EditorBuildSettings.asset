@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu/MENUSHKA.unity
+    path: Assets/Scenes/Menu/Menu.unity
     guid: 5158caaec18d8364f8453ef5fa0e8c4f
   - enabled: 1
     path: Assets/Scenes/Level 1.unity
