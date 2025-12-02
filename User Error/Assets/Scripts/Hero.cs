@@ -30,6 +30,15 @@ public class Hero : Entity
     private float originalGravity;
     private RoomManager roomManager;
 
+    [Header("Wall jump Settings")]
+    [SerializeField] private float wallJumpForce = 11f;
+    [SerializeField] private float wallJumpHorizontalForce = 8f;
+    [SerializeField] private float wallCheckDistance = 0.5f;
+    [SerializeField] private LayerMask whatIsWall;
+
+    private bool isTouchingWall = false;
+    private int wallDirection = 0;
+    private bool canWallJump = true;
 
     private void Awake()
     {
