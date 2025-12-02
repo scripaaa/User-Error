@@ -130,11 +130,45 @@ public class Hero : Entity
             if (col.gameObject != gameObject)
             {
                 isGrounded = true;
+                canWallJump = true; 
                 break;
             }
         }
     }
+    /// <summary>
+    /// CheackWall
+    /// </summary>
+    private void CheckWall() 
+    {
+        isTouchingWall = false;
+        wallDirection = 0;
 
+        BoxCollider2D col = GetComponent<BoxCollider2D>();
+        if (col == null) return;
+
+        Vector2 leftOrigin = new Vector2(col.bounds.min.x, transform.position.y);
+        Vector2 rightOrigin = new Vector2(col.bounds.max.x, transform.position.y);
+
+        RaycastHit2D hitLeft = Physics2D.Raycast(leftOrigin, Vector2.left, wallCheckDistance, whatIsWall);
+        RaycastHit2D hitRight = Physics2D.Raycast(rightOrigin, Vector2.right, wallCheckDistance, whatIsWall);
+
+        Debug.DrawRay(leftOrigin, Vector2.left * wallCheckDistance, Color.red);
+        Debug.DrawRay(rightOrigin, Vector2.right * wallCheckDistance, Color.blue);
+
+        if (hitLeft.collider != null)
+        {
+            isTouchingWall = true;
+            wallDirection = -1;
+        }
+        else if (hitRight.collider != null)
+        {
+            isTouchingWall = true;
+            wallDirection = 1;
+
+        }
+        if (!isTouchingWall && !isGrounded)
+            canWallJump = true;
+    }
     /// <summary>
     /// ������ �����
     /// </summary>
