@@ -60,7 +60,7 @@ public class Hero : Entity
             return; // ��������� ���������� ��������� ������
         }
         CheckGround();
-
+        CheckWall();
         Jump();
     }
     private void Update()
@@ -98,8 +98,20 @@ public class Hero : Entity
         {
 
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            jumpPerformedThisFrame = false;
+            return;
         }
 
+
+        if(jumpPerformedThisFrame && !isGrounded && isTouchingWall && canWallJump)
+        {
+            canWallJump = false;
+            float hor = (wallDirection == -1) ? 1f : -1f;
+            rb.linearVelocity = new Vector2(hor * wallJumpHorizontalForce,wallJumpForce);
+
+            jumpPerformedThisFrame = false;
+            return;
+        }
 
         jumpPerformedThisFrame = false;
 
