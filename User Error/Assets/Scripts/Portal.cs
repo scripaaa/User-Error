@@ -5,7 +5,7 @@ public class Portal : MonoBehaviour
 {
     [SerializeField] private string sceneToLoad = "PortalScene1";
     [SerializeField] private string spawnPointName = "SpawnPoint";
-    [SerializeField] private bool isOneWayPortal = false; // Если true - только в одну сторону
+    [SerializeField] private bool isOneWayPortal = false; 
 
     private bool isPlayerInRange = false;
 
@@ -13,13 +13,8 @@ public class Portal : MonoBehaviour
     {
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            // Сохраняем данные для следующей сцены
             GameStateManager.SpawnPointName = spawnPointName;
             GameStateManager.CameFromPortal = true;
-
-            Debug.Log($"Переход через портал в сцену: {sceneToLoad}, точка спавна: {spawnPointName}");
-
-            // Загружаем сцену
             SceneManager.LoadScene(sceneToLoad);
         }
     }

@@ -1283,7 +1283,7 @@ GameObject:
   - component: {fileID: 300191029}
   m_Layer: 0
   m_Name: Room 3
-  m_TagString: Untagged
+  m_TagString: RoomCenter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2134,7 +2134,7 @@ GameObject:
   - component: {fileID: 581977283}
   m_Layer: 0
   m_Name: Room 1
-  m_TagString: Untagged
+  m_TagString: RoomCenter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4011,7 +4011,7 @@ GameObject:
   - component: {fileID: 1226934111}
   m_Layer: 0
   m_Name: Room 4
-  m_TagString: Untagged
+  m_TagString: RoomCenter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5792,7 +5792,7 @@ GameObject:
   - component: {fileID: 1801630246}
   m_Layer: 0
   m_Name: Room 5
-  m_TagString: Untagged
+  m_TagString: RoomCenter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6288,7 +6288,7 @@ GameObject:
   - component: {fileID: 1849844262}
   m_Layer: 0
   m_Name: Room 2
-  m_TagString: Untagged
+  m_TagString: RoomCenter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

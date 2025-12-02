@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f9f3b8fd5b5114a9d943435941a4dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawnManager
+  defaultSpawnPoint: {fileID: 267787016}
 --- !u!4 &31828199
 Transform:
   m_ObjectHideFlags: 0
@@ -407,7 +408,7 @@ Transform:
   m_GameObject: {fileID: 267787015}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.77, y: -2.04, z: 0}
+  m_LocalPosition: {x: -2.77, y: -3.43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -868,7 +869,7 @@ GameObject:
   - component: {fileID: 758247196}
   m_Layer: 0
   m_Name: Room 1
-  m_TagString: Untagged
+  m_TagString: RoomCenter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -984,6 +985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Portal
   sceneToLoad: Level 1
   spawnPointName: SpawnFromMainLevel
+  isOneWayPortal: 0
 --- !u!61 &1247948213
 BoxCollider2D:
   m_ObjectHideFlags: 0

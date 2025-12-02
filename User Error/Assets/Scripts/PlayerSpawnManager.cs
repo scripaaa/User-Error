@@ -1,54 +1,69 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
-    [SerializeField] private Transform defaultSpawnPoint; // Перетащите стартовую точку в инспекторе
+    [SerializeField] private Transform defaultSpawnPoint;
 
-    void Start()
+    IEnumerator Start()
     {
+        // Ждем один кадр, чтобы все компоненты успели инициализироваться
+        yield return null;
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {
             Debug.LogError("Игрока с тегом 'Player' на сцене нет! Исправь.");
-            return;
+            yield break;
         }
 
-        // Если игрок пришел через портал - спавним в точке портала
+        Vector3 spawnPosition;
+
         if (GameStateManager.CameFromPortal && !string.IsNullOrEmpty(GameStateManager.SpawnPointName))
         {
-            GameObject spawnPoint = GameObject.Find(GameStateManager.SpawnPointName);
+            string spawnPointName = GameStateManager.SpawnPointName;
+            GameObject spawnPoint = GameObject.Find(spawnPointName);
 
             if (spawnPoint != null)
             {
                 player.transform.position = spawnPoint.transform.position;
-                Debug.Log($"Игрок спавнится в точке портала: {GameStateManager.SpawnPointName}");
+                spawnPosition = spawnPoint.transform.position;
+                Debug.Log($"Игрок спавнится в точке портала: {spawnPointName}");
             }
             else
             {
-                Debug.LogWarning($"Не найдена точка спавна: {GameStateManager.SpawnPointName}. Используем дефолтную.");
-                SpawnAtDefaultPoint(player);
+                spawnPosition = defaultSpawnPoint.position;
+                player.transform.position = spawnPosition;
+                Debug.LogWarning($"Не найдена точка спавна: {spawnPointName}. Используем дефолтную.");
             }
 
-            // Сбрасываем флаг после использования
             GameStateManager.CameFromPortal = false;
         }
         else
         {
-            // Иначе спавним в дефолтной точке
-            SpawnAtDefaultPoint(player);
+            if (defaultSpawnPoint != null)
+            {
+                spawnPosition = defaultSpawnPoint.position;
+                player.transform.position = spawnPosition;
+                Debug.Log("Игрок спавнится в дефолтной точке");
+            }
+            else
+            {
+                Debug.LogWarning("Дефолтная точка спавна не назначена в инспекторе!");
+                yield break;
+            }
         }
+
+        // Мгновенно перемещаем камеру в центр комнаты
+        SnapCameraToPlayerPosition(spawnPosition);
     }
 
-    private void SpawnAtDefaultPoint(GameObject player)
+    private void SnapCameraToPlayerPosition(Vector3 playerPosition)
     {
-        if (defaultSpawnPoint != null)
+        RoomManager roomManager = FindObjectOfType<RoomManager>();
+        if (roomManager != null)
         {
-            player.transform.position = defaultSpawnPoint.position;
-            Debug.Log("Игрок спавнится в дефолтной точке");
-        }
-        else
-        {
-            Debug.LogWarning("Дефолтная точка спавна не назначена в инспекторе!");
+            roomManager.SnapCameraToPosition(playerPosition);
         }
     }
 }
