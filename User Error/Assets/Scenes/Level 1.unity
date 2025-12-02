@@ -482,6 +482,97 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 407e1c6601274174f8a80b44fedd77d9, type: 3}
+--- !u!1 &92149714
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 92149715}
+  - component: {fileID: 92149717}
+  - component: {fileID: 92149716}
+  m_Layer: 0
+  m_Name: DeathTrigger (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &92149715
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92149714}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.2999916, y: -3.81, z: 0}
+  m_LocalScale: {x: 15, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1801630245}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &92149716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92149714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e630931b7d7e6464983bf70850a37fcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &92149717
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92149714}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1001 &93210884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1346,6 +1437,7 @@ MonoBehaviour:
   roomManager: {fileID: 843449923}
   targetRoomCenter: {fileID: 300191028}
   currentCheckpoint: {fileID: 315616276}
+  barrier: {fileID: 1849844259}
 --- !u!61 &300191030
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2224,6 +2316,7 @@ Transform:
   m_Children:
   - {fileID: 130331121}
   - {fileID: 1374176844}
+  - {fileID: 1206639558}
   m_Father: {fileID: 536908567}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &581977283
@@ -2241,6 +2334,7 @@ MonoBehaviour:
   roomManager: {fileID: 843449923}
   targetRoomCenter: {fileID: 581977282}
   currentCheckpoint: {fileID: 1374176844}
+  barrier: {fileID: 1206639557}
 --- !u!1001 &585692035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3110,7 +3204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 843449920}
-  cameraMoveSpeed: 2
+  cameraMoveSpeed: 2.5
   currentCheckpoint: {x: 0, y: 0, z: 0}
 --- !u!4 &855174042 stripped
 Transform:
@@ -4022,6 +4116,84 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 900909449460494191, guid: 407e1c6601274174f8a80b44fedd77d9, type: 3}
   m_PrefabInstance: {fileID: 873540686}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1206639557
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1206639558}
+  - component: {fileID: 1206639559}
+  m_Layer: 0
+  m_Name: Barrier
+  m_TagString: Barrier
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1206639558
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206639557}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.29, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 581977282}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1206639559
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206639557}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 7}
+  m_EdgeRadius: 0
 --- !u!1 &1226934109
 GameObject:
   m_ObjectHideFlags: 0
@@ -4073,6 +4245,7 @@ MonoBehaviour:
   roomManager: {fileID: 843449923}
   targetRoomCenter: {fileID: 1226934110}
   currentCheckpoint: {fileID: 213706305}
+  barrier: {fileID: 300191027}
 --- !u!61 &1226934112
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5909,6 +6082,7 @@ Transform:
   - {fileID: 315047101}
   - {fileID: 722278949}
   - {fileID: 1721254513}
+  - {fileID: 92149715}
   m_Father: {fileID: 536908567}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1801630246
@@ -5926,6 +6100,7 @@ MonoBehaviour:
   roomManager: {fileID: 843449923}
   targetRoomCenter: {fileID: 1801630245}
   currentCheckpoint: {fileID: 1721254513}
+  barrier: {fileID: 1226934109}
 --- !u!61 &1801630247
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6464,6 +6639,7 @@ MonoBehaviour:
   roomManager: {fileID: 843449923}
   targetRoomCenter: {fileID: 1849844260}
   currentCheckpoint: {fileID: 1830709127}
+  barrier: {fileID: 581977280}
 --- !u!1001 &1861940697
 PrefabInstance:
   m_ObjectHideFlags: 0
