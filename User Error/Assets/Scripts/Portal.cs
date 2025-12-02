@@ -3,26 +3,27 @@ using UnityEngine.SceneManagement;
 
 public class Portal : MonoBehaviour
 {
-    // В эту переменную в инспекторе ты впишешь название сцены для загрузки
     [SerializeField] private string sceneToLoad = "PortalScene1";
-    
-    // В эту переменную в инспекторе ты впишешь имя объекта, где игрок должен появиться
     [SerializeField] private string spawnPointName = "SpawnPoint";
+    [SerializeField] private bool isOneWayPortal = false; // Если true - только в одну сторону
 
     private bool isPlayerInRange = false;
 
     void Update()
     {
-        // Если игрок рядом и жмет E - грузим сцену
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            // Сохраняем, куда вернуться, ПЕРЕД тем как уйти
-            PlayerPrefs.SetString("SpawnPointName", spawnPointName);
+            // Сохраняем данные для следующей сцены
+            GameStateManager.SpawnPointName = spawnPointName;
+            GameStateManager.CameFromPortal = true;
+
+            Debug.Log($"Переход через портал в сцену: {sceneToLoad}, точка спавна: {spawnPointName}");
+
+            // Загружаем сцену
             SceneManager.LoadScene(sceneToLoad);
         }
     }
 
-    // Когда игрок вошел в зону портала
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -31,7 +32,6 @@ public class Portal : MonoBehaviour
         }
     }
 
-    // Когда игрок вышел из зоны портала
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
