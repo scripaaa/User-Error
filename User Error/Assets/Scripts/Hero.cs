@@ -20,6 +20,8 @@ public class Hero : Entity
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
 
+    private Animator anim;
+
     public static Hero Instance { get; set; }
 
     private bool isGrounded = false;
@@ -36,6 +38,7 @@ public class Hero : Entity
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         originalGravity = rb.gravityScale;
+        anim = GetComponent<Animator>();
 
         if (Instance == null)
         {
@@ -68,6 +71,7 @@ public class Hero : Entity
 
         if (Input.GetButton("Horizontal"))
             Run();
+        anim.SetBool("Run", Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D));
         if (Input.GetButtonDown("Jump"))
         {
             jumpPerformedThisFrame = true;
