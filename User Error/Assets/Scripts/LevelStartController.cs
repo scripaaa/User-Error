@@ -9,60 +9,100 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private string[] dialoglines;
     [SerializeField] private float delayBeforeDialogue = 10f;
 
-    private bool dialogStarted = false;
-
-    private GameObject backgroundParent; // Родительский объект "Background"
+    private GameObject backgroundParent;
+    private GameObject Mita;
     private List<Image> backgroundImages = new List<Image>();
-
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Mita = GameObject.Find("Mita");
         backgroundParent = GameObject.Find("BackGround");
-        Debug.Log($"Найден объект BackGround, дочерних объектов: {backgroundParent.transform.childCount}");
-
+        Debug.Log($"Найден объект BackGround, дочерних объектов: {(backgroundParent != null ? backgroundParent.transform.childCount : 0)}");
+        Mita.gameObject.SetActive(false);
         if (backgroundParent != null)
         {
-            Image[] images = backgroundParent.GetComponentsInChildren<Image>();
+            Image[] images = backgroundParent.GetComponentsInChildren<Image>(true);  // Добавил true для поиска неактивных объектов
             backgroundImages.AddRange(images);
             Debug.Log($"Найдено изображений: {backgroundImages.Count}");
         }
 
         // Запускаем всю последовательность
         StartCoroutine(CompleteStartSequence());
-
     }
 
     IEnumerator CompleteStartSequence()
     {
-        // Включаем фон
-        backgroundImages[4].gameObject.SetActive(true);
+        // Проверяем, что есть достаточно изображений
+        if (backgroundImages.Count > 4)
+        {
+            // Включаем фон
+            backgroundImages[4].gameObject.SetActive(true);
+            Debug.Log("Фон включен");
+        }
+        else
+        {
+            Debug.LogError("Недостаточно элементов в backgroundImages");
+        }
 
-        // Ждем 10 секунд
+        // Ждем 3 секунды
         yield return new WaitForSeconds(3f);
 
         // Запускаем первый диалог
         dialoglines = new string[] { "Подожди секунду.....", "Сейчас я включу свет!", "И вот!" };
 
-        StartDialogueManually();
+        // Ждем, пока можно запустить диалог
+        yield return StartCoroutine(StartDialogAndWait(dialoglines));
+
+        Debug.Log("Первый диалог завершен");
 
         // Выключаем фон
-        backgroundImages[4].gameObject.SetActive(false);
+        if (backgroundImages.Count > 4)
+        {
+            backgroundImages[4].gameObject.SetActive(false);
+            Debug.Log("Фон выключен");
+            Mita.gameObject.SetActive(true);
+        }
 
-        // Меняем реплики
+        // Небольшая пауза между диалогами
+        yield return new WaitForSeconds(0.5f);
+
+        // Меняем реплики и запускаем второй диалог
         dialoglines = new string[] { "Привет!", "Проверкааовфылдаоывжа", "лпфвалплыоавпжывап" };
 
-        StartDialogueManually();
+        // Запускаем второй диалог и ждем его завершения
+        yield return StartCoroutine(StartDialogAndWait(dialoglines));
+
+        Debug.Log("Второй диалог завершен");
+    }
+
+    // Новый метод для запуска диалога и ожидания его завершения
+    IEnumerator StartDialogAndWait(string[] lines)
+    {
+        // Ждем, пока диалоговый менеджер будет доступен
+        while (DialogManager.Instance == null)
+        {
+            yield return null;
+        }
+
+        // Запускаем диалог
+        DialogManager.Instance.StartDialog(lines);
+
+        // Ждем, пока диалог активен
+        while (DialogManager.Instance.IsDialogActive())
+        {
+            yield return null;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         // Для тестирования - запуск диалога по нажатию клавиши
-        if (Input.GetKeyDown(KeyCode.T) && !dialogStarted)
+        if (Input.GetKeyDown(KeyCode.T))
         {
-            StartDialogueManually();
+            dialoglines = new string[] { "Тестовый диалог", "Вторая строка", "Третья строка" };
+            StartCoroutine(StartDialogAndWait(dialoglines));
         }
     }
 
@@ -70,20 +110,23 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         yield return new WaitForSeconds(delayBeforeDialogue);
 
-        if (!dialogStarted && DialogManager.Instance != null)
+        if (DialogManager.Instance != null)
         {
             DialogManager.Instance.StartDialog(dialoglines);
-            dialogStarted = true; 
         }
     }
 
-    // Метод для тестирования (можно вызвать из других скриптов)
-    public void StartDialogueManually()
+    // Упрощенный метод для запуска диалога
+    public void StartDialogueManually(string[] lines = null)
     {
-        if (!dialogStarted && DialogManager.Instance != null)
+        if (lines != null)
+        {
+            dialoglines = lines;
+        }
+
+        if (DialogManager.Instance != null && dialoglines != null && dialoglines.Length > 0)
         {
             DialogManager.Instance.StartDialog(dialoglines);
-            dialogStarted = true;
         }
     }
 }
