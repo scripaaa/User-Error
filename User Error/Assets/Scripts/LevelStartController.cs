@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
@@ -74,6 +75,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
         yield return StartCoroutine(StartDialogAndWait(dialoglines));
 
         Debug.Log("¬торой диалог завершен");
+
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("Level 1");
+
     }
 
     // Ќовый метод дл€ запуска диалога и ожидани€ его завершени€
