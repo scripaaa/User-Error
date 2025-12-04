@@ -19,6 +19,7 @@ public class Hero : Entity
     [SerializeField] private Transform groundCheck;
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
+    private Animator anim;
 
     public static Hero Instance { get; set; }
 
@@ -36,6 +37,7 @@ public class Hero : Entity
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         originalGravity = rb.gravityScale;
+        anim = GetComponent<Animator>();
 
         if (Instance == null)
         {
@@ -54,29 +56,40 @@ public class Hero : Entity
             rb.linearVelocity = dashDirection * dashSpeed;
             return; // ��������� ���������� ��������� ������
         }
-        CheckGround();
+        
+       
+           
+        
 
         Jump();
+
+
     }
     private void Update()
     {
         if (DialogManager.Instance != null && DialogManager.Instance.IsDialogActive())
             return;
-
+        CheckGround();
+        if (!jumpPerformedThisFrame)
+         anim.SetBool("grounded", isGrounded);
 
         if (isDashing) return;
 
         if (Input.GetButton("Horizontal"))
             Run();
+        anim.SetBool("Run", Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D));
+        
         if (Input.GetButtonDown("Jump"))
         {
             jumpPerformedThisFrame = true;
             
         }
+        
         if (Input.GetKeyDown(dashKey) && canDash && Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f)
         {
             StartDash();
         }
+       
     }
 
     private void Run()
@@ -91,12 +104,17 @@ public class Hero : Entity
     {
         if (isDashing) return;
         CheckGround();
+        // Сбрасываем флаг падения при прыжке
+        if (jumpPerformedThisFrame)
+            anim.SetBool("grounded", false);
+
         
-        
+
         if (jumpPerformedThisFrame && isGrounded)
         {
-            
+            anim.SetTrigger("Jump");
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            isGrounded = false;
         }
         
        
