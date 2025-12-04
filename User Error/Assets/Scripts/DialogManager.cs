@@ -15,7 +15,7 @@ public class DialogManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogText;
 
     [Header("Settings")]
-    [SerializeField] private float textSpeed = 0.05f; // скорость появления текста
+    [SerializeField] private float textSpeed = 0.00001f; // скорость появления текста
 
     [Header("Input Settings")]
     [SerializeField] private KeyCode continueKey = KeyCode.Space;
