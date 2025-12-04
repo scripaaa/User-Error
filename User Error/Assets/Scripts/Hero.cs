@@ -53,6 +53,10 @@ public class Hero : Entity
     }
     private void FixedUpdate()
     {
+
+        if (DialogManager.Instance != null && DialogManager.Instance.IsDialogActive())
+            return;
+
         if (isDashing)
         {
 
@@ -65,6 +69,10 @@ public class Hero : Entity
     }
     private void Update()
     {
+        if (DialogManager.Instance != null && DialogManager.Instance.IsDialogActive())
+            return;
+
+
         if (isDashing) return;
 
         if (Input.GetButton("Horizontal"))

@@ -6,10 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu/MENUSHKA.unity
+    path: Assets/Scenes/Menu.unity
     guid: 5158caaec18d8364f8453ef5fa0e8c4f
+  - enabled: 1
+    path: Assets/Scenes/StartLevel.unity
+    guid: a9f018136c84f3646b84cfcd5dacdb18
   - enabled: 1
     path: Assets/Scenes/Level 1.unity
     guid: 259bc9256c2fc624788743e11ebfe251
+  - enabled: 1
+    path: Assets/Scenes/PortalScene1.unity
+    guid: f45a5e533fcd1bc45964cea8e670e87d
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
