@@ -795,7 +795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogManager
   dialogpanel: {fileID: 1169811951}
   dialogText: {fileID: 150041998}
-  textSpeed: 0.05
+  textSpeed: 0.03
   continueKey: 32
   skipKey: 13
 --- !u!4 &771614020
