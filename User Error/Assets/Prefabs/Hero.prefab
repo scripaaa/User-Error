@@ -633,6 +633,7 @@ GameObject:
   - component: {fileID: 2237790771809779324}
   - component: {fileID: 4054304042127255456}
   - component: {fileID: 1479953017741933055}
+  - component: {fileID: -7971878725177387319}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Player
@@ -655,6 +656,7 @@ Transform:
   m_Children:
   - {fileID: 7396861792579873186}
   - {fileID: 8091884705535148980}
+  - {fileID: 2186061124771130563}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &8656033744845073854
@@ -753,6 +755,12 @@ MonoBehaviour:
   dashCooldown: 1
   dashKey: 304
   groundCheck: {fileID: 7396861792579873186}
+  wallJumpForce: 11
+  wallJumpHorizontalForce: 8
+  wallCheckDistance: 0.5
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1479953017741933055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,6 +775,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   PauseGame: 0
   pauseGameMenu: {fileID: 4694833423098995505}
+--- !u!95 &-7971878725177387319
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5240256510321237945}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e7749226a67ce5142b4691ce161906b2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5314494493929458367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,7 +1254,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8992086159047867657}
+  m_GameObject: {fileID: 6654873044668375983}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.033, y: 0.858, z: -0.025185732}
@@ -1239,7 +1269,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8992086159047867657}
+  m_GameObject: {fileID: 6654873044668375983}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

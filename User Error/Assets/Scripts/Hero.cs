@@ -65,7 +65,7 @@ public class Hero : Entity
             rb.linearVelocity = dashDirection * dashSpeed;
             return; // ��������� ���������� ��������� ������
         }
-        CheckGround();
+       
         CheckWall();
         Jump();
 
@@ -111,10 +111,12 @@ public class Hero : Entity
         if (isDashing) return;
         CheckGround();
 
+        if (jumpPerformedThisFrame)
+            anim.SetBool("grounded", false);
 
         if (jumpPerformedThisFrame && isGrounded)
         {
-
+            anim.SetTrigger("Jump");
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             jumpPerformedThisFrame = false;
             return;
