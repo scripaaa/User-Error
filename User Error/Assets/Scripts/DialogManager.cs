@@ -15,7 +15,7 @@ public class DialogManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogText;
 
     [Header("Settings")]
-    [SerializeField] private float textSpeed = 0.05f; // скорость появления текста
+    [SerializeField] private float textSpeed = 0.03f; // скорость появления текста
 
     [Header("Input Settings")]
     [SerializeField] private KeyCode continueKey = KeyCode.Space;
@@ -36,9 +36,13 @@ public class DialogManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+           
         }
-        else Destroy(gameObject);
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         sentences = new Queue<string>();
         dialogpanel.SetActive(false);
