@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+[RequireComponent(typeof(AudioSource))]
 public class AudioController : MonoBehaviour
 {
     public Slider slider;       // Ссылка на ваш ползунок
@@ -30,4 +30,11 @@ public class AudioController : MonoBehaviour
             audio.volume = slider.value;
         }
     }
+    public AudioSource uiSource;
+public AudioClip clickClip;
+
+public void PlayClick()
+{
+    uiSource.PlayOneShot(clickClip);
+}
 }
