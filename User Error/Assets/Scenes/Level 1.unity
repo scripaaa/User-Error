@@ -4536,6 +4536,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -5585,6 +5586,7 @@ GameObject:
   - component: {fileID: 1665450604}
   - component: {fileID: 1665450603}
   - component: {fileID: 1665450602}
+  - component: {fileID: 1665450606}
   m_Layer: 0
   m_Name: Portal_To_PortalScene1
   m_TagString: Untagged
@@ -5726,6 +5728,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1665450606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665450601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32e6545859fe2a246aeee6154b07a78c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PortalInteraction
+  promptText: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 [E] \u0434\u043B\u044F
+    \u0432\u0445\u043E\u0434\u0430"
+  fontSize: 4
+  fontAsset: {fileID: 11400000, guid: fdd2bd9f4decd484cb6f9b56fe13a5dd, type: 2}
+  textColor: {r: 0, g: 0, b: 0, a: 1}
+  activationDistance: 1
 --- !u!4 &1666089669 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 900909449460494191, guid: 407e1c6601274174f8a80b44fedd77d9, type: 3}

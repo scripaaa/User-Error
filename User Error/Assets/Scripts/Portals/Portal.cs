@@ -5,9 +5,15 @@ public class Portal : MonoBehaviour
 {
     [SerializeField] private string sceneToLoad = "PortalScene1";
     [SerializeField] private string spawnPointName = "SpawnPoint";
-    [SerializeField] private bool isOneWayPortal = false; 
+    [SerializeField] private bool isOneWayPortal = false;
 
     private bool isPlayerInRange = false;
+    private PortalInteraction portalInteraction;
+
+    private void Start()
+    {
+        portalInteraction = GetComponent<PortalInteraction>();
+    }
 
     void Update()
     {
