@@ -41,6 +41,10 @@ public class Hero : Entity
     private int wallDirection = 0;
     private bool canWallJump = true;
 
+    [Header("Attack Settings")]
+    [SerializeField] private GameObject attackHitboxPrefab;
+    [SerializeField] private Transform attackPoint;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -95,7 +99,12 @@ public class Hero : Entity
         {
             StartDash();
         }
-       
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Attack();
+        }
+
     }
 
     private void Run()
@@ -254,5 +263,15 @@ public class Hero : Entity
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
     }
+    private void Attack()
+    {
+        Vector3 spawnPos = attackPoint.position;
 
+        if (sprite.flipX)
+            spawnPos.x = transform.position.x - Mathf.Abs(attackPoint.localPosition.x);
+        else
+            spawnPos.x = transform.position.x + Mathf.Abs(attackPoint.localPosition.x);
+
+        Instantiate(attackHitboxPrefab, spawnPos, Quaternion.identity);
+    }
 }
