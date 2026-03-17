@@ -36,10 +36,12 @@ public class Hero : Entity
     [SerializeField] private float wallJumpHorizontalForce = 8f;
     [SerializeField] private float wallCheckDistance = 0.5f;
     [SerializeField] private LayerMask whatIsWall;
+    [SerializeField] private float wallSlideSpeed = 2f;
 
     private bool isTouchingWall = false;
     private int wallDirection = 0;
     private bool canWallJump = true;
+    private bool isWallSliding = false;
 
     private void Awake()
     {
@@ -67,6 +69,7 @@ public class Hero : Entity
         }
        
         CheckWall();
+        HandleWallSliding();
         Jump();
 
 
@@ -158,7 +161,7 @@ public class Hero : Entity
     /// <summary>
     /// CheackWall
     /// </summary>
-    private void CheckWall() 
+    private void CheckWall()
     {
         isTouchingWall = false;
         wallDirection = 0;
@@ -166,29 +169,84 @@ public class Hero : Entity
         BoxCollider2D col = GetComponent<BoxCollider2D>();
         if (col == null) return;
 
-        Vector2 leftOrigin = new Vector2(col.bounds.min.x, transform.position.y);
-        Vector2 rightOrigin = new Vector2(col.bounds.max.x, transform.position.y);
+        // Получаем границы коллайдера
+        Bounds bounds = col.bounds;
 
-        RaycastHit2D hitLeft = Physics2D.Raycast(leftOrigin, Vector2.left, wallCheckDistance, whatIsWall);
-        RaycastHit2D hitRight = Physics2D.Raycast(rightOrigin, Vector2.right, wallCheckDistance, whatIsWall);
+        // Определяем количество лучей и их смещения по Y (относительно нижней и верхней границы)
+        int rayCount = 3; // можно увеличить при необходимости
+        float[] offsets = new float[rayCount];
 
-        Debug.DrawRay(leftOrigin, Vector2.left * wallCheckDistance, Color.red);
-        Debug.DrawRay(rightOrigin, Vector2.right * wallCheckDistance, Color.blue);
+        if (rayCount == 1)
+        {
+            offsets[0] = bounds.center.y;
+        }
+        else
+        {
+            for (int i = 0; i < rayCount; i++)
+            {
+                // Равномерно распределяем лучи по высоте коллайдера
+                float t = i / (float)(rayCount - 1); // от 0 до 1
+                offsets[i] = Mathf.Lerp(bounds.min.y, bounds.max.y, t);
+            }
+        }
 
-        if (hitLeft.collider != null)
+        // Переменные для отслеживания попаданий
+        bool leftHit = false;
+        bool rightHit = false;
+
+        // Проходим по всем точкам и пускаем лучи
+        foreach (float y in offsets)
+        {
+            Vector2 leftOrigin = new Vector2(bounds.min.x, y);
+            Vector2 rightOrigin = new Vector2(bounds.max.x, y);
+
+            RaycastHit2D hitLeft = Physics2D.Raycast(leftOrigin, Vector2.left, wallCheckDistance, whatIsWall);
+            RaycastHit2D hitRight = Physics2D.Raycast(rightOrigin, Vector2.right, wallCheckDistance, whatIsWall);
+
+            // Рисуем лучи для отладки (каждый луч своим цветом: красный для левого, синий для правого)
+            Debug.DrawRay(leftOrigin, Vector2.left * wallCheckDistance, hitLeft.collider != null ? Color.green : Color.red);
+            Debug.DrawRay(rightOrigin, Vector2.right * wallCheckDistance, hitRight.collider != null ? Color.green : Color.blue);
+
+            if (hitLeft.collider != null)
+                leftHit = true;
+            if (hitRight.collider != null)
+                rightHit = true;
+        }
+
+        // Определяем результат
+        if (leftHit)
         {
             isTouchingWall = true;
             wallDirection = -1;
         }
-        else if (hitRight.collider != null)
+        else if (rightHit)
         {
             isTouchingWall = true;
             wallDirection = 1;
-
         }
+
+        // Разрешаем стена-прыжок, если персонаж не касается стены и не на земле
         if (!isTouchingWall && !isGrounded)
             canWallJump = true;
     }
+    private void HandleWallSliding()
+    {
+        // Скольжение возможно, если:
+        // - касаемся стены
+        // - не на земле
+        // - падаем вниз (velocity.y < 0)
+        if (isTouchingWall && !isGrounded && rb.linearVelocity.y < 0)
+        {
+            isWallSliding = true;
+            // Устанавливаем вертикальную скорость равной wallSlideSpeed (отрицательной)
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, -wallSlideSpeed);
+        }
+        else
+        {
+            isWallSliding = false;
+        }
+    }
+
     /// <summary>
     /// ������ �����
     /// </summary>
