@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour
 {
     public bool PauseGame;
     public GameObject pauseGameMenu;
+    public GameObject inventoryPanel;
 
     void Update()
     {
@@ -25,6 +26,9 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        if (inventoryPanel != null)
+            inventoryPanel.SetActive(false);
+            
         pauseGameMenu.SetActive(false);
         Time.timeScale = 1f;
         PauseGame = false;
@@ -36,19 +40,25 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         PauseGame = true;
     }
+
+    public void ToggleInventory()
+    {
+        if (inventoryPanel != null)
+        {
+            bool isActive = inventoryPanel.activeSelf;
+            inventoryPanel.SetActive(!isActive);
+        }
+    }
+
     public void Restart()
     {
-        // 1. Устанавливаем нормальную скорость игры, чтобы избежать зависания
-        // (на случай, если кнопка нажата в режиме паузы)
         Time.timeScale = 1f;
-        
-        // 2. Загружаем текущую сцену заново по её индексу
-        // SceneManager.GetActiveScene().buildIndex возвращает индекс активной сцены
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
     public void LosdMenu()
-{
-    Time.timeScale = 1f;
-    SceneManager.LoadScene("Menu");
-}
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Menu");
+    }
 }

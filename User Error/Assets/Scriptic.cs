@@ -18,4 +18,15 @@ public class InventoryUI : MonoBehaviour
             counterText.text = $"{playerHero.countCollectedItems}/5";
         }
     }
+
+    public void ToggleInventory()
+    {
+        bool isActive = gameObject.activeSelf;
+        gameObject.SetActive(!isActive);
+    }
+
+    public void CloseInventory()
+    {
+        gameObject.SetActive(false);
+    }
 }
