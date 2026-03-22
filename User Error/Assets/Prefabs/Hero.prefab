@@ -621,9 +621,9 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  dashSpeed: 15
-  dashDuration: 0.2
-  dashCooldown: 1
+  dashSpeed: 0
+  dashDuration: 0
+  dashCooldown: 0
   dashKey: 304
   groundCheck: {fileID: 7396861792579873186}
   wallJumpForce: 11
@@ -633,6 +633,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   wallSlideSpeed: 2
+  attackHitboxPrefab: {fileID: 0}
+  attackPoint: {fileID: 0}
 --- !u!114 &1479953017741933055
 MonoBehaviour:
   m_ObjectHideFlags: 0
