@@ -398,13 +398,14 @@ GameObject:
   - component: {fileID: 8186862671189149733}
   - component: {fileID: 5649511480958177446}
   - component: {fileID: 7791718713659191522}
+  - component: {fileID: 2577792435197986095}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4519839288347660593
 RectTransform:
   m_ObjectHideFlags: 0
@@ -412,7 +413,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5188640911021146462}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
@@ -424,7 +425,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0, y: -0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!223 &8186862671189149733
@@ -490,6 +491,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2577792435197986095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5188640911021146462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e38051fb2874154c97557be37dc584c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
+  PauseGame: 0
+  pauseGameMenu: {fileID: 2977149539622083489}
+  inventoryPanel: {fileID: 0}
 --- !u!1 &5240256510321237945
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,6 +641,7 @@ MonoBehaviour:
   dashCooldown: 1
   dashKey: 304
   groundCheck: {fileID: 7396861792579873186}
+  countCollectedItems: 0
   wallJumpForce: 11
   wallJumpHorizontalForce: 8
   wallCheckDistance: 0.5
@@ -638,13 +655,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5240256510321237945}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e38051fb2874154c97557be37dc584c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
   PauseGame: 0
-  pauseGameMenu: {fileID: 5188640911021146462}
+  pauseGameMenu: {fileID: 2977149539622083489}
+  inventoryPanel: {fileID: 0}
 --- !u!95 &-7971878725177387319
 Animator:
   serializedVersion: 7

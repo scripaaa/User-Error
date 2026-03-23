@@ -11,6 +11,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
+     
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (PauseGame)
@@ -24,6 +25,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    
     public void Resume()
     {
         if (inventoryPanel != null)
