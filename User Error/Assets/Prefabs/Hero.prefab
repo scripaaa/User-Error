@@ -650,8 +650,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   wallSlideSpeed: 2
-  attackHitboxPrefab: {fileID: 0}
-  attackPoint: {fileID: 0}
+  attackHitboxPrefab: {fileID: 9151289958178566183, guid: e6a4102d4d1cd5f45b92ec929c4cf681, type: 3}
+  attackPoint: {fileID: 1134439968199901296}
 --- !u!114 &1479953017741933055
 MonoBehaviour:
   m_ObjectHideFlags: 0
