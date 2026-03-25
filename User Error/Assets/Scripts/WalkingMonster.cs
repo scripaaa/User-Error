@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class WalkingMonster : Entity
 {
-    private float speed = 3.5f;
-    private float dir = 1f;
-    private SpriteRenderer sprite;
+    [Header("Настройки монстра")]
+    [SerializeField] private float speed = 2f;
+    [SerializeField] private float detectionRadius = 5f;
+    [SerializeField] private float returnSpeed = 1.3f;
+    [SerializeField] private float heightThreshold = 1.5f;
 
+    private SpriteRenderer sprite;
+    private Vector3 startPosition;
+    private Transform player;
+    private bool isChasing = false;
 
     private void Awake()
     {
@@ -16,44 +22,90 @@ public class WalkingMonster : Entity
 
     private void Start()
     {
-        dir = 1f;
+        startPosition = transform.position;
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+        }
     }
 
     private void Update()
     {
-        Move();
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                player = playerObj.transform;
+            }
+            else
+            {
+                ReturnToStart();
+                return;
+            }
+        }
+
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        float heightDifference = player.position.y - transform.position.y;
+
+        if (distanceToPlayer <= detectionRadius && heightDifference < heightThreshold)
+        {
+            isChasing = true;
+            ChasePlayer();
+        }
+        else
+        {
+            isChasing = false;
+            ReturnToStart();
+        }
     }
 
-    private void Move()
+    private void ChasePlayer()
     {
-        Vector3 checkPosition = transform.position + Vector3.up * 0.3f + Vector3.right * dir * 0.5f;
+        Vector3 direction = (player.position - transform.position).normalized;
+        direction.y = 0;
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(checkPosition, 0.15f);
-
-        bool shouldFlip = false;
-        foreach (var collider in colliders)
-        {
-            if (collider.transform.root == transform.root) continue;
-            if (collider.isTrigger) continue;
-            if (collider.CompareTag("Player")) continue;
-        
-            shouldFlip = true;
-            break;
-        }
-
-        if (shouldFlip) 
-        {
-            dir *= -1f;
-        }
-
-        Vector3 moveDir = Vector3.right * dir;
         transform.position = Vector3.MoveTowards(
-            transform.position, 
-            transform.position + moveDir, 
+            transform.position,
+            transform.position + direction,
             speed * Time.deltaTime
         );
 
-        sprite.flipX = dir > 0f;
+        if (direction.x > 0f)
+        {
+            sprite.flipX = true;
+        }
+        else if (direction.x < 0f)
+        {
+            sprite.flipX = false;
+        }
+    }
+
+    private void ReturnToStart()
+    {
+        float distanceToStart = Vector3.Distance(transform.position, startPosition);
+
+        if (distanceToStart > 0.1f)
+        {
+            Vector3 direction = (startPosition - transform.position).normalized;
+            direction.y = 0;
+
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                startPosition,
+                returnSpeed * Time.deltaTime
+            );
+
+            if (direction.x > 0f)
+            {
+                sprite.flipX = true;
+            }
+            else if (direction.x < 0f)
+            {
+                sprite.flipX = false;
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
