@@ -17,5 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PortalScene1.unity
     guid: f45a5e533fcd1bc45964cea8e670e87d
+  - enabled: 1
+    path: Assets/Scenes/Level 2.unity
+    guid: 3ff15e98deba9e34ea3b0156f72005e7
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
