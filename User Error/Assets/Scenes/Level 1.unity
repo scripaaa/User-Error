@@ -8811,7 +8811,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2080832619}
   - component: {fileID: 2080832618}
-  - component: {fileID: 2080832617}
+  - component: {fileID: 2080832620}
   m_Layer: 0
   m_Name: Finish
   m_TagString: Untagged
@@ -8819,19 +8819,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2080832617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2080832616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 286c0dd84c615534e8ed40fec4791c73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Finish
-  finishCanvas: {fileID: 78250649}
 --- !u!61 &2080832618
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8893,6 +8880,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2080832620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080832616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23592d20d359ccb4fbbbf7ed44cad79b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneChanger
+  sceneToLoad: Level 2
 --- !u!1001 &2091231885
 PrefabInstance:
   m_ObjectHideFlags: 0
