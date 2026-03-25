@@ -10,7 +10,7 @@ public class PortalInteraction : MonoBehaviour
     [SerializeField] private Color textColor = Color.black;
 
     [Header("Настройки активации")]
-    [SerializeField] private float activationDistance = 1f;
+    [SerializeField] private float activationDistance = 1.4f;
 
     private TextMeshPro textMesh;
     private Camera mainCamera;
@@ -31,7 +31,7 @@ public class PortalInteraction : MonoBehaviour
         {
             GameObject textObj = new GameObject("PortalPrompt");
             textObj.transform.SetParent(transform);
-            textObj.transform.localPosition = new Vector3(0, 0.25f, 0);
+            textObj.transform.localPosition = new Vector3(0, 0.215f, 0);
 
             textMesh = textObj.AddComponent<TextMeshPro>();
             textMesh.text = promptText;
