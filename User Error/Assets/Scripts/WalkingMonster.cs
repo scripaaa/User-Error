@@ -8,13 +8,12 @@ public class WalkingMonster : Entity
     [SerializeField] private float speed = 2f;
     [SerializeField] private float detectionRadius = 5f;
     [SerializeField] private float returnSpeed = 1.3f;
-    [SerializeField] private float chaseDelay = 0.0f;
+    [SerializeField] private float heightThreshold = 1.5f;
 
     private SpriteRenderer sprite;
     private Vector3 startPosition;
     private Transform player;
     private bool isChasing = false;
-    private float chaseTimer = 0f;
 
     private void Awake()
     {
@@ -48,19 +47,15 @@ public class WalkingMonster : Entity
         }
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        float heightDifference = player.position.y - transform.position.y;
 
-        if (distanceToPlayer <= detectionRadius)
+        if (distanceToPlayer <= detectionRadius && heightDifference < heightThreshold)
         {
-            chaseTimer += Time.deltaTime;
-            if (chaseTimer >= chaseDelay)
-            {
-                isChasing = true;
-                ChasePlayer();
-            }
+            isChasing = true;
+            ChasePlayer();
         }
         else
         {
-            chaseTimer = 0f;
             isChasing = false;
             ReturnToStart();
         }
