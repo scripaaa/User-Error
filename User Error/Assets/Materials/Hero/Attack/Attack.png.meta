@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: a7bfac82c18f12141bb9070e9b83f65a
+guid: d3127bd333c8dce4098e11513114595f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1709690111188285185
-    second: Gemini_Generated_Image_3dt9j33dt9j33dt9-Photoroom_0
+      213: -7008412969330441016
+    second: Attack_0
+  - first:
+      213: -7763475090823894447
+    second: Attack_1
+  - first:
+      213: 302641331129538988
+    second: Attack_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +43,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -73,9 +79,9 @@ TextureImporter:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -97,7 +103,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
+    buildTarget: WindowsStoreApps
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -109,30 +115,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 1
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gemini_Generated_Image_3dt9j33dt9j33dt9-Photoroom_0
+      name: Attack_0
       rect:
         serializedVersion: 2
-        x: 149
-        y: 83
-        width: 740
-        height: 215
+        x: 402
+        y: 433
+        width: 901
+        height: 963
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +134,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1073069091a0ab710800000000000000
-      internalID: 1709690111188285185
+      spriteID: 8c481db598d1dbe90800000000000000
+      internalID: -7008412969330441016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attack_1
+      rect:
+        serializedVersion: 2
+        x: 2386
+        y: 433
+        width: 963
+        height: 963
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15a29dc9988924490800000000000000
+      internalID: -7763475090823894447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attack_2
+      rect:
+        serializedVersion: 2
+        x: 4370
+        y: 433
+        width: 1118
+        height: 963
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca9d35cefa2333400800000000000000
+      internalID: 302641331129538988
       vertices: []
       indices: 
       edges: []
@@ -161,7 +198,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Gemini_Generated_Image_3dt9j33dt9j33dt9-Photoroom_0: 1709690111188285185
+      Attack_0: -7008412969330441016
+      Attack_1: -7763475090823894447
+      Attack_2: 302641331129538988
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
