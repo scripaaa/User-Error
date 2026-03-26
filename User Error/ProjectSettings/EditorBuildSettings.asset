@@ -17,5 +17,20 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PortalScene1.unity
     guid: f45a5e533fcd1bc45964cea8e670e87d
+  - enabled: 1
+    path: Assets/Scenes/Level 2.unity
+    guid: 3ff15e98deba9e34ea3b0156f72005e7
+  - enabled: 1
+    path: Assets/Scenes/Level 3.unity
+    guid: c5846bd5f2c9d4c44b9d953681a54b47
+  - enabled: 1
+    path: Assets/Scenes/Level 3 Anomaly.unity
+    guid: 9219a3d4dd2352d4c9add29f92a07bff
+  - enabled: 1
+    path: Assets/Scenes/Level 4.unity
+    guid: 6a4b180656d2ef04cb9736a13c891bf9
+  - enabled: 1
+    path: Assets/Scenes/Level 4A.unity
+    guid: 4170a49e48390314a8472c4cc1a61a5d
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
