@@ -137,34 +137,33 @@ public class Hero : Entity
         if (isDashing) return;
         CheckGround();
 
-       
+        // Определяем направление гравитации: -1 (вниз), 1 (вверх)
+        float gravityDir = Mathf.Sign(Physics2D.gravity.y);
 
-        // Прыжок с земли (теперь с учетом Coyote Time)
+        // 1. Обычный прыжок
         if (jumpPerformedThisFrame && coyoteTimeCounter > 0f)
         {
             anim.SetTrigger("Jump");
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
 
-            // Важно: обнуляем счетчик после прыжка, чтобы нельзя было 
-            // прыгнуть второй раз в воздухе
+            // Прыгаем ПРОТИВ направления гравитации
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * -gravityDir);
+
             coyoteTimeCounter = 0f;
             jumpPerformedThisFrame = false;
             return;
         }
 
+        // 2. Прыжок от стены
         if (jumpPerformedThisFrame && !isGrounded && isTouchingWall && canWallJump)
         {
             canWallJump = false;
             float hor = (wallDirection == -1) ? 1f : -1f;
 
-            // Прикладываем силу
-            rb.linearVelocity = new Vector2(hor * wallJumpHorizontalForce, wallJumpForce);
+            // Также инвертируем вертикальную силу прыжка от стены
+            rb.linearVelocity = new Vector2(hor * wallJumpHorizontalForce, wallJumpForce * -gravityDir);
 
-            // Блокируем ввод на 0.15 секунды, чтобы персонаж успел отлететь от стены
             wallJumpLockTimer = 0.15f;
-
-            // Разворачиваем персонажа в сторону прыжка
-            transform.localScale = new Vector3(hor, 1, 1);
+            transform.localScale = new Vector3(hor, transform.localScale.y, 1);
 
             jumpPerformedThisFrame = false;
             return;
@@ -261,15 +260,18 @@ public class Hero : Entity
     }
     private void HandleWallSliding()
     {
-        // Скольжение возможно, если:
-        // - касаемся стены
-        // - не на земле
-        // - падаем вниз (velocity.y < 0)
-        if (isTouchingWall && !isGrounded && rb.linearVelocity.y < 0)
+        float gravityDir = Mathf.Sign(Physics2D.gravity.y);
+
+        // Проверяем "падение": 
+        // Если гравитация обычная (-1), падаем когда velocity.y < 0
+        // Если инвертированная (1), падаем когда velocity.y > 0
+        bool isFalling = (gravityDir < 0) ? rb.linearVelocity.y < 0 : rb.linearVelocity.y > 0;
+
+        if (isTouchingWall && !isGrounded && isFalling)
         {
             isWallSliding = true;
-            // Устанавливаем вертикальную скорость равной wallSlideSpeed (отрицательной)
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, -wallSlideSpeed);
+            // Скользим "вниз" относительно текущей гравитации
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, wallSlideSpeed * gravityDir);
         }
         else
         {
