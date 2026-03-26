@@ -194,17 +194,24 @@ public class SecondDialofController : MonoBehaviour
 
     void ShowChoicePanelIfRemaining()
     {
-      
-        if (choiceButton1.gameObject.activeSelf ||
-            choiceButton2.gameObject.activeSelf ||
-            choiceButton3.gameObject.activeSelf ||
-            choiceButton4.gameObject.activeSelf)
+        bool hasButtons = choiceButton1.gameObject.activeSelf ||
+                          choiceButton2.gameObject.activeSelf ||
+                          choiceButton3.gameObject.activeSelf ||
+                          choiceButton4.gameObject.activeSelf;
+
+        if (hasButtons)
         {
             choicePanel.SetActive(true);
+            // ѕ–»Ќ”ƒ»“≈Ћ№Ќќ блокируем игрока, когда показаны кнопки
+            if (DialogManager.Instance != null)
+                DialogManager.Instance.DisablePlayerControl();
         }
         else
         {
             choicePanel.SetActive(false);
+            // ≈сли кнопок нет, и диалог не идет Ч возвращаем контроль
+            if (DialogManager.Instance != null && !DialogManager.Instance.IsDialogActive())
+                DialogManager.Instance.EnablePlayerControl();
         }
     }
 }

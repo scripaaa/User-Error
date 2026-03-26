@@ -609,7 +609,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0
   m_GravityScale: 3
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a5f58de0e1e17ed489c65f660b090ca3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -617,8 +617,8 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &4054304042127255456
 MonoBehaviour:
@@ -633,17 +633,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  jumpForce: 10
+  jumpForce: 11
   groundCheckRadius: 0.27
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   dashSpeed: 0
   dashDuration: 0
   dashCooldown: 0
   dashKey: 304
   groundCheck: {fileID: 7396861792579873186}
   countCollectedItems: 0
+  coyoteTime: 0.15
   wallJumpForce: 11
   wallJumpHorizontalForce: 8
   wallCheckDistance: 0.5
