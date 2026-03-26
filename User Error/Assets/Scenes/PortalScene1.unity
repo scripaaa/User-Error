@@ -677,6 +677,10 @@ PrefabInstance:
       propertyPath: m_RaycastTarget
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4054304042127255456, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
+      propertyPath: attackHitboxPrefab
+      value: 
+      objectReference: {fileID: 9151289958178566183, guid: e6a4102d4d1cd5f45b92ec929c4cf681, type: 3}
     - target: {fileID: 4062125314556038926, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
       propertyPath: m_RaycastTarget
       value: 1
@@ -1094,7 +1098,6 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2444,7 +2447,6 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
