@@ -131,6 +131,8 @@ GameObject:
   - component: {fileID: 243470018}
   - component: {fileID: 243470017}
   - component: {fileID: 243470016}
+  - component: {fileID: 243470020}
+  - component: {fileID: 243470019}
   m_Layer: 3
   m_Name: Grass
   m_TagString: Untagged
@@ -185,7 +187,7 @@ TilemapCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_CompositeOperation: 0
+  m_CompositeOperation: 1
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
@@ -796,6 +798,179 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!66 &243470019
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243470014}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 243470016}
+    m_ColliderPaths:
+    - - X: 10312500
+        Y: 27500000
+      - X: 5937500
+        Y: 28125000
+      - X: 312500
+        Y: 27500000
+      - X: 312500
+        Y: 20000000
+      - X: 10312500
+        Y: 20000000
+    - - X: 20937500
+        Y: 27500000
+      - X: 16562500
+        Y: 28125000
+      - X: 10937500
+        Y: 27500000
+      - X: 10937500
+        Y: 20000000
+      - X: 20937500
+        Y: 20000000
+    - - X: 29687500
+        Y: 21250000
+      - X: 29687500
+        Y: 23750000
+      - X: 27187500
+        Y: 28125000
+      - X: 21562500
+        Y: 28125000
+      - X: 21562500
+        Y: 20000000
+      - X: 28437500
+        Y: 20000000
+    - - X: -312500
+        Y: 27500000
+      - X: -4687500
+        Y: 28125000
+      - X: -10312500
+        Y: 27500000
+      - X: -10312500
+        Y: 20000000
+      - X: -312500
+        Y: 20000000
+    - - X: -10937500
+        Y: 27500000
+      - X: -15312500
+        Y: 27500000
+      - X: -18437500
+        Y: 23750000
+      - X: -19062500
+        Y: 21250000
+      - X: -17812500
+        Y: 20000000
+      - X: -10937500
+        Y: 20000000
+    - - X: 53125000
+        Y: -38750000
+      - X: 53125000
+        Y: -10000000
+      - X: -42500000
+        Y: -10000000
+      - X: -42500000
+        Y: -38750000
+      - X: -41250000
+        Y: -40000000
+      - X: 51875000
+        Y: -40000000
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 2.8437393, y: 2}
+      - {x: 2.96875, y: 2.1250107}
+      - {x: 2.9687467, y: 2.3750057}
+      - {x: 2.7187345, y: 2.8125}
+      - {x: 2.15625, y: 2.812471}
+      - {x: 2.1562793, y: 2}
+    - - {x: -0.0312793, y: 2}
+      - {x: -0.0312745, y: 2.7500036}
+      - {x: -0.46875322, y: 2.8124995}
+      - {x: -1.03125, y: 2.7499745}
+      - {x: -1.0312207, y: 2}
+    - - {x: 1.0312207, y: 2}
+      - {x: 1.0312256, y: 2.7500036}
+      - {x: 0.5937468, y: 2.8124995}
+      - {x: 0.03125, y: 2.7499745}
+      - {x: 0.0312793, y: 2}
+    - - {x: 2.093721, y: 2}
+      - {x: 2.0937257, y: 2.7500036}
+      - {x: 1.6562468, y: 2.8124995}
+      - {x: 1.09375, y: 2.7499745}
+      - {x: 1.0937793, y: 2}
+    - - {x: -1.0937793, y: 2}
+      - {x: -1.0937793, y: 2.75}
+      - {x: -1.531258, y: 2.7499907}
+      - {x: -1.8437512, y: 2.3749945}
+      - {x: -1.9062393, y: 2.1249893}
+      - {x: -1.7812393, y: 2}
+    - - {x: 5.187489, y: -4}
+      - {x: 5.3125, y: -3.8749893}
+      - {x: 5.312471, y: -1}
+      - {x: -4.25, y: -1.0000293}
+      - {x: -4.2499924, y: -3.8750076}
+      - {x: -4.124989, y: -4}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
+  m_UseDelaunayMesh: 0
+  m_CompositeGameObject: {fileID: 243470014}
+--- !u!50 &243470020
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243470014}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &849277879
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,6 +1428,74 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1526333668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1526333671}
+  - component: {fileID: 1526333670}
+  - component: {fileID: 1526333669}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1526333669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526333668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.StandaloneInputModule
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &1526333670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526333668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1526333671
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526333668}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1639555025
 GameObject:
   m_ObjectHideFlags: 0
@@ -1662,3 +1905,4 @@ SceneRoots:
   - {fileID: 1639555027}
   - {fileID: 1695598844}
   - {fileID: 1786841575}
+  - {fileID: 1526333671}
