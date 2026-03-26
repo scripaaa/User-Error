@@ -133,7 +133,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1034c600746bfe4685c444a57ad83da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  maxHealth: 3
+  maxHealth: 5
+  knockbackForce: 5
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.2
 --- !u!1 &7047799277368768471
 GameObject:
   m_ObjectHideFlags: 0
