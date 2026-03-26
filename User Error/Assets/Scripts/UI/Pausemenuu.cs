@@ -9,9 +9,20 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseGameMenu;
     public GameObject inventoryPanel;
 
+
+    void Start()
+    {
+        PauseGame = false;
+        Time.timeScale = 1f;
+        pauseGameMenu.SetActive(false);
+
+        if (inventoryPanel != null)
+            inventoryPanel.SetActive(false);
+    }
+
     void Update()
     {
-     
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (PauseGame)
@@ -25,12 +36,12 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    
+
     public void Resume()
     {
         if (inventoryPanel != null)
             inventoryPanel.SetActive(false);
-            
+
         pauseGameMenu.SetActive(false);
         Time.timeScale = 1f;
         PauseGame = false;
