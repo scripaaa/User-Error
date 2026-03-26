@@ -1846,7 +1846,7 @@ MonoBehaviour:
   referenceWidth: 1920
   referenceHeight: 1080
   baseOrthoSize: 5.5
---- !u!1001 &1002410149
+--- !u!1001 &742596046
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1860,11 +1860,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5890825431947715359, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.7992716
+      value: -4.46927
       objectReference: {fileID: 0}
     - target: {fileID: 5890825431947715359, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.74
+      value: -2.8852005
       objectReference: {fileID: 0}
     - target: {fileID: 5890825431947715359, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2052,4 +2052,4 @@ SceneRoots:
   - {fileID: 530996771}
   - {fileID: 1643175541}
   - {fileID: 1423765586}
-  - {fileID: 1002410149}
+  - {fileID: 742596046}
