@@ -5,7 +5,7 @@ public class Hero : Entity
 {
     [Header("Movement Settings")]
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float jumpForce = 11f;
+    [SerializeField] private float jumpForce = 11.5f;
     [SerializeField] private float groundCheckRadius = 0.27f;
     [SerializeField] private LayerMask whatIsGround;
     public float dashSpeed = 15f;
@@ -19,6 +19,11 @@ public class Hero : Entity
     private SpriteRenderer sprite;
     private Animator anim;
     public int countCollectedItems = 0;
+    private float wallJumpLockTimer;
+
+    [Header("Juice Settings")]
+    [SerializeField] private float coyoteTime = 0.15f; // Длительность окна койота
+    private float coyoteTimeCounter;
 
     public static Hero Instance { get; set; }
 
@@ -78,29 +83,31 @@ public class Hero : Entity
     private void Update()
     {
         if (DialogManager.Instance != null && DialogManager.Instance.IsDialogActive())
+        {
+            rb.linearVelocity = Vector2.zero;
             return;
+        }
 
         CheckGround();
 
         if (!jumpPerformedThisFrame)
             anim.SetBool("grounded", isGrounded);
 
+        float moveInput = Input.GetAxisRaw("Horizontal"); // Используем GetAxisRaw для резкости
+        anim.SetBool("Run", Mathf.Abs(moveInput) > 0.1f);
+
         if (isDashing) return;
 
-        if (Input.GetButton("Horizontal"))
-            Run();
-
-        anim.SetBool("Run", Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D));
-        
-        if (Input.GetButtonDown("Jump"))
+        if (wallJumpLockTimer <= 0)
         {
-            jumpPerformedThisFrame = true;
+            Run(moveInput);
         }
-        
-        if (Input.GetKeyDown(dashKey) && canDash && Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f)
+        else
         {
-            StartDash();
+            wallJumpLockTimer -= Time.deltaTime;
         }
+        // Прыжок и Даш
+        if (Input.GetButtonDown("Jump")) jumpPerformedThisFrame = true;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -109,11 +116,20 @@ public class Hero : Entity
 
     }
 
-    private void Run()
+    private void Run(float moveInput)
     {
-        Vector3 dir = transform.right * Input.GetAxis("Horizontal");
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
-        sprite.flipX = dir.x < 0.0f;
+        // Устанавливаем горизонтальную скорость, сохраняя вертикальную (гравитацию)
+        rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
+
+        // Поворот через localScale
+        if (moveInput > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (moveInput < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
     }
 
     private void Jump()
@@ -121,22 +137,35 @@ public class Hero : Entity
         if (isDashing) return;
         CheckGround();
 
-        if (jumpPerformedThisFrame)
-            anim.SetBool("grounded", false);
+       
 
-        if (jumpPerformedThisFrame && isGrounded)
+        // Прыжок с земли (теперь с учетом Coyote Time)
+        if (jumpPerformedThisFrame && coyoteTimeCounter > 0f)
         {
             anim.SetTrigger("Jump");
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+
+            // Важно: обнуляем счетчик после прыжка, чтобы нельзя было 
+            // прыгнуть второй раз в воздухе
+            coyoteTimeCounter = 0f;
             jumpPerformedThisFrame = false;
             return;
         }
 
-        if(jumpPerformedThisFrame && !isGrounded && isTouchingWall && canWallJump)
+        if (jumpPerformedThisFrame && !isGrounded && isTouchingWall && canWallJump)
         {
             canWallJump = false;
             float hor = (wallDirection == -1) ? 1f : -1f;
-            rb.linearVelocity = new Vector2(hor * wallJumpHorizontalForce,wallJumpForce);
+
+            // Прикладываем силу
+            rb.linearVelocity = new Vector2(hor * wallJumpHorizontalForce, wallJumpForce);
+
+            // Блокируем ввод на 0.15 секунды, чтобы персонаж успел отлететь от стены
+            wallJumpLockTimer = 0.15f;
+
+            // Разворачиваем персонажа в сторону прыжка
+            transform.localScale = new Vector3(hor, 1, 1);
+
             jumpPerformedThisFrame = false;
             return;
         }
@@ -147,15 +176,28 @@ public class Hero : Entity
     private void CheckGround()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckRadius, whatIsGround);
+        bool wasGrounded = isGrounded;
         isGrounded = false;
+
         foreach (Collider2D col in colliders)
         {
             if (col.gameObject != gameObject)
             {
                 isGrounded = true;
-                canWallJump = true; 
+                canWallJump = true;
                 break;
             }
+        }
+
+        // Если мы на земле — счетчик на максимуме. 
+        // Если в воздухе — он начинает уменьшаться.
+        if (isGrounded)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
         }
     }
     /// <summary>
@@ -163,69 +205,57 @@ public class Hero : Entity
     /// </summary>
     private void CheckWall()
     {
+        if (isGrounded)
+        {
+            isTouchingWall = false;
+            return;
+        }
         isTouchingWall = false;
         wallDirection = 0;
 
         BoxCollider2D col = GetComponent<BoxCollider2D>();
         if (col == null) return;
 
-        // Получаем границы коллайдера
         Bounds bounds = col.bounds;
+        // Небольшой отступ внутрь, чтобы лучи не начинались на самой границе
+        float inset = 0.05f;
 
-        // Определяем количество лучей и их смещения по Y (относительно нижней и верхней границы)
-        int rayCount = 3; // можно увеличить при необходимости
-        float[] offsets = new float[rayCount];
+        // Рисуем 3 луча с каждой стороны
+        int rayCount = 3;
+        float verticalStep = (bounds.max.y - bounds.min.y) / (rayCount - 1);
 
-        if (rayCount == 1)
+        for (int i = 0; i < rayCount; i++)
         {
-            offsets[0] = bounds.center.y;
-        }
-        else
-        {
-            for (int i = 0; i < rayCount; i++)
+            float yPos = bounds.min.y + (verticalStep * i);
+
+            // Точки старта чуть-чуть внутри коллайдера
+            Vector2 leftStart = new Vector2(bounds.min.x + inset, yPos);
+            Vector2 rightStart = new Vector2(bounds.max.x - inset, yPos);
+
+            // Дистанция должна учитывать наш inset + небольшой запас
+            float distance = inset + 0.1f;
+
+            RaycastHit2D hitLeft = Physics2D.Raycast(leftStart, Vector2.left, distance, whatIsWall);
+            RaycastHit2D hitRight = Physics2D.Raycast(rightStart, Vector2.right, distance, whatIsWall);
+
+            // Визуализация в эдиторе
+            Debug.DrawRay(leftStart, Vector2.left * distance, hitLeft ? Color.green : Color.red);
+            Debug.DrawRay(rightStart, Vector2.right * distance, hitRight ? Color.green : Color.blue);
+
+            if (hitLeft.collider != null)
             {
-                // Равномерно распределяем лучи по высоте коллайдера
-                float t = i / (float)(rayCount - 1); // от 0 до 1
-                offsets[i] = Mathf.Lerp(bounds.min.y, bounds.max.y, t);
+                isTouchingWall = true;
+                wallDirection = -1;
+                break;
+            }
+            if (hitRight.collider != null)
+            {
+                isTouchingWall = true;
+                wallDirection = 1;
+                break;
             }
         }
 
-        // Переменные для отслеживания попаданий
-        bool leftHit = false;
-        bool rightHit = false;
-
-        // Проходим по всем точкам и пускаем лучи
-        foreach (float y in offsets)
-        {
-            Vector2 leftOrigin = new Vector2(bounds.min.x, y);
-            Vector2 rightOrigin = new Vector2(bounds.max.x, y);
-
-            RaycastHit2D hitLeft = Physics2D.Raycast(leftOrigin, Vector2.left, wallCheckDistance, whatIsWall);
-            RaycastHit2D hitRight = Physics2D.Raycast(rightOrigin, Vector2.right, wallCheckDistance, whatIsWall);
-
-            // Рисуем лучи для отладки (каждый луч своим цветом: красный для левого, синий для правого)
-            Debug.DrawRay(leftOrigin, Vector2.left * wallCheckDistance, hitLeft.collider != null ? Color.green : Color.red);
-            Debug.DrawRay(rightOrigin, Vector2.right * wallCheckDistance, hitRight.collider != null ? Color.green : Color.blue);
-
-            if (hitLeft.collider != null)
-                leftHit = true;
-            if (hitRight.collider != null)
-                rightHit = true;
-        }
-
-        // Определяем результат
-        if (leftHit)
-        {
-            isTouchingWall = true;
-            wallDirection = -1;
-        }
-        else if (rightHit)
-        {
-            isTouchingWall = true;
-            wallDirection = 1;
-        }
-
-        // Разрешаем стена-прыжок, если персонаж не касается стены и не на земле
         if (!isTouchingWall && !isGrounded)
             canWallJump = true;
     }
@@ -292,13 +322,11 @@ public class Hero : Entity
     }
     private void Attack()
     {
-        Vector3 spawnPos = attackPoint.position;
+        if (DialogManager.Instance != null && DialogManager.Instance.IsDialogActive()) return;
+        if (isDashing) return;
 
-        if (sprite.flipX)
-            spawnPos.x = transform.position.x - Mathf.Abs(attackPoint.localPosition.x);
-        else
-            spawnPos.x = transform.position.x + Mathf.Abs(attackPoint.localPosition.x);
+        anim.SetTrigger("Attack");
 
-        Instantiate(attackHitboxPrefab, spawnPos, Quaternion.identity);
+        Instantiate(attackHitboxPrefab, attackPoint.position, transform.rotation);
     }
 }

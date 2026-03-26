@@ -156,28 +156,22 @@ public class DialogManager : MonoBehaviour
     /// <summary>
     /// Забирает контроль у игрока
     /// </summary>
-    void DisablePlayerControl()
-    {
-        Hero player = FindObjectOfType<Hero>();
-        if (player != null )
-        {
-            player.enabled = false;
-
-            Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                rb.linearVelocity = Vector2.zero;
-            }
-        }
-    }
-
-    void EnablePlayerControl()
+    // Измените private/void на public
+    public void DisablePlayerControl()
     {
         Hero player = FindObjectOfType<Hero>();
         if (player != null)
         {
-            player.enabled = true;
+            player.enabled = false;
+            Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+            if (rb != null) rb.linearVelocity = Vector2.zero;
         }
+    }
+
+    public void EnablePlayerControl()
+    {
+        Hero player = FindObjectOfType<Hero>();
+        if (player != null) player.enabled = true;
     }
 
     public bool IsDialogActive()
