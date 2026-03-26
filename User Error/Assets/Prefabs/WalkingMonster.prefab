@@ -107,7 +107,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &2587145514444622396
 MonoBehaviour:
@@ -121,6 +121,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c9e9f184b4017409d8bafea4665f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WalkingMonster
+  speed: 2
+  detectionRadius: 5
+  returnSpeed: 1.3
+  heightThreshold: 1.5
 --- !u!114 &-1136298926127761806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +137,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1034c600746bfe4685c444a57ad83da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  maxHealth: 3
+  maxHealth: 5
+  knockbackForce: 5
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.2
 --- !u!1 &7047799277368768471
 GameObject:
   m_ObjectHideFlags: 0

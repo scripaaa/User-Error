@@ -111,9 +111,19 @@ public class Hero : Entity
 
     private void Run()
     {
-        Vector3 dir = transform.right * Input.GetAxis("Horizontal");
+        float moveInput = Input.GetAxis("Horizontal");
+        Vector3 dir = transform.right * moveInput;
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
-        sprite.flipX = dir.x < 0.0f;
+
+        // Вместо flipX меняем scale
+        if (moveInput > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (moveInput < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
     }
 
     private void Jump()
@@ -292,13 +302,11 @@ public class Hero : Entity
     }
     private void Attack()
     {
-        Vector3 spawnPos = attackPoint.position;
+        if (DialogManager.Instance != null && DialogManager.Instance.IsDialogActive()) return;
+        if (isDashing) return;
 
-        if (sprite.flipX)
-            spawnPos.x = transform.position.x - Mathf.Abs(attackPoint.localPosition.x);
-        else
-            spawnPos.x = transform.position.x + Mathf.Abs(attackPoint.localPosition.x);
+        anim.SetTrigger("Attack");
 
-        Instantiate(attackHitboxPrefab, spawnPos, Quaternion.identity);
+        Instantiate(attackHitboxPrefab, attackPoint.position, transform.rotation);
     }
 }
