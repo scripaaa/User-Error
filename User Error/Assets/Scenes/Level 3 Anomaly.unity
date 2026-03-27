@@ -4492,7 +4492,6 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4692,7 +4691,7 @@ MonoBehaviour:
   roomManager: {fileID: 324274941}
   targetRoomCenter: {fileID: 1003721949}
   currentCheckpoint: {fileID: 1271205377}
-  barrier: {fileID: 0}
+  barrier: {fileID: 1239492138}
 --- !u!61 &1003721951
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4820,7 +4819,7 @@ MonoBehaviour:
   roomManager: {fileID: 324274941}
   targetRoomCenter: {fileID: 1239492139}
   currentCheckpoint: {fileID: 340855905}
-  barrier: {fileID: 0}
+  barrier: {fileID: 2135506674}
 --- !u!61 &1239492141
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6079,7 +6078,6 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -6332,7 +6330,7 @@ MonoBehaviour:
   roomManager: {fileID: 324274941}
   targetRoomCenter: {fileID: 2017861642}
   currentCheckpoint: {fileID: 1973859008}
-  barrier: {fileID: 0}
+  barrier: {fileID: 1003721948}
 --- !u!61 &2017861644
 BoxCollider2D:
   m_ObjectHideFlags: 0
