@@ -1,13 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WalkingMonster : Entity
 {
-    private float speed = 3.5f;
-    private float dir = 1f;
-    private SpriteRenderer sprite;
+    [Header("Movement Settings")]
+    [SerializeField] private float speed = 2.5f;
+    [SerializeField] private float chaseSpeed = 4.0f;
 
+    [Header("Patrol Points")]
+    [SerializeField] private Transform pointA;
+    [SerializeField] private Transform pointB;
+    private Transform currentTarget;
+
+    [Header("Detection")]
+    [SerializeField] private float detectionRadius = 5f;
+
+    private SpriteRenderer sprite;
+    private bool isChasing = false;
+    private Transform playerTransform;
 
     private void Awake()
     {
@@ -16,51 +25,97 @@ public class WalkingMonster : Entity
 
     private void Start()
     {
-        dir = 1f;
+        // Инициализируем начальную точку
+        if (pointA != null) currentTarget = pointA;
     }
 
     private void Update()
     {
-        Move();
+        SearchForPlayer();
+
+        if (isChasing && playerTransform != null)
+        {
+            ChasePlayer();
+        }
+        else
+        {
+            Patrol();
+        }
     }
 
-    private void Move()
+    private void SearchForPlayer()
     {
-        Vector3 checkPosition = transform.position + Vector3.up * 0.3f + Vector3.right * dir * 0.5f;
+        // Находим все объекты в радиусе
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(checkPosition, 0.15f);
+        bool foundInThisFrame = false;
 
-        bool shouldFlip = false;
-        foreach (var collider in colliders)
+        foreach (var col in colliders)
         {
-            if (collider.transform.root == transform.root) continue;
-            if (collider.isTrigger) continue;
-            if (collider.CompareTag("Player")) continue;
-        
-            shouldFlip = true;
-            break;
+            // Проверяем ТЕГ и убеждаемся, что это не сам монстр
+            if (col.CompareTag("Player") && col.gameObject != gameObject)
+            {
+                playerTransform = col.transform;
+                foundInThisFrame = true;
+                break; // Игрок найден, выходим из цикла
+            }
         }
 
-        if (shouldFlip) 
-        {
-            dir *= -1f;
-        }
+        isChasing = foundInThisFrame;
+    }
 
-        Vector3 moveDir = Vector3.right * dir;
-        transform.position = Vector3.MoveTowards(
-            transform.position, 
-            transform.position + moveDir, 
-            speed * Time.deltaTime
+    private void Patrol()
+    {
+        if (currentTarget == null) return;
+
+        MoveToTarget(currentTarget.position, speed);
+
+        // Дистанция до точки патруля
+        if (Vector2.Distance(transform.position, new Vector2(currentTarget.position.x, transform.position.y)) < 0.2f)
+        {
+            currentTarget = (currentTarget == pointA) ? pointB : pointA;
+        }
+    }
+
+    private void ChasePlayer()
+    {
+        MoveToTarget(playerTransform.position, chaseSpeed);
+    }
+
+    private void MoveToTarget(Vector3 targetPos, float currentSpeed)
+    {
+        float step = currentSpeed * Time.deltaTime;
+
+        // Двигаемся только по X
+        Vector2 newPos = Vector2.MoveTowards(
+            transform.position,
+            new Vector2(targetPos.x, transform.position.y),
+            step
         );
 
-        sprite.flipX = dir > 0f;
+        transform.position = newPos;
+
+        // Разворот спрайта
+        float direction = targetPos.x - transform.position.x;
+        if (Mathf.Abs(direction) > 0.01f)
+        {
+            // Если монстр идет вправо (direction > 0), flipX = false (если спрайт смотрит вправо)
+            // Отрегулируй это под свой спрайт
+            sprite.flipX = direction < 0f;
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnDrawGizmos()
     {
-        if (collision.gameObject == Hero.Instance.gameObject)
+        // Рисуем радиус агрессии в окне Scene
+        Gizmos.color = isChasing ? Color.red : Color.green;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+
+        // Рисуем линии к точкам патруля
+        if (pointA != null && pointB != null)
         {
-            Hero.Instance.Die();
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(pointA.position, pointB.position);
         }
     }
 }

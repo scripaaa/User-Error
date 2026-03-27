@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4184466345961397235}
   - component: {fileID: 8658587770845667873}
   - component: {fileID: 8816482458433988654}
+  - component: {fileID: 9130163786516719308}
   m_Layer: 0
   m_Name: slime2_0
   m_TagString: Enemy
@@ -130,6 +131,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   maxHealth: 3
+  knockbackForce: 5
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.2
 --- !u!61 &4184466345961397235
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -215,3 +219,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c9e9f184b4017409d8bafea4665f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WalkingMonster
+  speed: 2.5
+  chaseSpeed: 1
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
+  detectionRadius: 2
+--- !u!114 &9130163786516719308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6465390516571279834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1034c600746bfe4685c444a57ad83da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  maxHealth: 5
+  knockbackForce: 5
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.2
