@@ -1601,6 +1601,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WalkingMonster
       objectReference: {fileID: 0}
+    - target: {fileID: 6101371350083641841, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
