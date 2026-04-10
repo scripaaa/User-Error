@@ -4,29 +4,32 @@ using TMPro;
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI counterText;
-    [SerializeField] private Hero playerHero;
 
+    // Срабатывает каждый раз, когда ты открываешь инвентарь
     private void OnEnable()
     {
-        UpdateCounter();
+        RefreshVisuals();
     }
 
-    public void UpdateCounter()
+    // Добавим старт на всякий случай
+    private void Start()
     {
-        if (playerHero != null && counterText != null)
+        RefreshVisuals();
+    }
+
+    public void RefreshVisuals()
+    {
+        // Если "вечный" счетчик существует, берем у него число
+        if (CollectionCounter.instance != null && counterText != null)
         {
-            counterText.text = $"{playerHero.countCollectedItems}/5";
+            counterText.text = $"{CollectionCounter.instance.Count}/5";
+            Debug.Log("Инвентарь обновил текст: " + counterText.text);
         }
     }
 
     public void ToggleInventory()
     {
-        bool isActive = gameObject.activeSelf;
-        gameObject.SetActive(!isActive);
-    }
-
-    public void CloseInventory()
-    {
-        gameObject.SetActive(false);
+        gameObject.SetActive(!gameObject.activeSelf);
+        if (gameObject.activeSelf) RefreshVisuals();
     }
 }

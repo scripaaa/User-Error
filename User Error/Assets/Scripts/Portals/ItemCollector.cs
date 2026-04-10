@@ -76,14 +76,22 @@ public class ItemCollector : MonoBehaviour
 
     private void CollectItem()
     {
-        CollectionCounter.instance?.Collect();
+        if (CollectionCounter.instance != null)
+        {
+            CollectionCounter.instance.Collect();
+        }
+        else
+        {
+            Debug.LogWarning("На сцене не найден GlobalManager со скриптом CollectionCounter!");
+        }
 
         isCollected = true;
-        Destroy(gameObject);
 
         if (portalToActivate != null)
         {
             portalToActivate.SetActive(true);
         }
+
+        Destroy(gameObject); 
     }
 }

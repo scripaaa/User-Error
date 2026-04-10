@@ -4060,7 +4060,6 @@ GameObject:
   - component: {fileID: 568640857}
   - component: {fileID: 568640856}
   - component: {fileID: 568640859}
-  - component: {fileID: 568640858}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -4142,19 +4141,6 @@ Transform:
   - {fileID: 779851198}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &568640858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 568640855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6105b7273ef89a143a0904e81b54303e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CollectionCounter
-  counterText: {fileID: 1858672605}
 --- !u!114 &568640859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6314,17 +6300,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1523704685}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1858672605 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1191743326545326734, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
-  m_PrefabInstance: {fileID: 1440428382}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1973859007
 GameObject:
   m_ObjectHideFlags: 0
@@ -6498,64 +6473,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 19.8, y: 10}
   m_EdgeRadius: 0
---- !u!1001 &2126126281
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 26.56411
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6101371350083641841, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_Name
-      value: WalkingMonster
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 7047799277368768471, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
 --- !u!1 &2135506674
 GameObject:
   m_ObjectHideFlags: 0
@@ -6664,7 +6581,6 @@ SceneRoots:
   - {fileID: 589708285}
   - {fileID: 1676470987}
   - {fileID: 447220406}
-  - {fileID: 2126126281}
   - {fileID: 1973926636}
   - {fileID: 764329405}
   - {fileID: 1440428382}
