@@ -805,7 +805,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0029296875, y: 0.20950317}
+  m_AnchoredPosition: {x: 0.0029296875, y: 0.20953369}
   m_SizeDelta: {x: -0.19995117, y: -0.17999268}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &451553802
@@ -1648,6 +1648,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963443779}
   m_CullTransparentMesh: 1
+--- !u!1 &1006709851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1006709853}
+  - component: {fileID: 1006709852}
+  m_Layer: 0
+  m_Name: AudioController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1006709852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006709851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2985a5cef84baf940aa63f264fd674e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioController
+  musicSource: {fileID: 0}
+  musicTracks:
+  - {fileID: 8300000, guid: 9505feac5c28793469c4dae2eda196e0, type: 3}
+  - {fileID: 8300000, guid: f01aceb0fb82933439e27a7902d51334, type: 3}
+  - {fileID: 8300000, guid: 4c70e6c3a3db42f44bfd4b01f6157d53, type: 3}
+  defaultTrackIndex: 0
+  musicSlider: {fileID: 0}
+  sfxSource: {fileID: 0}
+  footstepSounds:
+  - {fileID: 8300000, guid: 7247e0a52c31256429eedc8dec825b64, type: 3}
+  - {fileID: 8300000, guid: 831de64606cac8c4889055088268ed55, type: 3}
+  slimeMovementSounds:
+  - {fileID: 8300000, guid: 7247e0a52c31256429eedc8dec825b64, type: 3}
+  slimeAttackSounds:
+  - {fileID: 8300000, guid: 831de64606cac8c4889055088268ed55, type: 3}
+  musicVolume: 0.7
+  sfxVolume: 0.8
+--- !u!4 &1006709853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006709851}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.34958, y: -2.41199, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1114971402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2833,9 +2894,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioController
   musicSource: {fileID: 1692803058}
+  musicTracks: []
+  defaultTrackIndex: 0
   musicSlider: {fileID: 1961535443}
   sfxSource: {fileID: 1692803057}
-  clickSound: {fileID: 8300000, guid: a4d9ec00d5b6e2a46aa6f9a67b5be2ba, type: 3}
+  footstepSounds: []
+  slimeMovementSounds: []
+  slimeAttackSounds: []
+  musicVolume: 0.7
+  sfxVolume: 0.8
 --- !u!1 &1735725626
 GameObject:
   m_ObjectHideFlags: 0
@@ -3427,7 +3494,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1006709852}
+        m_TargetAssemblyTypeName: AudioController, Assembly-CSharp
+        m_MethodName: SetMusicVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &1961535444
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3528,7 +3607,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0020751953, y: -0.00064086914}
+  m_AnchoredPosition: {x: 0.0020751953, y: -0.0006713867}
   m_SizeDelta: {x: -0.19995117, y: -0.5999756}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2084611570
@@ -3773,3 +3852,4 @@ SceneRoots:
   - {fileID: 515821138}
   - {fileID: 823606053}
   - {fileID: 1692803059}
+  - {fileID: 1006709853}
