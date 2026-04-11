@@ -21,10 +21,10 @@ public class AudioController : MonoBehaviour
     public AudioClip[] slimeAttackSounds;
 
     [Range(0f, 1f)]
-    public float musicVolume = 0.55f;
+    public float musicVolume = 0.67f;
 
     [Range(0f, 1f)]
-    public float sfxVolume = 0.67f;
+    public float sfxVolume = 0.72f;
 
     [Range(0f, 1f)]
     public float slimeVolume = 0.3f;
