@@ -1689,11 +1689,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7247e0a52c31256429eedc8dec825b64, type: 3}
   - {fileID: 8300000, guid: 831de64606cac8c4889055088268ed55, type: 3}
   slimeMovementSounds:
-  - {fileID: 8300000, guid: 7247e0a52c31256429eedc8dec825b64, type: 3}
+  - {fileID: 8300000, guid: 6fac445e885c6714b941ff596ef3c5e5, type: 3}
   slimeAttackSounds:
-  - {fileID: 8300000, guid: 831de64606cac8c4889055088268ed55, type: 3}
-  musicVolume: 0.7
-  sfxVolume: 0.8
+  - {fileID: 8300000, guid: 22e707341f75f1e488f4537913e6f925, type: 3}
+  musicVolume: 0.55
+  sfxVolume: 0.5
+  slimeVolume: 0.3
 --- !u!4 &1006709853
 Transform:
   m_ObjectHideFlags: 0
@@ -2903,6 +2904,7 @@ MonoBehaviour:
   slimeAttackSounds: []
   musicVolume: 0.7
   sfxVolume: 0.8
+  slimeVolume: 0.3
 --- !u!1 &1735725626
 GameObject:
   m_ObjectHideFlags: 0
@@ -3491,7 +3493,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0.67
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

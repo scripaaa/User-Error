@@ -19,8 +19,8 @@ public class WalkingMonster : Entity
     private Transform playerTransform;
 
     [Header("Audio Settings")]
-    [SerializeField] private float moveSoundInterval = 0.8f;
-    [SerializeField] private float moveSoundChance = 0.3f;
+    [SerializeField] private float moveSoundInterval = 0.55f;
+    [SerializeField] private float moveSoundChance = 0.7f;
 
     private float moveSoundTimer = 0f;
 

@@ -26,6 +26,9 @@ public class AudioController : MonoBehaviour
     [Range(0f, 1f)]
     public float sfxVolume = 0.67f;
 
+    [Range(0f, 1f)]
+    public float slimeVolume = 0.3f;
+
     private int lastFootstepIndex = -1;
     private int lastSlimeMoveIndex = -1;
 
@@ -124,7 +127,7 @@ public class AudioController : MonoBehaviour
         AudioClip clip = slimeMovementSounds[index];
         if (clip != null)
         {
-            float finalVolume = Mathf.Clamp01(sfxVolume * 0.5f);
+            float finalVolume = Mathf.Clamp01(slimeVolume * 0.8f);
             sfxSource.PlayOneShot(clip, finalVolume);
         }
     }
@@ -138,7 +141,7 @@ public class AudioController : MonoBehaviour
         AudioClip clip = slimeAttackSounds[index];
         if (clip != null)
         {
-            float finalVolume = Mathf.Clamp01(sfxVolume * 0.7f);
+            float finalVolume = Mathf.Clamp01(slimeVolume * 1.0f);
             sfxSource.PlayOneShot(clip, finalVolume);
         }
     }
@@ -163,7 +166,13 @@ public class AudioController : MonoBehaviour
     {
         PlayerPrefs.SetFloat("MusicVol", musicVolume);
         PlayerPrefs.SetFloat("SFXVol", sfxVolume);
+        PlayerPrefs.SetFloat("SlimeVol", slimeVolume);
         PlayerPrefs.Save();
+    }
+
+    public void SetSlimeVolume(float volume)
+    {
+        slimeVolume = Mathf.Clamp01(volume);
     }
 
     public void LoadVolumeSettings()
@@ -184,6 +193,15 @@ public class AudioController : MonoBehaviour
         else
         {
             sfxVolume = 0.67f;
+        }
+
+        if (PlayerPrefs.HasKey("SlimeVol"))
+        {
+            slimeVolume = PlayerPrefs.GetFloat("SlimeVol");
+        }
+        else
+        {
+            slimeVolume = 0.3f;
         }
 
         if (musicSource != null)
@@ -211,10 +229,6 @@ public class AudioController : MonoBehaviour
     }
 
     public void SetFootstepVolume(float volume)
-    {
-    }
-
-    public void SetSlimeVolume(float volume)
     {
     }
 
