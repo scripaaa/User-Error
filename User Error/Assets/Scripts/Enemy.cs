@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 5;
@@ -13,7 +12,6 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer sprite;
     private Rigidbody2D rb;
     private Color originalColor;
-
 
     private void Awake()
     {
@@ -27,6 +25,7 @@ public class Enemy : MonoBehaviour
     {
         currentHealth -= damage;
 
+        PlayHitSound();
 
         StopAllCoroutines();
         StartCoroutine(FlashEffect());
@@ -39,17 +38,20 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void PlayHitSound()
+    {
+        if (AudioController.Instance != null)
+        {
+            AudioController.Instance.PlaySlimeAttack();
+        }
+    }
+
     private void ApplyKnockback()
     {
         if (rb == null) return;
 
-        // Вычисляем направление от игрока к монстру
         Vector2 direction = (transform.position - Hero.Instance.transform.position).normalized;
-
-        // Обнуляем текущую скорость, чтобы отброс был четким
         rb.linearVelocity = Vector2.zero;
-
-        // Прикладываем импульс. ForceMode2D.Impulse идеален для мгновенных ударов
         rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
     }
 
