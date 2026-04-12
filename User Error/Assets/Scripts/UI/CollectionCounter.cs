@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class CollectionCounter : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class CollectionCounter : MonoBehaviour
     // Сделаем их static, чтобы они железно жили между сценами
     private static int totalSavedCount = 0;
     private static int countInCurrentLevel = 0;
-
+    public static List<ItemData> collectedItems = new List<ItemData>();
     public int Count => totalSavedCount + countInCurrentLevel;
 
     private void Awake()
@@ -36,6 +37,7 @@ public class CollectionCounter : MonoBehaviour
     {
         totalSavedCount = 0;
         countInCurrentLevel = 0;
+        collectedItems.Clear();
         UpdateAllUI();
     }
 

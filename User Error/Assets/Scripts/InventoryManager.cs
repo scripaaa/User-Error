@@ -32,4 +32,19 @@ public class InventoryManager : MonoBehaviour
 
         Debug.LogWarning("Инвентарь полон!");
     }
+
+    public void RedrawFromList(List<ItemData> items)
+    {
+        // сначала всё очищаем
+        foreach (var icon in cellIcons)
+            icon.gameObject.SetActive(false);
+
+        // потом заполняем
+        for (int i = 0; i < items.Count && i < cellIcons.Count; i++)
+        {
+            cellIcons[i].sprite = items[i].itemIcon;
+            cellIcons[i].color = Color.white;
+            cellIcons[i].gameObject.SetActive(true);
+        }
+    }
 }

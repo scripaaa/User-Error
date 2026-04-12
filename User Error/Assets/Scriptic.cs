@@ -9,12 +9,24 @@ public class InventoryUI : MonoBehaviour
     private void OnEnable()
     {
         RefreshVisuals();
+        RefreshIcons();
     }
 
     // Добавим старт на всякий случай
     private void Start()
     {
         RefreshVisuals();
+        RefreshIcons();
+
+    }
+
+    public void RefreshIcons()
+    {
+        // cellIcons — List<Image> из InventoryManager
+        // просто заполни по списку
+        if (InventoryManager.instance == null) return;
+
+        InventoryManager.instance.RedrawFromList(CollectionCounter.collectedItems);
     }
 
     public void RefreshVisuals()

@@ -98,6 +98,7 @@ public class ItemCollector : MonoBehaviour
         if (CollectionCounter.instance != null)
         {
             CollectionCounter.instance.Collect();
+            CollectionCounter.collectedItems.Add(itemData);
         }
 
         isCollected = true;
