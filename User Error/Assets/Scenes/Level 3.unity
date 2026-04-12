@@ -6358,7 +6358,6 @@ GameObject:
   - component: {fileID: 903376065}
   - component: {fileID: 903376064}
   - component: {fileID: 903376063}
-  - component: {fileID: 903376062}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -6366,19 +6365,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &903376062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903376061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6105b7273ef89a143a0904e81b54303e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CollectionCounter
-  counterText: {fileID: 0}
 --- !u!114 &903376063
 MonoBehaviour:
   m_ObjectHideFlags: 0
