@@ -4158,6 +4158,7 @@ MonoBehaviour:
   textColor: {r: 1, g: 1, b: 1, a: 1}
   activationDistance: 2
   itemScale: 0.3
+  itemData: {fileID: 11400000, guid: e30802086f2e31a48967fb08cacce885, type: 2}
   portalToActivate: {fileID: 447220402}
 --- !u!1 &589708284
 GameObject:
