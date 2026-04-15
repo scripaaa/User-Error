@@ -62,6 +62,14 @@ public class Hero : Entity
         {
             Instance = this;
         }
+
+        // Делаем герою статический доступ, если понадобится из других скриптов
+        Instance = this;
+
+        // Сохраняем ссылку на менеджер уже здесь, а не в Start (чтобы он точно был готов)
+        roomManager = FindObjectOfType<RoomManager>();
+        if (roomManager == null)
+            Debug.LogError("[Hero] RoomManager не найден в сцене!");
     }
 
     private void FixedUpdate()
@@ -311,7 +319,26 @@ public class Hero : Entity
 
     public void Die()
     {
-        roomManager.Respawn(gameObject);
+        if (LevelCheckpointManager.Instance != null)
+        {
+            LevelCheckpointManager.Instance.RespawnHero();
+            
+            return; 
+        }
+
+       
+        if (roomManager != null)
+        {
+            roomManager.Respawn(gameObject);
+           
+            return;
+        }
+
+      
+        Debug.LogWarning("[Hero] Нет ни LevelCheckpointManager, ни RoomManager – " +
+                         "персонаж не будет перемещён после смерти.");
+
+
     }
 
     private void OnDrawGizmosSelected()
