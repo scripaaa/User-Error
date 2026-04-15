@@ -5192,10 +5192,10 @@ MonoBehaviour:
   slimeAttackSounds:
   - {fileID: 8300000, guid: 22e707341f75f1e488f4537913e6f925, type: 3}
   musicVolume: 0.67
-  sfxVolume: 0.72
+  sfxVolume: 0.62
   slimeVolume: 0.3
-  musicMultiplier: 0.6
-  footstepMultiplier: 0.5
+  musicMultiplier: 0.3
+  footstepMultiplier: 0.25
   slimeMultiplier: 0.5
   slimeSoundMaxDistance: 15
 --- !u!4 &834546275

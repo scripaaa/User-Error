@@ -3263,7 +3263,7 @@ MonoBehaviour:
   musicVolume: 0.67
   sfxVolume: 0.72
   slimeVolume: 0.3
-  musicMultiplier: 0.6
+  musicMultiplier: 0.2
   footstepMultiplier: 0.5
   slimeMultiplier: 0.5
   slimeSoundMaxDistance: 15

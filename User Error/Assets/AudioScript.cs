@@ -25,18 +25,18 @@ public class AudioController : MonoBehaviour
     public float musicVolume = 0.67f;
 
     [Range(0f, 1f)]
-    public float sfxVolume = 0.72f;
+    public float sfxVolume = 0.62f;
 
     [Range(0f, 1f)]
     public float slimeVolume = 0.3f;
 
     [Header("Multipliers")]
     [Range(0f, 1f)]
-    public float musicMultiplier = 0.2f;
+    public float musicMultiplier = 0.3f;
 
     [Tooltip("Множитель громкости шагов игрока")]
     [Range(0f, 2f)]
-    public float footstepMultiplier = 1.4f;
+    public float footstepMultiplier = 0.8f;
 
     [Tooltip("Множитель громкости слаймов")]
     [Range(0f, 1f)]
@@ -68,10 +68,8 @@ public class AudioController : MonoBehaviour
         LoadVolumeSettings();
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        // Запускаем музыку для текущей сцены
         PlayMusicForCurrentScene();
 
-        // Пробуем найти ползунок сразу при старте
         FindMusicSlider();
     }
 
@@ -79,7 +77,6 @@ public class AudioController : MonoBehaviour
     {
         FindMusicSlider();
 
-        // При загрузке новой сцены - переключаем музыку
         PlayMusicForCurrentScene();
     }
 
@@ -90,17 +87,14 @@ public class AudioController : MonoBehaviour
 
         if (isMenuScene)
         {
-            // В меню - проверяем что первый трек менюшный
             if (musicTracks == null || musicTracks.Length == 0) return;
             Debug.Log("[AudioController] МЕНЮ - играем трек: " + (musicTracks.Length > 0 ? musicTracks[0].name : "нет"));
             PlayMusic(0);
         }
         else
         {
-            // В игре - проверяем что треки игровые (не менюшные)
             if (musicTracks == null || musicTracks.Length == 0) return;
 
-            // Если треков меньше 2 значит это менюшные - нужно загрузить игровые
             if (musicTracks.Length < 2)
             {
                 LoadGameTracks();
@@ -113,7 +107,6 @@ public class AudioController : MonoBehaviour
 
     void LoadGameTracks()
     {
-        // Загружаем игровую музыку
         AudioClip[] tracks = new AudioClip[4];
         tracks[0] = LoadClipFromResources("SomeSounds/Broken Promise Broken Dream 76 BPM Loop");
         tracks[1] = LoadClipFromResources("SomeSounds/Cave of the Sisterhood 131 BPM Loop");
@@ -176,7 +169,6 @@ public class AudioController : MonoBehaviour
         if (trackIndex < 0 || trackIndex >= musicTracks.Length) return;
         if (musicSource == null) return;
 
-        // Останавливаем текущую музыку
         musicSource.Stop();
 
         musicSource.clip = musicTracks[trackIndex];
@@ -223,9 +215,8 @@ public class AudioController : MonoBehaviour
         {
             float distanceToPlayer = Vector3.Distance(slimePosition, Hero.Instance.transform.position);
             if (distanceToPlayer > slimeSoundMaxDistance)
-                return; // Не воспроизводим звук если слайм далеко
+                return;
 
-            // Уменьшаем громкость в зависимости от расстояния
             float distanceFactor = 1f - (distanceToPlayer / slimeSoundMaxDistance);
             distanceFactor = Mathf.Clamp01(distanceFactor);
 
@@ -313,7 +304,7 @@ public class AudioController : MonoBehaviour
         }
         else
         {
-            sfxVolume = 0.72f;
+            sfxVolume = 0.62f;
         }
 
         if (PlayerPrefs.HasKey("SlimeVol"))
@@ -355,7 +346,6 @@ public class AudioController : MonoBehaviour
     {
     }
 
-    // Метод для вызова из UI Slider (OnValueChanged)
     public void OnMusicSliderChanged(float value)
     {
         SetMusicVolume(value);
@@ -364,14 +354,12 @@ public class AudioController : MonoBehaviour
 
     void FindMusicSlider()
     {
-        // Если ползунок уже назначен в инспекторе - используем его
         if (musicSlider != null)
         {
             musicSlider.value = musicVolume;
             return;
         }
 
-        // Ищем по имени "Slider"
         GameObject sliderObj = GameObject.Find("Slider");
         if (sliderObj != null)
         {
@@ -384,7 +372,6 @@ public class AudioController : MonoBehaviour
             }
         }
 
-        // Ищем среди всех Canvas
         Canvas[] canvases = FindObjectsOfType<Canvas>();
         foreach (var canvas in canvases)
         {
