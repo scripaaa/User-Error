@@ -977,68 +977,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!1 &333428128
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 333428130}
-  - component: {fileID: 333428129}
-  m_Layer: 0
-  m_Name: AudioController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &333428129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 333428128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2985a5cef84baf940aa63f264fd674e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioController
-  musicSource: {fileID: 0}
-  musicTracks:
-  - {fileID: 8300000, guid: 9505feac5c28793469c4dae2eda196e0, type: 3}
-  - {fileID: 8300000, guid: f01aceb0fb82933439e27a7902d51334, type: 3}
-  - {fileID: 8300000, guid: 4c70e6c3a3db42f44bfd4b01f6157d53, type: 3}
-  defaultTrackIndex: 0
-  musicSlider: {fileID: 0}
-  sfxSource: {fileID: 0}
-  footstepSounds:
-  - {fileID: 8300000, guid: 7247e0a52c31256429eedc8dec825b64, type: 3}
-  - {fileID: 8300000, guid: 831de64606cac8c4889055088268ed55, type: 3}
-  slimeMovementSounds:
-  - {fileID: 8300000, guid: 6fac445e885c6714b941ff596ef3c5e5, type: 3}
-  slimeAttackSounds:
-  - {fileID: 8300000, guid: 22e707341f75f1e488f4537913e6f925, type: 3}
-  musicVolume: 0.55
-  sfxVolume: 0.5
-  slimeVolume: 0.3
---- !u!4 &333428130
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 333428128}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.34958, y: -2.41199, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &370242965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2627,6 +2565,72 @@ Transform:
   - {fileID: 1898446081}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1889263335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1889263337}
+  - component: {fileID: 1889263336}
+  m_Layer: 0
+  m_Name: AudioController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1889263336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889263335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2985a5cef84baf940aa63f264fd674e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioController
+  musicSource: {fileID: 0}
+  musicTracks:
+  - {fileID: 8300000, guid: 9505feac5c28793469c4dae2eda196e0, type: 3}
+  - {fileID: 8300000, guid: f01aceb0fb82933439e27a7902d51334, type: 3}
+  - {fileID: 8300000, guid: 4c70e6c3a3db42f44bfd4b01f6157d53, type: 3}
+  defaultTrackIndex: 0
+  musicSlider: {fileID: 0}
+  sfxSource: {fileID: 0}
+  footstepSounds:
+  - {fileID: 8300000, guid: 7247e0a52c31256429eedc8dec825b64, type: 3}
+  - {fileID: 8300000, guid: 831de64606cac8c4889055088268ed55, type: 3}
+  slimeMovementSounds:
+  - {fileID: 8300000, guid: 6fac445e885c6714b941ff596ef3c5e5, type: 3}
+  slimeAttackSounds:
+  - {fileID: 8300000, guid: 22e707341f75f1e488f4537913e6f925, type: 3}
+  musicVolume: 0.67
+  sfxVolume: 0.72
+  slimeVolume: 0.3
+  musicMultiplier: 0.6
+  footstepMultiplier: 0.5
+  slimeMultiplier: 0.5
+  slimeSoundMaxDistance: 15
+--- !u!4 &1889263337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889263335}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.25901, y: -0.12142, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1898446080
 GameObject:
   m_ObjectHideFlags: 0
@@ -2806,4 +2810,4 @@ SceneRoots:
   - {fileID: 1327318149}
   - {fileID: 1650025976}
   - {fileID: 1526333671}
-  - {fileID: 333428130}
+  - {fileID: 1889263337}

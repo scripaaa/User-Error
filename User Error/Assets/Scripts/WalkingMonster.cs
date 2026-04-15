@@ -66,7 +66,7 @@ public class WalkingMonster : Entity
             {
                 if (AudioController.Instance != null)
                 {
-                    AudioController.Instance.PlaySlimeMovement();
+                    AudioController.Instance.PlaySlimeMovement(transform.position);
                 }
             }
 

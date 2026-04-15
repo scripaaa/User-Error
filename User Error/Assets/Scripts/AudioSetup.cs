@@ -34,16 +34,40 @@ public class AudioSetup : MonoBehaviour
 
     void LoadAudioClips(AudioController controller)
     {
-        AudioClip[] musicTracks = new AudioClip[4];
-        musicTracks[0] = Resources.Load<AudioClip>("SomeSounds/Broken Promise Broken Dream 76 BPM Loop");
-        musicTracks[1] = Resources.Load<AudioClip>("SomeSounds/Cave of the Sisterhood 131 BPM Loop");
-        musicTracks[2] = Resources.Load<AudioClip>("SomeSounds/Silver Creek 117 BPM Loop");
+        // Проверяем текущую сцену
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        bool isMenuScene = sceneName.Contains("Menu") || sceneName.Contains("menu") || sceneName.Contains("MainMenu");
 
-        if (musicTracks[0] == null)
+        AudioClip[] musicTracks;
+        
+        if (isMenuScene)
         {
-            musicTracks[0] = LoadClipFromPath("Assets/SomeSounds/Broken Promise Broken Dream 76 BPM Loop.wav");
-            musicTracks[1] = LoadClipFromPath("Assets/SomeSounds/Cave of the Sisterhood 131 BPM Loop.wav");
-            musicTracks[2] = LoadClipFromPath("Assets/SomeSounds/Silver Creek 117 BPM Loop.wav");
+            // Для меню - только одна музыка
+            musicTracks = new AudioClip[1];
+            musicTracks[0] = Resources.Load<AudioClip>("SomeSounds/enlia-a-winter-tragedy");
+            if (musicTracks[0] == null)
+            {
+                musicTracks[0] = LoadClipFromPath("Assets/SomeSounds/enlia-a-winter-tragedy.mp3");
+            }
+            Debug.Log("[AudioSetup] Загружена музыка для МЕНЮ: enlia-a-winter-tragedy");
+        }
+        else
+        {
+            // Для игры - обычные треки
+            musicTracks = new AudioClip[4];
+            musicTracks[0] = Resources.Load<AudioClip>("SomeSounds/Broken Promise Broken Dream 76 BPM Loop");
+            musicTracks[1] = Resources.Load<AudioClip>("SomeSounds/Cave of the Sisterhood 131 BPM Loop");
+            musicTracks[2] = Resources.Load<AudioClip>("SomeSounds/Silver Creek 117 BPM Loop");
+            musicTracks[3] = Resources.Load<AudioClip>("SomeSounds/Far From Home 112 BPM Loop");
+
+            if (musicTracks[0] == null)
+            {
+                musicTracks[0] = LoadClipFromPath("Assets/SomeSounds/Broken Promise Broken Dream 76 BPM Loop.wav");
+                musicTracks[1] = LoadClipFromPath("Assets/SomeSounds/Cave of the Sisterhood 131 BPM Loop.wav");
+                musicTracks[2] = LoadClipFromPath("Assets/SomeSounds/Silver Creek 117 BPM Loop.wav");
+                musicTracks[3] = LoadClipFromPath("Assets/SomeSounds/Far From Home 112 BPM Loop.wav");
+            }
+            Debug.Log("[AudioSetup] Загружена музыка для ИГРЫ: " + musicTracks.Length + " треков");
         }
 
         controller.musicTracks = musicTracks;

@@ -20,6 +20,7 @@ public class AudioController : MonoBehaviour
     public AudioClip[] slimeMovementSounds;
     public AudioClip[] slimeAttackSounds;
 
+    [Header("Volume Settings")]
     [Range(0f, 1f)]
     public float musicVolume = 0.67f;
 
@@ -28,6 +29,21 @@ public class AudioController : MonoBehaviour
 
     [Range(0f, 1f)]
     public float slimeVolume = 0.3f;
+
+    [Header("Multipliers")]
+    [Range(0f, 1f)]
+    public float musicMultiplier = 0.2f;
+
+    [Tooltip("Множитель громкости шагов игрока")]
+    [Range(0f, 2f)]
+    public float footstepMultiplier = 1.4f;
+
+    [Tooltip("Множитель громкости слаймов")]
+    [Range(0f, 1f)]
+    public float slimeMultiplier = 0.5f;
+
+    [Tooltip("Максимальное расстояние для звуков слаймов")]
+    public float slimeSoundMaxDistance = 15f;
 
     private int lastFootstepIndex = -1;
     private int lastSlimeMoveIndex = -1;
@@ -50,8 +66,90 @@ public class AudioController : MonoBehaviour
     void Start()
     {
         LoadVolumeSettings();
-        PlayMusic(defaultTrackIndex);
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        // Запускаем музыку для текущей сцены
+        PlayMusicForCurrentScene();
+
+        // Пробуем найти ползунок сразу при старте
+        FindMusicSlider();
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        FindMusicSlider();
+
+        // При загрузке новой сцены - переключаем музыку
+        PlayMusicForCurrentScene();
+    }
+
+    void PlayMusicForCurrentScene()
+    {
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        bool isMenuScene = sceneName.Contains("Menu") || sceneName.Contains("menu");
+
+        if (isMenuScene)
+        {
+            // В меню - проверяем что первый трек менюшный
+            if (musicTracks == null || musicTracks.Length == 0) return;
+            Debug.Log("[AudioController] МЕНЮ - играем трек: " + (musicTracks.Length > 0 ? musicTracks[0].name : "нет"));
+            PlayMusic(0);
+        }
+        else
+        {
+            // В игре - проверяем что треки игровые (не менюшные)
+            if (musicTracks == null || musicTracks.Length == 0) return;
+
+            // Если треков меньше 2 значит это менюшные - нужно загрузить игровые
+            if (musicTracks.Length < 2)
+            {
+                LoadGameTracks();
+            }
+
+            Debug.Log("[AudioController] ИГРА - играем трек индекс: " + defaultTrackIndex);
+            PlayMusic(defaultTrackIndex);
+        }
+    }
+
+    void LoadGameTracks()
+    {
+        // Загружаем игровую музыку
+        AudioClip[] tracks = new AudioClip[4];
+        tracks[0] = LoadClipFromResources("SomeSounds/Broken Promise Broken Dream 76 BPM Loop");
+        tracks[1] = LoadClipFromResources("SomeSounds/Cave of the Sisterhood 131 BPM Loop");
+        tracks[2] = LoadClipFromResources("SomeSounds/Silver Creek 117 BPM Loop");
+        tracks[3] = LoadClipFromResources("SomeSounds/Far From Home 112 BPM Loop");
+
+        if (tracks[0] == null)
+        {
+            tracks[0] = LoadClipFromPath("Assets/SomeSounds/Broken Promise Broken Dream 76 BPM Loop.wav");
+            tracks[1] = LoadClipFromPath("Assets/SomeSounds/Cave of the Sisterhood 131 BPM Loop.wav");
+            tracks[2] = LoadClipFromPath("Assets/SomeSounds/Silver Creek 117 BPM Loop.wav");
+            tracks[3] = LoadClipFromPath("Assets/SomeSounds/Far From Home 112 BPM Loop.wav");
+        }
+
+        musicTracks = tracks;
+        Debug.Log("[AudioController] Загружены игровые треки: " + tracks.Length + " шт.");
+    }
+
+    AudioClip LoadClipFromResources(string resourceName)
+    {
+        AudioClip clip = Resources.Load<AudioClip>(resourceName);
+        if (clip == null)
+        {
+            Debug.LogWarning("[AudioController] Не найден трек в Resources: " + resourceName);
+        }
+        return clip;
+    }
+
+    AudioClip LoadClipFromPath(string path)
+    {
+#if UNITY_EDITOR
+        return UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(path);
+#else
+        string resourcePath = path.Replace("Assets/", "").Replace(".wav", "").Replace(".mp3", "");
+        return Resources.Load<AudioClip>(resourcePath);
+#endif
     }
 
     void OnDestroy()
@@ -59,20 +157,15 @@ public class AudioController : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        FindMusicSlider();
-    }
-
     void Update()
     {
         if (musicSlider != null && musicSource != null)
         {
             float newVolume = musicSlider.value;
-            if (Mathf.Abs(musicSource.volume - newVolume) > 0.01f)
+            if (Mathf.Abs(musicVolume - newVolume) > 0.01f)
             {
-                musicSource.volume = newVolume;
-                musicVolume = newVolume;
+                SetMusicVolume(newVolume);
+                SaveVolume();
             }
         }
     }
@@ -83,13 +176,15 @@ public class AudioController : MonoBehaviour
         if (trackIndex < 0 || trackIndex >= musicTracks.Length) return;
         if (musicSource == null) return;
 
-        if (musicSource.isPlaying && musicSource.clip == musicTracks[trackIndex])
-            return;
+        // Останавливаем текущую музыку
+        musicSource.Stop();
 
         musicSource.clip = musicTracks[trackIndex];
-        musicSource.volume = musicVolume;
+        musicSource.volume = musicVolume * musicMultiplier;
         musicSource.loop = true;
         musicSource.Play();
+
+        Debug.Log("[AudioController] Играет трек: " + musicTracks[trackIndex].name + " (индекс: " + trackIndex + ")");
     }
 
     public void StopMusic()
@@ -115,7 +210,33 @@ public class AudioController : MonoBehaviour
         if (footstepSounds == null || footstepSounds.Length == 0) return;
 
         int index = GetNextIndex(ref lastFootstepIndex, footstepSounds.Length);
-        PlaySFX(footstepSounds[index], sfxVolume * 0.35f);
+        PlaySFX(footstepSounds[index], footstepMultiplier);
+    }
+
+    public void PlaySlimeMovement(Vector3 slimePosition)
+    {
+        if (slimeMovementSounds == null || slimeMovementSounds.Length == 0) return;
+        if (sfxSource == null) return;
+
+        // Проверяем расстояние до игрока
+        if (Hero.Instance != null)
+        {
+            float distanceToPlayer = Vector3.Distance(slimePosition, Hero.Instance.transform.position);
+            if (distanceToPlayer > slimeSoundMaxDistance)
+                return; // Не воспроизводим звук если слайм далеко
+
+            // Уменьшаем громкость в зависимости от расстояния
+            float distanceFactor = 1f - (distanceToPlayer / slimeSoundMaxDistance);
+            distanceFactor = Mathf.Clamp01(distanceFactor);
+
+            int index = GetNextIndex(ref lastSlimeMoveIndex, slimeMovementSounds.Length);
+            AudioClip clip = slimeMovementSounds[index];
+            if (clip != null)
+            {
+                float finalVolume = slimeVolume * slimeMultiplier * distanceFactor;
+                sfxSource.PlayOneShot(clip, finalVolume);
+            }
+        }
     }
 
     public void PlaySlimeMovement()
@@ -127,7 +248,7 @@ public class AudioController : MonoBehaviour
         AudioClip clip = slimeMovementSounds[index];
         if (clip != null)
         {
-            float finalVolume = Mathf.Clamp01(slimeVolume * 0.8f);
+            float finalVolume = slimeVolume * slimeMultiplier;
             sfxSource.PlayOneShot(clip, finalVolume);
         }
     }
@@ -141,7 +262,7 @@ public class AudioController : MonoBehaviour
         AudioClip clip = slimeAttackSounds[index];
         if (clip != null)
         {
-            float finalVolume = Mathf.Clamp01(slimeVolume * 1.0f);
+            float finalVolume = slimeVolume * slimeMultiplier;
             sfxSource.PlayOneShot(clip, finalVolume);
         }
     }
@@ -150,7 +271,7 @@ public class AudioController : MonoBehaviour
     {
         if (clip == null || sfxSource == null) return;
 
-        float finalVolume = Mathf.Clamp01(volume * sfxVolume);
+        float finalVolume = volume * sfxVolume;
         sfxSource.PlayOneShot(clip, finalVolume);
     }
 
@@ -158,7 +279,7 @@ public class AudioController : MonoBehaviour
     {
         if (clip == null) return;
 
-        float finalVolume = Mathf.Clamp01(volume * sfxVolume);
+        float finalVolume = volume * sfxVolume;
         AudioSource.PlayClipAtPoint(clip, position, finalVolume);
     }
 
@@ -183,7 +304,7 @@ public class AudioController : MonoBehaviour
         }
         else
         {
-            musicVolume = 0.55f;
+            musicVolume = 0.67f;
         }
 
         if (PlayerPrefs.HasKey("SFXVol"))
@@ -192,7 +313,7 @@ public class AudioController : MonoBehaviour
         }
         else
         {
-            sfxVolume = 0.67f;
+            sfxVolume = 0.72f;
         }
 
         if (PlayerPrefs.HasKey("SlimeVol"))
@@ -205,7 +326,7 @@ public class AudioController : MonoBehaviour
         }
 
         if (musicSource != null)
-            musicSource.volume = musicVolume;
+            musicSource.volume = musicVolume * musicMultiplier;
 
         if (sfxSource != null)
             sfxSource.volume = sfxVolume;
@@ -218,7 +339,9 @@ public class AudioController : MonoBehaviour
     {
         musicVolume = Mathf.Clamp01(volume);
         if (musicSource != null)
-            musicSource.volume = musicVolume;
+            musicSource.volume = musicVolume * musicMultiplier;
+        if (musicSlider != null)
+            musicSlider.value = musicVolume;
     }
 
     public void SetSFXVolume(float volume)
@@ -232,8 +355,23 @@ public class AudioController : MonoBehaviour
     {
     }
 
+    // Метод для вызова из UI Slider (OnValueChanged)
+    public void OnMusicSliderChanged(float value)
+    {
+        SetMusicVolume(value);
+        SaveVolume();
+    }
+
     void FindMusicSlider()
     {
+        // Если ползунок уже назначен в инспекторе - используем его
+        if (musicSlider != null)
+        {
+            musicSlider.value = musicVolume;
+            return;
+        }
+
+        // Ищем по имени "Slider"
         GameObject sliderObj = GameObject.Find("Slider");
         if (sliderObj != null)
         {
@@ -241,8 +379,26 @@ public class AudioController : MonoBehaviour
             if (musicSlider != null)
             {
                 musicSlider.value = musicVolume;
+                Debug.Log("[AudioController] Ползунок найден по имени: " + sliderObj.name);
+                return;
             }
         }
+
+        // Ищем среди всех Canvas
+        Canvas[] canvases = FindObjectsOfType<Canvas>();
+        foreach (var canvas in canvases)
+        {
+            Slider[] sliders = canvas.GetComponentsInChildren<Slider>(true);
+            if (sliders.Length > 0)
+            {
+                musicSlider = sliders[0];
+                musicSlider.value = musicVolume;
+                Debug.Log("[AudioController] Ползунок найден в Canvas: " + musicSlider.gameObject.name);
+                return;
+            }
+        }
+
+        Debug.LogWarning("[AudioController] Ползунок НЕ найден! Назначьте его вручную в AudioController.MusicSlider");
     }
 
     void EnsureAudioSources()
@@ -254,7 +410,7 @@ public class AudioController : MonoBehaviour
             musicSource = musicGO.AddComponent<AudioSource>();
             musicSource.playOnAwake = false;
             musicSource.loop = true;
-            musicSource.volume = musicVolume;
+            musicSource.volume = musicVolume * musicMultiplier;
         }
 
         if (sfxSource == null)
