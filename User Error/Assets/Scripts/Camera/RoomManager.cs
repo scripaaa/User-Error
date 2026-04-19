@@ -12,10 +12,23 @@ public class RoomManager : MonoBehaviour
     private bool isMovingCamera;
     private GameObject[] roomCenters;
 
+
+
     void Start()
     {
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+        }
+
         targetCameraPos = mainCamera.transform.position;
-        roomCenters = GameObject.FindGameObjectsWithTag("RoomCenter");
+        //roomCenters = GameObject.FindGameObjectsWithTag("RoomCenter");
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            currentCheckpoint = player.transform.position;
+        }
     }
 
     // движение камеры в центр комнаты
@@ -90,6 +103,8 @@ public class RoomManager : MonoBehaviour
 
         return nearest;
     }
+
+
 
     void Update()
     {

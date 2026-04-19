@@ -18,10 +18,11 @@ public class Hero : Entity
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     private Animator anim;
+    public int countCollectedItems = 0;
     private float wallJumpLockTimer;
 
     [Header("Juice Settings")]
-    [SerializeField] private float coyoteTime = 0.15f;
+    [SerializeField] private float coyoteTime = 0.15f; // Длительность окна койота
     private float coyoteTimeCounter;
 
     public static Hero Instance { get; set; }
@@ -50,13 +51,6 @@ public class Hero : Entity
     [SerializeField] private GameObject attackHitboxPrefab;
     [SerializeField] private Transform attackPoint;
 
-    [Header("Audio Settings")]
-    [SerializeField] private float footstepInterval = 0.35f;
-    [SerializeField] private float minMovementForFootstep = 0.1f;
-
-    private float footstepTimer = 0f;
-    private bool wasMoving = false;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -68,19 +62,27 @@ public class Hero : Entity
         {
             Instance = this;
         }
+
+        // Делаем герою статический доступ, если понадобится из других скриптов
+        Instance = this;
+
+        // Сохраняем ссылку на менеджер уже здесь, а не в Start (чтобы он точно был готов)
+        roomManager = FindObjectOfType<RoomManager>();
+        if (roomManager == null)
+            Debug.LogError("[Hero] RoomManager не найден в сцене!");
     }
 
     private void FixedUpdate()
     {
         if (DialogManager.Instance != null && DialogManager.Instance.IsDialogActive())
-        return;
+            return;
 
         if (isDashing)
         {
             rb.linearVelocity = dashDirection * dashSpeed;
             return;
         }
-
+        
         CheckWall();
         HandleWallSliding();
         Jump();
@@ -99,7 +101,7 @@ public class Hero : Entity
         if (!jumpPerformedThisFrame)
             anim.SetBool("grounded", isGrounded);
 
-        float moveInput = Input.GetAxisRaw("Horizontal");
+        float moveInput = Input.GetAxisRaw("Horizontal"); // Используем GetAxisRaw для резкости
         anim.SetBool("Run", Mathf.Abs(moveInput) > 0.1f);
 
         if (isDashing) return;
@@ -112,7 +114,7 @@ public class Hero : Entity
         {
             wallJumpLockTimer -= Time.deltaTime;
         }
-
+        // Прыжок и Даш
         if (Input.GetButtonDown("Jump")) jumpPerformedThisFrame = true;
 
         if (Input.GetMouseButtonDown(0))
@@ -120,39 +122,14 @@ public class Hero : Entity
             Attack();
         }
 
-        HandleFootstepSounds(moveInput);
-    }
-
-    private void HandleFootstepSounds(float moveInput)
-    {
-        bool isMoving = Mathf.Abs(moveInput) > minMovementForFootstep && isGrounded && !isDashing;
-
-        if (isMoving)
-        {
-            footstepTimer -= Time.deltaTime;
-
-            if (footstepTimer <= 0f)
-            {
-                if (AudioController.Instance != null)
-                {
-                    AudioController.Instance.PlayFootstepSound();
-                }
-
-                footstepTimer = footstepInterval;
-            }
-        }
-        else
-        {
-            footstepTimer = 0f;
-        }
-
-        wasMoving = isMoving;
     }
 
     private void Run(float moveInput)
     {
+        // Устанавливаем горизонтальную скорость, сохраняя вертикальную (гравитацию)
         rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
 
+        // Поворот через localScale
         if (moveInput > 0)
         {
             transform.localScale = new Vector3(1, 1, 1);
@@ -168,11 +145,15 @@ public class Hero : Entity
         if (isDashing) return;
         CheckGround();
 
+        // Определяем направление гравитации: -1 (вниз), 1 (вверх)
         float gravityDir = Mathf.Sign(Physics2D.gravity.y);
 
+        // 1. Обычный прыжок
         if (jumpPerformedThisFrame && coyoteTimeCounter > 0f)
         {
             anim.SetTrigger("Jump");
+
+            // Прыгаем ПРОТИВ направления гравитации
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * -gravityDir);
 
             coyoteTimeCounter = 0f;
@@ -180,11 +161,13 @@ public class Hero : Entity
             return;
         }
 
+        // 2. Прыжок от стены
         if (jumpPerformedThisFrame && !isGrounded && isTouchingWall && canWallJump)
         {
             canWallJump = false;
             float hor = (wallDirection == -1) ? 1f : -1f;
 
+            // Также инвертируем вертикальную силу прыжка от стены
             rb.linearVelocity = new Vector2(hor * wallJumpHorizontalForce, wallJumpForce * -gravityDir);
 
             wallJumpLockTimer = 0.15f;
@@ -213,6 +196,8 @@ public class Hero : Entity
             }
         }
 
+        // Если мы на земле — счетчик на максимуме. 
+        // Если в воздухе — он начинает уменьшаться.
         if (isGrounded)
         {
             coyoteTimeCounter = coyoteTime;
@@ -222,7 +207,9 @@ public class Hero : Entity
             coyoteTimeCounter -= Time.deltaTime;
         }
     }
-
+    /// <summary>
+    /// CheackWall
+    /// </summary>
     private void CheckWall()
     {
         if (isGrounded)
@@ -237,8 +224,10 @@ public class Hero : Entity
         if (col == null) return;
 
         Bounds bounds = col.bounds;
+        // Небольшой отступ внутрь, чтобы лучи не начинались на самой границе
         float inset = 0.05f;
 
+        // Рисуем 3 луча с каждой стороны
         int rayCount = 3;
         float verticalStep = (bounds.max.y - bounds.min.y) / (rayCount - 1);
 
@@ -246,14 +235,17 @@ public class Hero : Entity
         {
             float yPos = bounds.min.y + (verticalStep * i);
 
+            // Точки старта чуть-чуть внутри коллайдера
             Vector2 leftStart = new Vector2(bounds.min.x + inset, yPos);
             Vector2 rightStart = new Vector2(bounds.max.x - inset, yPos);
 
+            // Дистанция должна учитывать наш inset + небольшой запас
             float distance = inset + 0.1f;
 
             RaycastHit2D hitLeft = Physics2D.Raycast(leftStart, Vector2.left, distance, whatIsWall);
             RaycastHit2D hitRight = Physics2D.Raycast(rightStart, Vector2.right, distance, whatIsWall);
 
+            // Визуализация в эдиторе
             Debug.DrawRay(leftStart, Vector2.left * distance, hitLeft ? Color.green : Color.red);
             Debug.DrawRay(rightStart, Vector2.right * distance, hitRight ? Color.green : Color.blue);
 
@@ -272,17 +264,21 @@ public class Hero : Entity
         }
 
         if (!isTouchingWall && !isGrounded)
-        canWallJump = true;
+            canWallJump = true;
     }
     private void HandleWallSliding()
     {
         float gravityDir = Mathf.Sign(Physics2D.gravity.y);
 
+        // Проверяем "падение": 
+        // Если гравитация обычная (-1), падаем когда velocity.y < 0
+        // Если инвертированная (1), падаем когда velocity.y > 0
         bool isFalling = (gravityDir < 0) ? rb.linearVelocity.y < 0 : rb.linearVelocity.y > 0;
 
         if (isTouchingWall && !isGrounded && isFalling)
         {
             isWallSliding = true;
+            // Скользим "вниз" относительно текущей гравитации
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, wallSlideSpeed * gravityDir);
         }
         else
@@ -291,6 +287,9 @@ public class Hero : Entity
         }
     }
 
+    /// <summary>
+    /// ������ �����
+    /// </summary>
     private void StartDash()
     {
         isDashing = true;
@@ -320,10 +319,26 @@ public class Hero : Entity
 
     public void Die()
     {
-        roomManager.Respawn(gameObject);
+        if (LevelCheckpointManager.Instance != null)
+        {
+            LevelCheckpointManager.Instance.RespawnHero();
+            
+            return; 
+        }
 
-        footstepTimer = 0f;
-        wasMoving = false;
+       
+        if (roomManager != null)
+        {
+            roomManager.Respawn(gameObject);
+           
+            return;
+        }
+
+      
+        Debug.LogWarning("[Hero] Нет ни LevelCheckpointManager, ни RoomManager – " +
+                         "персонаж не будет перемещён после смерти.");
+
+
     }
 
     private void OnDrawGizmosSelected()
