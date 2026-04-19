@@ -18,7 +18,6 @@ public class Hero : Entity
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     private Animator anim;
-    public int countCollectedItems = 0;
     private float wallJumpLockTimer;
 
     [Header("Juice Settings")]
