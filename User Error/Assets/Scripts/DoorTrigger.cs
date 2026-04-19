@@ -1,14 +1,20 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DoorTrigger : MonoBehaviour
 {
-    public DoorController door;
+    public DoorController door;      // ссылка на дверь
+    public GameObject chipCanvas;    // ← сюда вставляешь Canvas
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            door.ActivateGlitchWithDelay(1f); // �������� 1 �������
+            // включаем Canvas
+            if (chipCanvas != null)
+                chipCanvas.SetActive(true);
+
+            // запускаем глюк двери
+            door.ActivateGlitchWithDelay(0f);
         }
     }
 }
