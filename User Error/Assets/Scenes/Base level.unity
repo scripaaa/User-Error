@@ -2647,12 +2647,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1607341665076551669, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1607341665076551671, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 6750842062697640823, guid: 6bcdbdec73a60354db5d8bc8e736b2fc, type: 3}
+      objectReference: {fileID: 3531382605639199663, guid: bd73fbfdb96c32f4d809e773ec7b010e, type: 3}
     - target: {fileID: 1607341665076551678, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.4464
