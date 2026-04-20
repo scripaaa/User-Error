@@ -51,6 +51,13 @@ public class Hero : Entity
     [SerializeField] private GameObject attackHitboxPrefab;
     [SerializeField] private Transform attackPoint;
 
+    [Header("Audio Settings")]
+    [SerializeField] private float footstepInterval = 0.35f;
+    [SerializeField] private float minMovementForFootstep = 0.1f;
+
+    private float footstepTimer = 0f;
+    private bool wasMoving = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -122,6 +129,33 @@ public class Hero : Entity
             Attack();
         }
 
+        HandleFootstepSounds(moveInput);
+    }
+
+    private void HandleFootstepSounds(float moveInput)
+    {
+        bool isMoving = Mathf.Abs(moveInput) > minMovementForFootstep && isGrounded && !isDashing;
+
+        if (isMoving)
+        {
+            footstepTimer -= Time.deltaTime;
+
+            if (footstepTimer <= 0f)
+            {
+                if (AudioController.Instance != null)
+                {
+                    AudioController.Instance.PlayFootstepSound();
+                }
+
+                footstepTimer = footstepInterval;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f;
+        }
+
+        wasMoving = isMoving;
     }
 
     private void Run(float moveInput)
@@ -322,23 +356,19 @@ public class Hero : Entity
         if (LevelCheckpointManager.Instance != null)
         {
             LevelCheckpointManager.Instance.RespawnHero();
-            
-            return; 
-        }
-
-       
-        if (roomManager != null)
-        {
-            roomManager.Respawn(gameObject);
-           
             return;
         }
 
-      
-        Debug.LogWarning("[Hero] Нет ни LevelCheckpointManager, ни RoomManager – " +
-                         "персонаж не будет перемещён после смерти.");
+        if (roomManager != null)
+        {
+            roomManager.Respawn(gameObject);
+            return;
+        }
 
+        Debug.LogWarning("[Hero] Нет ни LevelCheckpointManager, ни RoomManager – персонаж не будет перемещён после смерти.");
 
+        footstepTimer = 0f;
+        wasMoving = false;
     }
 
     private void OnDrawGizmosSelected()
