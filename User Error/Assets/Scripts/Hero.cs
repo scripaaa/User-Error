@@ -160,18 +160,19 @@ public class Hero : Entity
 
     private void Run(float moveInput)
     {
-        // Устанавливаем горизонтальную скорость, сохраняя вертикальную (гравитацию)
+        // Горизонтальное движение всегда по глобальной оси X (без изменений)
         rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
 
-        // Поворот через localScale
-        if (moveInput > 0)
-        {
+        // Проверяем, перевёрнут ли персонаж (поворот на 180° по Z)
+        bool isUpsideDown = Mathf.Abs(transform.eulerAngles.z - 180f) < 0.1f;
+
+        // Если перевёрнут – инвертируем знак для масштаба, чтобы спрайт смотрел по направлению движения
+        float correctedInput = isUpsideDown ? -moveInput : moveInput;
+
+        if (correctedInput > 0)
             transform.localScale = new Vector3(1, 1, 1);
-        }
-        else if (moveInput < 0)
-        {
+        else if (correctedInput < 0)
             transform.localScale = new Vector3(-1, 1, 1);
-        }
     }
 
     private void Jump()
