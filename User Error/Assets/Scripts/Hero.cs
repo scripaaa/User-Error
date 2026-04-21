@@ -58,6 +58,8 @@ public class Hero : Entity
     private float footstepTimer = 0f;
     private bool wasMoving = false;
 
+    private MovingPlatform currentPlatform;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -160,13 +162,11 @@ public class Hero : Entity
 
     private void Run(float moveInput)
     {
-        // Горизонтальное движение всегда по глобальной оси X (без изменений)
-        rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
+        float platformX = currentPlatform != null ? currentPlatform.PlatformVelocity.x : 0f;
 
-        // Проверяем, перевёрнут ли персонаж (поворот на 180° по Z)
+        rb.linearVelocity = new Vector2(moveInput * speed + platformX, rb.linearVelocity.y);
+
         bool isUpsideDown = Mathf.Abs(transform.eulerAngles.z - 180f) < 0.1f;
-
-        // Если перевёрнут – инвертируем знак для масштаба, чтобы спрайт смотрел по направлению движения
         float correctedInput = isUpsideDown ? -moveInput : moveInput;
 
         if (correctedInput > 0)
@@ -388,5 +388,18 @@ public class Hero : Entity
         anim.SetTrigger("Attack");
 
         Instantiate(attackHitboxPrefab, attackPoint.position, transform.rotation);
+    }
+
+    // платформа
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        var platform = collision.gameObject.GetComponent<MovingPlatform>();
+        if (platform != null) currentPlatform = platform;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<MovingPlatform>() != null)
+            currentPlatform = null;
     }
 }
