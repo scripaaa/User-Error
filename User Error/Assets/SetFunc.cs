@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class Settings : MonoBehaviour
 {
     public Dropdown resolutionDropdown;
-
+    public GameObject controlsPanel;
+    public Image[] controlImages;
 
     Resolution[] resolutions;
 
     void Start()
     {
+        if (controlsPanel == null)
+        {
+            Transform child = transform.Find("ControlsPanel");
+            if (child != null)
+            {
+                controlsPanel = child.gameObject;
+                Debug.Log("Found ControlsPanel child: " + controlsPanel.name);
+            }
+        }
+            
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
         resolutions = Screen.resolutions;
@@ -41,24 +51,62 @@ public class Settings : MonoBehaviour
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
-   public void SaveSettings()
-    {
 
-    PlayerPrefs.SetInt("ResolutionPreference", resolutionDropdown.value);
-    PlayerPrefs.SetInt("FullscreenPreference", System.Convert.ToInt32(Screen.fullScreen));
+    public void SaveSettings()
+    {
+        PlayerPrefs.SetInt("ResolutionPreference", resolutionDropdown.value);
+        PlayerPrefs.SetInt("FullscreenPreference", System.Convert.ToInt32(Screen.fullScreen));
     }
+
     public void LoadSettings(int currentResolutionIndex)
     { 
-   
+        if (PlayerPrefs.HasKey("ResolutionPreference"))
+            resolutionDropdown.value = PlayerPrefs.GetInt("ResolutionPreference");
+        else
+            resolutionDropdown.value = currentResolutionIndex;
 
-    if (PlayerPrefs.HasKey("ResolutionPreference"))
-        resolutionDropdown.value = PlayerPrefs.GetInt("ResolutionPreference");
-    else
-        resolutionDropdown.value = currentResolutionIndex;
+        if (PlayerPrefs.HasKey("FullscreenPreference"))
+            Screen.fullScreen = System.Convert.ToBoolean(PlayerPrefs.GetInt("FullscreenPreference"));
+        else
+            Screen.fullScreen = true;
+    }
 
-    if (PlayerPrefs.HasKey("FullscreenPreference"))
-        Screen.fullScreen = System.Convert.ToBoolean(PlayerPrefs.GetInt("FullscreenPreference"));
-    else
-        Screen.fullScreen = true;
+    public void OpenControlsPanel()
+    {
+        if (controlsPanel == null)
+        {
+            Transform child = transform.Find("ControlsPanel");
+            if (child != null)
+                controlsPanel = child.gameObject;
+        }
+        
+        if (controlsPanel != null)
+        {
+            controlsPanel.SetActive(true);
+            Debug.Log("ControlsPanel opened!");
+        }
+        else
+        {
+            Debug.LogError("ControlsPanel not found! Add a child object named 'ControlsPanel' to SettingMenu.");
+        }
+    }
+
+    public void CloseControlsPanel()
+    {
+        if (controlsPanel != null)
+            controlsPanel.SetActive(false);
+    }
+
+    public void ToggleControlsPanel()
+    {
+        if (controlsPanel == null)
+        {
+            Transform child = transform.Find("ControlsPanel");
+            if (child != null)
+                controlsPanel = child.gameObject;
+        }
+        
+        if (controlsPanel != null)
+            controlsPanel.SetActive(!controlsPanel.activeSelf);
     }
 }

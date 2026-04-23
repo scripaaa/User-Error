@@ -126,7 +126,7 @@ public class Hero : Entity
         // Прыжок и Даш
         if (Input.GetButtonDown("Jump")) jumpPerformedThisFrame = true;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Q))
         {
             Attack();
         }
