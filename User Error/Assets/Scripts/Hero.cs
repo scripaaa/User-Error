@@ -319,26 +319,42 @@ public class Hero : Entity
 
     public void Die()
     {
-        if (LevelCheckpointManager.Instance != null)
+        if (DeathScreenFade.Instance != null)
         {
-            LevelCheckpointManager.Instance.RespawnHero();
-            
-            return; 
-        }
+            DeathScreenFade.Instance.TriggerDeathFade(() =>
+            {
+                if (LevelCheckpointManager.Instance != null)
+                {
+                    LevelCheckpointManager.Instance.RespawnHero();
+                    return;
+                }
 
-       
-        if (roomManager != null)
-        {
-            roomManager.Respawn(gameObject);
-           
+                if (roomManager != null)
+                {
+                    roomManager.Respawn(gameObject);
+                    return;
+                }
+
+                Debug.LogWarning("[Hero] Нет ни LevelCheckpointManager, ни RoomManager – " +
+                                 "персонаж не будет перемещён после смерти.");
+            });
             return;
         }
 
-      
+        if (LevelCheckpointManager.Instance != null)
+        {
+            LevelCheckpointManager.Instance.RespawnHero();
+            return;
+        }
+
+        if (roomManager != null)
+        {
+            roomManager.Respawn(gameObject);
+            return;
+        }
+
         Debug.LogWarning("[Hero] Нет ни LevelCheckpointManager, ни RoomManager – " +
                          "персонаж не будет перемещён после смерти.");
-
-
     }
 
     private void OnDrawGizmosSelected()
