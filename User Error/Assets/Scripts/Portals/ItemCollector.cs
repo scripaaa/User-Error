@@ -14,6 +14,9 @@ public class ItemCollector : MonoBehaviour
     [Header("Настройки масштаба")]
     [SerializeField] private float itemScale = 0.3f;
 
+    [Header("Данные предмета")]
+    [SerializeField] private ItemData itemData; 
+
     private TextMesh textMesh;
     private Camera mainCamera;
     private Transform player;
@@ -76,14 +79,30 @@ public class ItemCollector : MonoBehaviour
 
     private void CollectItem()
     {
-        CollectionCounter.instance?.Collect();
+        // Проверяем, назначен ли файл данных
+        if (itemData == null)
+        {
+            Debug.LogError("!!! КРИТИЧЕСКАЯ ОШИБКА: На предмете " + gameObject.name + " не назначен ItemData в Инспекторе!");
+            return;
+        }
+
+        if (InventoryManager.instance != null)
+        {
+            InventoryManager.instance.AddItemToCell(itemData);
+        }
+        else
+        {
+            Debug.LogError("!!! ОШИБКА: InventoryManager не найден на сцене!");
+        }
+
+        if (CollectionCounter.instance != null)
+        {
+            CollectionCounter.instance.Collect();
+            CollectionCounter.collectedItems.Add(itemData);
+        }
 
         isCollected = true;
+        if (portalToActivate != null) portalToActivate.SetActive(true);
         Destroy(gameObject);
-
-        if (portalToActivate != null)
-        {
-            portalToActivate.SetActive(true);
-        }
     }
 }

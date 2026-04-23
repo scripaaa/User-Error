@@ -4060,7 +4060,6 @@ GameObject:
   - component: {fileID: 568640857}
   - component: {fileID: 568640856}
   - component: {fileID: 568640859}
-  - component: {fileID: 568640858}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -4142,19 +4141,6 @@ Transform:
   - {fileID: 779851198}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &568640858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 568640855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6105b7273ef89a143a0904e81b54303e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CollectionCounter
-  counterText: {fileID: 1858672605}
 --- !u!114 &568640859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4172,6 +4158,7 @@ MonoBehaviour:
   textColor: {r: 1, g: 1, b: 1, a: 1}
   activationDistance: 2
   itemScale: 0.3
+  itemData: {fileID: 11400000, guid: e30802086f2e31a48967fb08cacce885, type: 2}
   portalToActivate: {fileID: 447220402}
 --- !u!1 &589708284
 GameObject:
@@ -4890,6 +4877,72 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8579a8f10910d3a4d845226f608d8eea, type: 3}
+--- !u!1 &1185112198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1185112200}
+  - component: {fileID: 1185112199}
+  m_Layer: 0
+  m_Name: AudioController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1185112199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185112198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2985a5cef84baf940aa63f264fd674e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioController
+  musicSource: {fileID: 0}
+  musicTracks:
+  - {fileID: 8300000, guid: 9505feac5c28793469c4dae2eda196e0, type: 3}
+  - {fileID: 8300000, guid: f01aceb0fb82933439e27a7902d51334, type: 3}
+  - {fileID: 8300000, guid: 4c70e6c3a3db42f44bfd4b01f6157d53, type: 3}
+  defaultTrackIndex: 0
+  musicSlider: {fileID: 0}
+  sfxSource: {fileID: 0}
+  footstepSounds:
+  - {fileID: 8300000, guid: 7247e0a52c31256429eedc8dec825b64, type: 3}
+  - {fileID: 8300000, guid: 831de64606cac8c4889055088268ed55, type: 3}
+  slimeMovementSounds:
+  - {fileID: 8300000, guid: 6fac445e885c6714b941ff596ef3c5e5, type: 3}
+  slimeAttackSounds:
+  - {fileID: 8300000, guid: 22e707341f75f1e488f4537913e6f925, type: 3}
+  musicVolume: 0.67
+  sfxVolume: 0.72
+  slimeVolume: 0.3
+  musicMultiplier: 0.6
+  footstepMultiplier: 0.5
+  slimeMultiplier: 0.5
+  slimeSoundMaxDistance: 15
+--- !u!4 &1185112200
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185112198}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.25901, y: -0.12142, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1239492138
 GameObject:
   m_ObjectHideFlags: 0
@@ -6314,17 +6367,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1523704685}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1858672605 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1191743326545326734, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
-  m_PrefabInstance: {fileID: 1440428382}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1973859007
 GameObject:
   m_ObjectHideFlags: 0
@@ -6498,64 +6540,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 19.8, y: 10}
   m_EdgeRadius: 0
---- !u!1001 &2126126281
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 26.56411
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2242305330727997654, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6101371350083641841, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-      propertyPath: m_Name
-      value: WalkingMonster
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 7047799277368768471, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6e77c382ecf6c184b9249faf404893b2, type: 3}
 --- !u!1 &2135506674
 GameObject:
   m_ObjectHideFlags: 0
@@ -6664,8 +6648,8 @@ SceneRoots:
   - {fileID: 589708285}
   - {fileID: 1676470987}
   - {fileID: 447220406}
-  - {fileID: 2126126281}
   - {fileID: 1973926636}
   - {fileID: 764329405}
   - {fileID: 1440428382}
   - {fileID: 568640857}
+  - {fileID: 1185112200}
