@@ -354,6 +354,20 @@ public class Hero : Entity
 
     public void Die()
     {
+        if (DeathScreenManager.Instance != null && !DeathScreenManager.Instance.IsFading)
+        {
+            DeathScreenManager.Instance.ShowDeathScreen(() =>
+            {
+                PerformRespawn();
+            });
+            return;
+        }
+
+        PerformRespawn();
+    }
+
+    private void PerformRespawn()
+    {
         if (LevelCheckpointManager.Instance != null)
         {
             LevelCheckpointManager.Instance.RespawnHero();
