@@ -25,8 +25,6 @@ public class Enemy : MonoBehaviour
     {
         currentHealth -= damage;
 
-        PlayHitSound();
-
         StopAllCoroutines();
         StartCoroutine(FlashEffect());
 
@@ -35,14 +33,6 @@ public class Enemy : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
-        }
-    }
-
-    private void PlayHitSound()
-    {
-        if (AudioController.Instance != null)
-        {
-            AudioController.Instance.PlaySlimeAttack();
         }
     }
 
@@ -62,19 +52,8 @@ public class Enemy : MonoBehaviour
         sprite.color = originalColor;
     }
 
-    private void Die()
+    protected virtual void Die()
     {
         Destroy(gameObject);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            if (Hero.Instance != null)
-            {
-                Hero.Instance.Die();
-            }
-        }
     }
 }
