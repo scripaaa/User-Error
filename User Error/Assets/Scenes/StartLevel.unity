@@ -1292,6 +1292,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 900909449460494191, guid: 407e1c6601274174f8a80b44fedd77d9, type: 3}
   m_PrefabInstance: {fileID: 2075553513}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1380299479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1380299481}
+  - component: {fileID: 1380299480}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1380299480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380299479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 056f2bd6fa635c84ab218bbfab7dc43a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathScreenManager
+  blackScreen: {fileID: 0}
+  fadeInDuration: 0.5
+  fadeOutDuration: 0.5
+  delayBeforeRespawn: 0.3
+  delayAfterRespawn: 0.2
+--- !u!4 &1380299481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380299479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1460797485
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1759,8 +1808,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5240256510321237945, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1908370115}
   m_SourcePrefab: {fileID: 100100000, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
+--- !u!1 &1908370114 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5240256510321237945, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
+  m_PrefabInstance: {fileID: 1908370113}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1908370115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908370114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 056f2bd6fa635c84ab218bbfab7dc43a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathScreenManager
+  blackScreen: {fileID: 0}
+  fadeInDuration: 0.5
+  fadeOutDuration: 0.5
+  delayBeforeRespawn: 0.3
+  delayAfterRespawn: 0.2
 --- !u!1 &1916259688
 GameObject:
   m_ObjectHideFlags: 0
@@ -2070,3 +2144,4 @@ SceneRoots:
   - {fileID: 391670750}
   - {fileID: 1908370113}
   - {fileID: 1558871203}
+  - {fileID: 1380299481}
