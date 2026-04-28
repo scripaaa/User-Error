@@ -10,7 +10,6 @@ public class DoorPanel : MonoBehaviour
 
     void Start()
     {
-        // Ищем подсказку "Нажми E" на этом же объекте
         prompt = GetComponent<TriggerPrompt>();
     }
 
@@ -19,7 +18,8 @@ public class DoorPanel : MonoBehaviour
         if (playerInZone && Input.GetKeyDown(interactKey))
         {
             // Для теста: игнорируем сбор чипов
-            if (true || (ChipManager.Instance != null && ChipManager.Instance.HasAllChips()))
+            // if (true || (ChipManager.Instance != null && ChipManager.Instance.HasAllChips()))
+            if (ChipManager.Instance != null && ChipManager.Instance.HasAllChips())
             {
                 if (HackingMinigameManager.Instance != null)
                 {
@@ -43,8 +43,6 @@ public class DoorPanel : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerInZone = true;
-            // Если есть скрипт подсказки, он сам включится через свои триггеры, 
-            // но мы можем проверить это тут для надежности.
         }
     }
 

@@ -82,7 +82,7 @@ public class Hero : Entity
             rb.linearVelocity = dashDirection * dashSpeed;
             return;
         }
-        
+
         CheckWall();
         HandleWallSliding();
         Jump();
@@ -322,19 +322,19 @@ public class Hero : Entity
         if (LevelCheckpointManager.Instance != null)
         {
             LevelCheckpointManager.Instance.RespawnHero();
-            
-            return; 
-        }
 
-       
-        if (roomManager != null)
-        {
-            roomManager.Respawn(gameObject);
-           
             return;
         }
 
-      
+
+        if (roomManager != null)
+        {
+            roomManager.Respawn(gameObject);
+
+            return;
+        }
+
+
         Debug.LogWarning("[Hero] Нет ни LevelCheckpointManager, ни RoomManager – " +
                          "персонаж не будет перемещён после смерти.");
 

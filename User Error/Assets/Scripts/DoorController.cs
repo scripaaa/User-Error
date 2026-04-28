@@ -6,6 +6,12 @@ public class DoorController : MonoBehaviour
     public Animator animator;
     public GameObject chipUI; // ← сюда перетащишь ChipUI
 
+    public void OpenDoor()
+    {
+        animator.SetTrigger("StartGlitch");
+        // Any other door opening logic (sound, disabling collision, etc.)
+    }
+
     public void ActivateGlitchWithDelay(float delay)
     {
         StartCoroutine(DelayCoroutine(delay));
