@@ -1,11 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChipManager : MonoBehaviour
 {
     public static ChipManager Instance;
 
-    public int chipsCollected = 0;
-    public int chipsRequired = 3;
+    public int chips = 0;
 
     private void Awake()
     {
@@ -14,12 +13,11 @@ public class ChipManager : MonoBehaviour
 
     public void AddChip()
     {
-        chipsCollected++;
-        UIChipDisplay.Instance.UpdateUI(chipsCollected);
+        chips++;
     }
 
     public bool HasAllChips()
     {
-        return chipsCollected >= chipsRequired;
+        return chips >= 3;
     }
 }
