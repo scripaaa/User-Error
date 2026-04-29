@@ -91,7 +91,7 @@ public class Hero : Entity
             rb.linearVelocity = dashDirection * dashSpeed;
             return;
         }
-        
+
         CheckWall();
         HandleWallSliding();
         Jump();
