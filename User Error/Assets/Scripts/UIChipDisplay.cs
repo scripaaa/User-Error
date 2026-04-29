@@ -3,17 +3,19 @@ using TMPro;
 
 public class UIChipDisplay : MonoBehaviour
 {
-    public static UIChipDisplay Instance;
+    public TMP_Text chipText;
 
-    public TextMeshProUGUI chipText;
-
-    private void Awake()
+    void Update()
     {
-        Instance = this;
-    }
+        int current = ChipManager.Instance.chips;
 
-    public void UpdateUI(int count)
-    {
-        chipText.text = count.ToString() + "/3";
+        if (current >= 3)
+        {
+            chipText.text = "»дите к панели";
+        }
+        else
+        {
+            chipText.text = current + "/3";
+        }
     }
 }

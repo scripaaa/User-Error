@@ -51,6 +51,15 @@ public class Hero : Entity
     [SerializeField] private GameObject attackHitboxPrefab;
     [SerializeField] private Transform attackPoint;
 
+    [Header("Audio Settings")]
+    [SerializeField] private float footstepInterval = 0.35f;
+    [SerializeField] private float minMovementForFootstep = 0.1f;
+
+    private float footstepTimer = 0f;
+    private bool wasMoving = false;
+
+    private MovingPlatform currentPlatform;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -117,27 +126,53 @@ public class Hero : Entity
         // Прыжок и Даш
         if (Input.GetButtonDown("Jump")) jumpPerformedThisFrame = true;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Q))
         {
             Attack();
         }
 
+        HandleFootstepSounds(moveInput);
+    }
+
+    private void HandleFootstepSounds(float moveInput)
+    {
+        bool isMoving = Mathf.Abs(moveInput) > minMovementForFootstep && isGrounded && !isDashing;
+
+        if (isMoving)
+        {
+            footstepTimer -= Time.deltaTime;
+
+            if (footstepTimer <= 0f)
+            {
+                if (AudioController.Instance != null)
+                {
+                    AudioController.Instance.PlayFootstepSound();
+                }
+
+                footstepTimer = footstepInterval;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f;
+        }
+
+        wasMoving = isMoving;
     }
 
     private void Run(float moveInput)
     {
-        // Устанавливаем горизонтальную скорость, сохраняя вертикальную (гравитацию)
-        rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
+        float platformX = currentPlatform != null ? currentPlatform.PlatformVelocity.x : 0f;
 
-        // Поворот через localScale
-        if (moveInput > 0)
-        {
+        rb.linearVelocity = new Vector2(moveInput * speed + platformX, rb.linearVelocity.y);
+
+        bool isUpsideDown = Mathf.Abs(transform.eulerAngles.z - 180f) < 0.1f;
+        float correctedInput = isUpsideDown ? -moveInput : moveInput;
+
+        if (correctedInput > 0)
             transform.localScale = new Vector3(1, 1, 1);
-        }
-        else if (moveInput < 0)
-        {
+        else if (correctedInput < 0)
             transform.localScale = new Vector3(-1, 1, 1);
-        }
     }
 
     private void Jump()
@@ -319,26 +354,36 @@ public class Hero : Entity
 
     public void Die()
     {
-        if (LevelCheckpointManager.Instance != null)
+        if (DeathScreenManager.Instance != null && !DeathScreenManager.Instance.IsFading)
         {
-            LevelCheckpointManager.Instance.RespawnHero();
-
+            DeathScreenManager.Instance.ShowDeathScreen(() =>
+            {
+                PerformRespawn();
+            });
             return;
         }
 
+        PerformRespawn();
+    }
+
+    private void PerformRespawn()
+    {
+        if (LevelCheckpointManager.Instance != null)
+        {
+            LevelCheckpointManager.Instance.RespawnHero();
+            return;
+        }
 
         if (roomManager != null)
         {
             roomManager.Respawn(gameObject);
-
             return;
         }
 
+        Debug.LogWarning("[Hero] Нет ни LevelCheckpointManager, ни RoomManager – персонаж не будет перемещён после смерти.");
 
-        Debug.LogWarning("[Hero] Нет ни LevelCheckpointManager, ни RoomManager – " +
-                         "персонаж не будет перемещён после смерти.");
-
-
+        footstepTimer = 0f;
+        wasMoving = false;
     }
 
     private void OnDrawGizmosSelected()
@@ -357,5 +402,18 @@ public class Hero : Entity
         anim.SetTrigger("Attack");
 
         Instantiate(attackHitboxPrefab, attackPoint.position, transform.rotation);
+    }
+
+    // платформа
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        var platform = collision.gameObject.GetComponent<MovingPlatform>();
+        if (platform != null) currentPlatform = platform;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<MovingPlatform>() != null)
+            currentPlatform = null;
     }
 }

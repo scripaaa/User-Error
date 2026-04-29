@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine;
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,13 +10,13 @@ public class MovingPlatform : MonoBehaviour
     public float travelTime = 2f;
     public float pauseTime = 1f;
 
+    public Vector2 PlatformVelocity { get; private set; }
+
     private Rigidbody2D rb;
     private float t = 0f;
     private bool movingAB = true;
     private bool isPaused = false;
     private Vector2 previousPosition;
-
-    private readonly List<Rigidbody2D> carriedBodies = new List<Rigidbody2D>();
 
     void Awake()
     {
@@ -34,27 +31,23 @@ public class MovingPlatform : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isPaused) return;
+        if (isPaused)
+        {
+            PlatformVelocity = Vector2.zero;
+            return;
+        }
 
         t += Time.fixedDeltaTime / travelTime;
         float smoothT = Mathf.SmoothStep(0f, 1f, t);
 
-        Vector2 targetPos = movingAB ?
-            Vector2.Lerp(pointA.position, pointB.position, smoothT) :
-            Vector2.Lerp(pointB.position, pointA.position, smoothT);
+        Vector2 targetPos = movingAB
+            ? Vector2.Lerp(pointA.position, pointB.position, smoothT)
+            : Vector2.Lerp(pointB.position, pointA.position, smoothT);
 
         rb.MovePosition(targetPos);
 
         Vector2 delta = targetPos - previousPosition;
-
-        if (delta != Vector2.zero)
-        {
-            foreach (var body in carriedBodies.ToArray())
-            {
-                if (body != null)
-                    body.MovePosition(body.position + delta);
-            }
-        }
+        PlatformVelocity = delta / Time.fixedDeltaTime;
 
         previousPosition = targetPos;
 
@@ -69,30 +62,5 @@ public class MovingPlatform : MonoBehaviour
         movingAB = !movingAB;
         t = 0f;
         isPaused = false;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Rigidbody2D otherRb = collision.collider.attachedRigidbody;
-        if (otherRb != null && !carriedBodies.Contains(otherRb))
-        {
-            foreach (var c in collision.contacts)
-            {
-                if (c.normal.y > 0.5f) // объект сверху
-                {
-                    carriedBodies.Add(otherRb);
-                    break;
-                }
-            }
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        Rigidbody2D otherRb = collision.collider.attachedRigidbody;
-        if (otherRb != null)
-        {
-            carriedBodies.Remove(otherRb);
-        }
     }
 }
