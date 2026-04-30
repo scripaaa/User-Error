@@ -11,11 +11,14 @@ public class HackingMinigameManager : MonoBehaviour
     [SerializeField] private RectTransform nodeContainer;
     [SerializeField] private RectTransform playerMarker;
     [SerializeField] private GameObject linePrefab;
+    [SerializeField] private GameObject startPrompt;
+    [SerializeField] private GameObject tutorialPanel; 
 
     [Header("Game State")]
     public List<GraphNode> allNodes = new List<GraphNode>();
     private GraphNode currentNode;
     private bool isActive = false;
+    private bool isWaitingForStart = false;
     private DoorController currentDoor;
 
     [Header("Camera Settings")]
@@ -33,6 +36,42 @@ public class HackingMinigameManager : MonoBehaviour
     void Start()
     {
         if (minigameUI != null) minigameUI.SetActive(false);
+        CreateTutorialUI();
+    }
+
+    private void CreateTutorialUI()
+    {
+        if (tutorialPanel != null || minigameUI == null) return;
+
+        GameObject tutObj = new GameObject("TutorialPanel");
+        tutObj.transform.SetParent(minigameUI.transform);
+        
+        Image bg = tutObj.AddComponent<Image>();
+        bg.color = new Color(0, 0, 0, 0.95f);
+        
+        RectTransform rect = tutObj.GetComponent<RectTransform>();
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.offsetMin = Vector2.zero;
+        rect.offsetMax = Vector2.zero;
+
+        GameObject textObj = new GameObject("TutorialText");
+        textObj.transform.SetParent(tutObj.transform);
+        Text t = textObj.AddComponent<Text>();
+        t.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        t.text = "СИСТЕМА ВЗЛОМА\n\n\nУПРАВЛЕНИЕ: WASD / СТРЕЛКИ\n\nЦЕЛЬ: ДОЙДИТЕ ДО ЯДРА (CORE)\nНАЖИМАЙТЕ КНОПКИ, ЧТОБЫ\nОТКРЫВАТЬ НОВЫЕ ПУТИ\n\n\n[НАЖМИТЕ E ЧТОБЫ НАЧАТЬ]";
+        t.fontSize = 25;
+        t.alignment = TextAnchor.MiddleCenter;
+        t.color = Color.cyan;
+
+        RectTransform tRect = textObj.GetComponent<RectTransform>();
+        tRect.anchorMin = new Vector2(0.1f, 0.1f);
+        tRect.anchorMax = new Vector2(0.9f, 0.9f);
+        tRect.offsetMin = Vector2.zero;
+        tRect.offsetMax = Vector2.zero;
+
+        tutorialPanel = tutObj;
+        tutorialPanel.SetActive(false);
     }
 
     void Update()
@@ -66,7 +105,19 @@ public class HackingMinigameManager : MonoBehaviour
         if (isActive) return;
         currentDoor = door;
         isActive = true;
+        
         if (minigameUI != null) minigameUI.SetActive(true);
+        
+        if (tutorialPanel != null)
+        {
+            isWaitingForStart = true;
+            tutorialPanel.SetActive(true);
+            if (startPrompt != null) startPrompt.SetActive(true);
+        }
+        else
+        {
+            isWaitingForStart = false;
+        }
 
         if (allNodes.Count > 0)
         {
@@ -79,6 +130,17 @@ public class HackingMinigameManager : MonoBehaviour
 
     private void HandleInput()
     {
+        if (isWaitingForStart)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                isWaitingForStart = false;
+                if (tutorialPanel != null) tutorialPanel.SetActive(false);
+                if (startPrompt != null) startPrompt.SetActive(false);
+            }
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) MoveTowards(Vector2.up);
         else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) MoveTowards(Vector2.down);
         else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) MoveTowards(Vector2.left);
