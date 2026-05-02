@@ -8,7 +8,7 @@ using UnityEditor;
 
 public class MinigameBuilder : MonoBehaviour
 {
-    private const float GRID = 150f;
+    private const float GRID = 130f;
 
     public void BuildMinigame()
     {
@@ -19,7 +19,9 @@ public class MinigameBuilder : MonoBehaviour
         Canvas canvas = canvasObj.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = 100;
-        canvasObj.AddComponent<CanvasScaler>();
+        CanvasScaler scaler = canvasObj.AddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920, 1080);
         canvasObj.AddComponent<GraphicRaycaster>();
 
         HackingMinigameManager manager = canvasObj.AddComponent<HackingMinigameManager>();
@@ -52,8 +54,27 @@ public class MinigameBuilder : MonoBehaviour
         markerObj.transform.SetParent(containerObj.transform);
         markerObj.AddComponent<Image>().color = Color.cyan;
         RectTransform markerRect = markerObj.GetComponent<RectTransform>();
-        markerRect.sizeDelta = new Vector2(40, 40);
+        markerRect.sizeDelta = new Vector2(30, 30);
         markerRect.anchorMin = markerRect.anchorMax = new Vector2(0.5f, 0.5f);
+
+        GameObject promptPanel = new GameObject("PromptPanel");
+        promptPanel.transform.SetParent(bgObj.transform);
+        RectTransform promptRect = promptPanel.AddComponent<RectTransform>();
+        promptRect.anchorMin = new Vector2(0.5f, 0);
+        promptRect.anchorMax = new Vector2(0.5f, 0);
+        promptRect.anchoredPosition = new Vector2(0, 100);
+        promptRect.sizeDelta = new Vector2(400, 50);
+
+        Text promptText = promptPanel.AddComponent<Text>();
+        promptText.text = ":)";
+        promptText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        promptText.fontSize = 24;
+        promptText.alignment = TextAnchor.MiddleCenter;
+        promptText.color = Color.white;
+
+        Shadow promptShadow = promptPanel.AddComponent<Shadow>();
+        promptShadow.effectColor = Color.black;
+        // ---------------------
 
         List<GraphNode> nodes = new List<GraphNode>();
 
@@ -70,41 +91,44 @@ public class MinigameBuilder : MonoBehaviour
         GraphNode nHub1 = Put("Hub1", -6, 0);
         Link(nStart, nHub1);
 
-        GraphNode nUp1 = Put("Up1", -6, 1);
-        GraphNode nUp2 = Put("Up2", -4, 1);
-        GraphNode nBtn1 = Put("Btn1", -4, 2, GraphNode.NodeType.Button);
+        GraphNode nUp1 = Put("Up1", -6, 2);
+        GraphNode nUp2 = Put("Up2", -4, 2);
+        GraphNode nBtn1 = Put("Btn1", -4, 3, GraphNode.NodeType.Button);
 
         Link(nHub1, nUp1); Link(nUp1, nUp2); Link(nUp2, nBtn1);
 
-        GraphNode nDown1 = Put("Down1", -6, -1);
-        GraphNode nDown2 = Put("Down2", -4, -1);
+        GraphNode nDown1 = Put("Down1", -6, -2);
+        GraphNode nDown2 = Put("Down2", -4, -2);
         Link(nHub1, nDown1);
 
         nBtn1.pairsToToggle.Add(new GraphNode.ConnectionPair { a = nDown1, b = nDown2 });
 
+        GraphNode nMid1 = Put("Mid1", -2, -2);
+        Link(nDown2, nMid1);
 
-        GraphNode nHub2 = Put("Hub2", -2, -1);
-        Link(nDown2, nHub2);
+        GraphNode nMid2 = Put("Mid2", 0, -2);
+        GraphNode nMid3 = Put("Mid3", 0, 0);
+        GraphNode nMid4 = Put("Mid4", 2, 0);
+        Link(nMid1, nMid2); Link(nMid2, nMid3); Link(nMid3, nMid4);
 
-        GraphNode nBtn2 = Put("Btn2", -2, 0, GraphNode.NodeType.Button);
-        Link(nHub2, nBtn2);
+        GraphNode nBtn2 = Put("Btn2", 0, 2, GraphNode.NodeType.Button);
+        Link(nMid3, nBtn2);
 
-        GraphNode nMazeEntry = Put("MazeEntry", 0, -1);
+        GraphNode nGate1 = Put("Gate1", 4, 0);
+        nBtn2.pairsToToggle.Add(new GraphNode.ConnectionPair { a = nMid4, b = nGate1 });
 
-        nBtn2.pairsToToggle.Add(new GraphNode.ConnectionPair { a = nHub2, b = nMazeEntry });
+        // Long snake maze
+        GraphNode cur = nGate1;
+        int currentX = 4;
+        int currentY = 0;
 
-
-        GraphNode cur = nMazeEntry;
-        int currentX = 0;
-        int currentY = -1;
-
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
             currentX += 2;
             GraphNode nNextX = Put("SnakeX_" + i, currentX, currentY);
             Link(cur, nNextX);
 
-            currentY = (i % 2 == 0) ? 1 : -1;
+            currentY = (i % 2 == 0) ? 2 : -2;
             GraphNode nNextY = Put("SnakeY_" + i, currentX, currentY);
             Link(nNextX, nNextY);
             cur = nNextY;
@@ -123,6 +147,7 @@ public class MinigameBuilder : MonoBehaviour
         SetPrivateField(manager, "nodeContainer", containerRect);
         SetPrivateField(manager, "playerMarker", markerRect);
         SetPrivateField(manager, "linePrefab", linePrefab);
+        SetPrivateField(manager, "startPrompt", promptPanel);
         manager.allNodes = nodes;
 
     }
@@ -141,7 +166,7 @@ public class MinigameBuilder : MonoBehaviour
         Image img = go.AddComponent<Image>();
         img.color = new Color(0.1f, 0.2f, 0.4f, 1f);
         RectTransform rect = go.GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(45, 45);
+        rect.sizeDelta = new Vector2(40, 40);
         rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
         rect.anchoredPosition = pos;
         go.AddComponent<Outline>().effectDistance = new Vector2(2, -2);

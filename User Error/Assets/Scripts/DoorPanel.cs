@@ -43,6 +43,7 @@ public class DoorPanel : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerInZone = true;
+            if (prompt != null) prompt.Show();
         }
     }
 
@@ -51,6 +52,7 @@ public class DoorPanel : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerInZone = false;
+            if (prompt != null) prompt.Hide();
         }
     }
 }

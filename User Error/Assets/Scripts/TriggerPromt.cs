@@ -3,55 +3,64 @@ using TMPro;
 
 public class TriggerPrompt : MonoBehaviour
 {
-    [Header("Ссылки")]
-    [SerializeField] private GameObject promptContainer; // Объект с текстом (Canvas или сам Текст)
+    [Header("Prompt Settings")]
+    [SerializeField] private string promptText = "Press [E]";
+    [SerializeField] private float fontSize = 3f;
+    [SerializeField] private Color textColor = Color.white;
+    [SerializeField] private Vector3 offset = new Vector3(0, 1.2f, 0);
+    [SerializeField] private float activationDistance = 1.5f;
 
-    [Header("Настройки позиции")]
-    [SerializeField] private float verticalOffset = 1.5f;
-    [SerializeField] private bool isInverted = false;
+    private TextMeshPro textMesh;
+    private Transform player;
+    private bool isShown = false;
 
     void Start()
     {
-        // Скрываем подсказку при запуске
-        if (promptContainer != null)
+        // РС‰РµРј РёРіСЂРѕРєР°
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null) player = playerObj.transform;
+
+        // РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ С‚РµРєСЃС‚Р° РїСЂРѕРіСЂР°РјРјРЅРѕ (РєР°Рє Сѓ РїРѕСЂС‚Р°Р»РѕРІ)
+        GameObject textObj = new GameObject("InteractionPrompt");
+        textObj.transform.SetParent(transform);
+        textObj.transform.localPosition = offset;
+
+        textMesh = textObj.AddComponent<TextMeshPro>();
+        textMesh.text = promptText;
+        textMesh.fontSize = fontSize;
+        textMesh.alignment = TextAlignmentOptions.Center;
+        textMesh.color = textColor;
+        
+        // Р”РµР»Р°РµРј РѕР±РІРѕРґРєСѓ РґР»СЏ С‡РёС‚Р°РµРјРѕСЃС‚Рё
+        textMesh.outlineWidth = 0.2f;
+        textMesh.outlineColor = Color.black;
+        
+        // РџСЂСЏС‡РµРј РІ РЅР°С‡Р°Р»Рµ
+        textMesh.gameObject.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (player == null) return;
+
+        // РЎС‡РёС‚Р°РµРј РґРёСЃС‚Р°РЅС†РёСЋ
+        float distance = Vector3.Distance(transform.position, player.position);
+        bool shouldShow = distance <= activationDistance;
+
+        if (shouldShow != isShown)
         {
-            UpdatePosition();
-            promptContainer.SetActive(false);
+            isShown = shouldShow;
+            textMesh.gameObject.SetActive(isShown);
+        }
+
+        // Р•СЃР»Рё С‚РµРєСЃС‚ РІРёРґРµРЅ, РїРѕРІРѕСЂР°С‡РёРІР°РµРј РµРіРѕ Рє РєР°РјРµСЂРµ (С‡С‚РѕР±С‹ РЅРµ Р±С‹Р» РїР»РѕСЃРєРёРј)
+        if (isShown)
+        {
+            textMesh.transform.rotation = Quaternion.identity;
         }
     }
 
-    // Срабатывает, когда объект с тегом Player входит в зону
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            UpdatePosition(); // Обновляем позицию перед показом
-            promptContainer.SetActive(true);
-        }
-    }
-
-    // Срабатывает, когда игрок выходит из зоны
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            promptContainer.SetActive(false);
-        }
-    }
-
-    // Тот же метод для управления "верх/низ"
-    private void UpdatePosition()
-    {
-        if (promptContainer == null) return;
-
-        // Если inverted = true, текст сверху (offset). Если false, текст снизу (-offset).
-        float currentOffset = isInverted ? verticalOffset : -verticalOffset;
-        promptContainer.transform.localPosition = new Vector3(0, currentOffset, 0);
-
-        // Разворачиваем текст, чтобы он не был вверх ногами в инвертированном режиме
-        if (isInverted)
-            promptContainer.transform.localRotation = Quaternion.Euler(0, 0, 180f);
-        else
-            promptContainer.transform.localRotation = Quaternion.identity;
-    }
+    // РњРµС‚РѕРґС‹ РґР»СЏ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё
+    public void Show() { isShown = true; if(textMesh) textMesh.gameObject.SetActive(true); }
+    public void Hide() { isShown = false; if(textMesh) textMesh.gameObject.SetActive(false); }
 }
