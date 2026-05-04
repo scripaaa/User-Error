@@ -230,7 +230,14 @@ public class HackingMinigameManager : MonoBehaviour
         isActive = false;
         if (minigameUI != null) minigameUI.SetActive(false);
         LockPlayer(false);
-        if (success && currentDoor != null) currentDoor.OpenDoor();
+        if (success && currentDoor != null)
+        {
+            currentDoor.OpenDoor();
+            if (FinalMenuManager.Instance != null)
+            {
+                FinalMenuManager.Instance.ShowFinalMenu();
+            }
+        }
     }
 
     private void LockPlayer(bool lockIt)
