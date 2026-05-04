@@ -9,6 +9,7 @@ TagManager:
   - Barrier
   - ItemCounter
   - ItemCounterText
+  - WallToDestroy
   layers:
   - Default
   - TransparentFX
