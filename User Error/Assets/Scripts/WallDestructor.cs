@@ -16,8 +16,8 @@ public class WallDestructor : MonoBehaviour
 
     private void LoadSounds()
     {
-        if (breakSound == null) breakSound = Resources.Load<AudioClip>("Castle/breaksound");
-        if (stoneSound == null) stoneSound = Resources.Load<AudioClip>("Castle/stone");
+        // Resources.Load works only in Resources folders. 
+        // We will use the serialized fields instead.
     }
 
     [Header("Sounds")]

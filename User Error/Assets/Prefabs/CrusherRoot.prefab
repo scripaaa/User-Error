@@ -178,9 +178,9 @@ PolygonCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0, y: 0, z: 0, w: 0.08}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 9.79, y: 8.44}
+    oldSize: {x: 9.79, y: 6.38}
     newSize: {x: 9.79, y: 17.07}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -439,6 +439,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39efa023fe3fb714b98477178a67fb49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrusherDamage
+  breakSound: {fileID: 8300000, guid: 6d411ac67b377504aa9aed656a4c1cb6, type: 3}
+  stoneSound: {fileID: 8300000, guid: 36a4c43cb6ceec2468135ccc096951ee, type: 3}
 --- !u!114 &3543695718863884334
 MonoBehaviour:
   m_ObjectHideFlags: 0
