@@ -2,23 +2,56 @@ using UnityEngine;
 
 public class WallDestructor : MonoBehaviour
 {
-    [Tooltip("Другой объект, который нужно скрыть при разрушении стены")]
+    [Tooltip(" ,      ")]
     public GameObject objectToHide;
 
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.spatialBlend = 1f;
+        LoadSounds();
+    }
+
+    private void LoadSounds()
+    {
+        if (breakSound == null) breakSound = Resources.Load<AudioClip>("Castle/breaksound");
+        if (stoneSound == null) stoneSound = Resources.Load<AudioClip>("Castle/stone");
+    }
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip breakSound;
+    [SerializeField] private AudioClip stoneSound;
+
     /// <summary>
-    /// Вызовите этот метод, чтобы разрушить стену.
+    ///   ,   .
     /// </summary>
     public void DestroyWall()
     {
-        // Скрываем указанный объект, если он задан
+        //  
+        PlaySounds();
+
+        //   ,   
         if (objectToHide != null)
             objectToHide.SetActive(false);
 
-        // Удаляем саму стену
+        //   
         Destroy(gameObject);
     }
 
-    // Пример срабатывания при входе в триггер (например, игроком)
+    private void PlaySounds()
+    {
+        if (audioSource == null) return;
+
+        if (breakSound != null)
+            audioSource.PlayOneShot(breakSound);
+        
+        if (stoneSound != null)
+            audioSource.PlayOneShot(stoneSound);
+    }
+
+    // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))

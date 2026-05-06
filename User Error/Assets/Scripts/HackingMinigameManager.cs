@@ -22,8 +22,8 @@ public class HackingMinigameManager : MonoBehaviour
     private DoorController currentDoor;
 
     [Header("Camera Settings")]
-    [SerializeField] private float scrollSpeed = 12f;
-    [SerializeField] private float moveThreshold = 0.1f;
+    [SerializeField] private float scrollSpeed = 3f;
+    [SerializeField] private float moveThreshold = 0.05f;
 
     private List<GameObject> activeLines = new List<GameObject>();
 
@@ -47,7 +47,7 @@ public class HackingMinigameManager : MonoBehaviour
         tutObj.transform.SetParent(minigameUI.transform);
         
         Image bg = tutObj.AddComponent<Image>();
-        bg.color = new Color(0, 0, 0, 0.95f);
+        bg.color = new Color(0, 0, 0, 1f);
         
         RectTransform rect = tutObj.GetComponent<RectTransform>();
         rect.anchorMin = Vector2.zero;
