@@ -4240,6 +4240,7 @@ GameObject:
   m_Component:
   - component: {fileID: 692456407}
   - component: {fileID: 692456406}
+  - component: {fileID: 692456408}
   m_Layer: 0
   m_Name: Mita2
   m_TagString: Untagged
@@ -4320,6 +4321,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &692456408
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692456405}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6e4c26904b168c9458dbbceced5b5da6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &694782976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10005,6 +10028,7 @@ GameObject:
   - component: {fileID: 1665450603}
   - component: {fileID: 1665450602}
   - component: {fileID: 1665450606}
+  - component: {fileID: 1665450607}
   m_Layer: 0
   m_Name: Portal_To_PortalScene1
   m_TagString: Untagged
@@ -10164,6 +10188,28 @@ MonoBehaviour:
   fontAsset: {fileID: 11400000, guid: fdd2bd9f4decd484cb6f9b56fe13a5dd, type: 2}
   textColor: {r: 0, g: 0, b: 0, a: 1}
   activationDistance: 1.5
+--- !u!95 &1665450607
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665450601}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ae19166e884504a48bc71ca2fcda540f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1666089669 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 900909449460494191, guid: 407e1c6601274174f8a80b44fedd77d9, type: 3}
@@ -11760,6 +11806,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1868692022}
   - component: {fileID: 1868692021}
+  - component: {fileID: 1868692023}
   m_Layer: 0
   m_Name: Mita
   m_TagString: Untagged
@@ -11840,6 +11887,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1868692023
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868692020}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6e4c26904b168c9458dbbceced5b5da6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1872489678 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2630921899459125862, guid: 1c20ea84f6a44c34db0569eb17601ff6, type: 3}
