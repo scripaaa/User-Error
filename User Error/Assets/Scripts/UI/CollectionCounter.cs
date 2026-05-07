@@ -1,6 +1,7 @@
-using UnityEngine;
-using TMPro;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollectionCounter : MonoBehaviour
 {
@@ -33,6 +34,42 @@ public class CollectionCounter : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Найти InventoryUI даже если он неактивен
+        InventoryUI ui = Object.FindAnyObjectByType<InventoryUI>(FindObjectsInactive.Include);
+        if (ui != null)
+        {
+            ui.RefreshVisuals();
+            ui.RefreshIcons();
+        }
+        else
+        {
+            // Если UI запаздывает, попробуем чуть позже — на случай, если сцена загружается не мгновенно
+            StartCoroutine(RefreshUILater());
+        }
+    }
+
+    private System.Collections.IEnumerator RefreshUILater()
+    {
+        yield return null; // ждём следующий кадр
+        InventoryUI ui = Object.FindAnyObjectByType<InventoryUI>(FindObjectsInactive.Include);
+        if (ui != null)
+        {
+            ui.RefreshVisuals();
+            ui.RefreshIcons();
+        }
+    }
     public void ResetData()
     {
         totalSavedCount = 0;

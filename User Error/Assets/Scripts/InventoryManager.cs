@@ -47,4 +47,11 @@ public class InventoryManager : MonoBehaviour
             cellIcons[i].gameObject.SetActive(true);
         }
     }
+
+    public bool IsFirstSlotOccupied()
+    {
+        if (cellIcons.Count > 0)
+            return cellIcons[0].gameObject.activeSelf;
+        return false;
+    }
 }
