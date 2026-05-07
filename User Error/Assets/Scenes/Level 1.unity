@@ -10005,6 +10005,7 @@ GameObject:
   - component: {fileID: 1665450603}
   - component: {fileID: 1665450602}
   - component: {fileID: 1665450606}
+  - component: {fileID: 1665450607}
   m_Layer: 0
   m_Name: Portal_To_PortalScene1
   m_TagString: Untagged
@@ -10164,6 +10165,28 @@ MonoBehaviour:
   fontAsset: {fileID: 11400000, guid: fdd2bd9f4decd484cb6f9b56fe13a5dd, type: 2}
   textColor: {r: 0, g: 0, b: 0, a: 1}
   activationDistance: 1.5
+--- !u!95 &1665450607
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665450601}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ae19166e884504a48bc71ca2fcda540f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1666089669 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 900909449460494191, guid: 407e1c6601274174f8a80b44fedd77d9, type: 3}
