@@ -5,6 +5,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class FinalScene : MonoBehaviour
 {
+    public GameObject panel1;
 
 
     [System.Serializable]
@@ -138,7 +139,7 @@ public class FinalScene : MonoBehaviour
         backgroundImage.color = Color.black;
 
         yield return new WaitForSeconds(2.0f);
-
+        panel1.SetActive(true);
 
     }
     // Новый метод для запуска диалога и ожидания его завершения
