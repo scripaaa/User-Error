@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class HackingMinigameManager : MonoBehaviour
 {
+    public GameObject objectToEnableOnWin;
     public static HackingMinigameManager Instance { get; private set; }
 
     [Header("UI References")]
@@ -230,7 +231,14 @@ public class HackingMinigameManager : MonoBehaviour
         isActive = false;
         if (minigameUI != null) minigameUI.SetActive(false);
         LockPlayer(false);
-        if (success && currentDoor != null) currentDoor.OpenDoor();
+
+        if (success && currentDoor != null)
+            currentDoor.OpenDoor();
+
+        if (success && objectToEnableOnWin != null)
+            objectToEnableOnWin.SetActive(true);
+        Debug.Log($"EndGame called. success={success}, objectToEnableOnWin={objectToEnableOnWin}");
+        
     }
 
     private void LockPlayer(bool lockIt)

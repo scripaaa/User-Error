@@ -8,6 +8,7 @@ using UnityEditor;
 
 public class MinigameBuilder : MonoBehaviour
 {
+    public GameObject targetObjectToEnable;
     private const float GRID = 130f;
 
     public void BuildMinigame()
@@ -25,6 +26,7 @@ public class MinigameBuilder : MonoBehaviour
         canvasObj.AddComponent<GraphicRaycaster>();
 
         HackingMinigameManager manager = canvasObj.AddComponent<HackingMinigameManager>();
+        manager.objectToEnableOnWin = targetObjectToEnable;
 
         GameObject bgObj = new GameObject("Background");
         bgObj.transform.SetParent(canvasObj.transform);

@@ -5437,13 +5437,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1156852571}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1156852572}
+        m_TargetAssemblyTypeName: MonitorUIManager, Assembly-CSharp
+        m_MethodName: GetAccess
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6750,7 +6750,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -14.4492035, y: -43.561058}
+  m_AnchoredPosition: {x: -14.44912, y: -43.561058}
   m_SizeDelta: {x: 1933.6641, y: 1079.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1673159327
