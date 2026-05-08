@@ -7064,7 +7064,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioController
   musicSource: {fileID: 0}
   musicTracks:
-  - {fileID: 8300000, guid: 9505feac5c28793469c4dae2eda196e0, type: 3}
+  - {fileID: 8300000, guid: 4c70e6c3a3db42f44bfd4b01f6157d53, type: 3}
   - {fileID: 8300000, guid: f01aceb0fb82933439e27a7902d51334, type: 3}
   - {fileID: 8300000, guid: 4c70e6c3a3db42f44bfd4b01f6157d53, type: 3}
   defaultTrackIndex: 0
