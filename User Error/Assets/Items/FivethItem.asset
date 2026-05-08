@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d614ddc97fc28f14ca914ee311ea4779, type: 3}
-  m_Name: FirstItem
+  m_Name: FivethItem
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: FirstItem
-  itemIcon: {fileID: -8612430073283935946, guid: 399a7d1365ec2084ab3d49cc979edd3e, type: 3}
+  itemIcon: {fileID: -6009885300799445423, guid: 82366fac396e7234a9e920d077b201cf, type: 3}
