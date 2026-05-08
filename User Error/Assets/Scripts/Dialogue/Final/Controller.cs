@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Controller : MonoBehaviour
 {
+    public GameObject panel1;
 
     [System.Serializable]
     public struct SoundEffect
@@ -79,14 +80,15 @@ public class Controller : MonoBehaviour
         yield return StartCoroutine(StartDialogAndWait(dialoglines));
         PlaySoundEffect(soundClips[0]);
         yield return new WaitForSeconds(2f);
+        panel1.SetActive(true);
 
 
 
     }
 
 
-        // Новый метод для запуска диалога и ожидания его завершения
-        IEnumerator StartDialogAndWait(string[] lines)
+    // Новый метод для запуска диалога и ожидания его завершения
+    IEnumerator StartDialogAndWait(string[] lines)
     {
         // Ждем, пока диалоговый менеджер будет доступен
         while (DialogManager.Instance == null)
