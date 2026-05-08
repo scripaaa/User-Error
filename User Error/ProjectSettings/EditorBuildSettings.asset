@@ -38,5 +38,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FinalScene.unity
     guid: 60a2fd6dc381e614caf277c5c5bfd0fa
+  - enabled: 1
+    path: Assets/Scenes/SecondFinall.unity
+    guid: 4dae133606f4954419cb276ebcba51f8
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
