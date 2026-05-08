@@ -27,6 +27,13 @@ public class Controller : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private SoundEffect[] soundClips;
 
+    void Awake()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 1f;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
