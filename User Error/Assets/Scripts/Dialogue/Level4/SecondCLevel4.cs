@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
-public class FirstController : MonoBehaviour
+public class SecondCLevel4 : MonoBehaviour
 {
     [Header("Dialog Settings")]
     private string[] dialoglines;
@@ -18,7 +17,7 @@ public class FirstController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Mita = GameObject.Find("Mita");
+        Mita = GameObject.Find("Mita2");
         Mita.gameObject.SetActive(false);
         Arrow = GameObject.Find("Arrow");
         Arrow.gameObject.SetActive(false);
@@ -34,8 +33,7 @@ public class FirstController : MonoBehaviour
 
 
         Mita.gameObject.SetActive(true);
-        dialoglines = new string[] { "Ого!", "Какая интересная дверь...", "Наверное, эта панель её открывает!", "Хм...", "Смотри-ка, тут какие-то разъёмы...", " Похоже, не хватает трёх чипов. Где-то на уровне они должны быть спрятаны",
-        "Ну что, идём искать?", "Я бы помогла, но... это же твоё приключение", "Давай!","Я в тебя верю! =)"};
+        dialoglines = new string[] { "Ой-ой-ой...", "Похоже, это тупик.", "Хм-м...", "А что, если попробовать просто... ударить по ней?", " Ну, знаешь, иногда грубая сила — лучшее решение. Тем более стена выглядит не очень прочной.", "Давай, разнеси её!" };
         yield return StartCoroutine(StartDialogAndWait(dialoglines));
         yield return new WaitForSeconds(0.5f);
         Mita.gameObject.SetActive(false);

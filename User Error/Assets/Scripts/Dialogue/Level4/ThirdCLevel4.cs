@@ -5,12 +5,12 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class FirstController : MonoBehaviour
+public class ThirdCLevel4 : MonoBehaviour
 {
     [Header("Dialog Settings")]
     private string[] dialoglines;
     private GameObject Mita;
-    private GameObject Arrow;
+   
 
 
     private bool dialogShown = false;
@@ -18,10 +18,9 @@ public class FirstController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Mita = GameObject.Find("Mita");
+        Mita = GameObject.Find("Mita3");
         Mita.gameObject.SetActive(false);
-        Arrow = GameObject.Find("Arrow");
-        Arrow.gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -34,12 +33,12 @@ public class FirstController : MonoBehaviour
 
 
         Mita.gameObject.SetActive(true);
-        dialoglines = new string[] { "Ого!", "Какая интересная дверь...", "Наверное, эта панель её открывает!", "Хм...", "Смотри-ка, тут какие-то разъёмы...", " Похоже, не хватает трёх чипов. Где-то на уровне они должны быть спрятаны",
-        "Ну что, идём искать?", "Я бы помогла, но... это же твоё приключение", "Давай!","Я в тебя верю! =)"};
+        dialoglines = new string[] { "Стой! Не трогай!", " Это...", "Это баг", "Просто кусок битого кода", " Лучше не взаимодействуй с ним, ладно?", "Такие штуки могут привести к... непредвиденным последствиям. Игра может вылететь, сохранения сломаться. Тебе же не нужны проблемы?",
+        "Просто... пройди мимо.","Хорошо?"};
         yield return StartCoroutine(StartDialogAndWait(dialoglines));
         yield return new WaitForSeconds(0.5f);
         Mita.gameObject.SetActive(false);
-        Arrow.gameObject.SetActive(true);
+       
 
 
 

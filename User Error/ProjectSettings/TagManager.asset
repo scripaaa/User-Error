@@ -7,6 +7,9 @@ TagManager:
   - WallToDestroy
   - ItemCounterText
   - Enemy
+  - RoomCenter
+  - ItemCounter
+  - Barrier
   layers:
   - Default
   - TransparentFX
@@ -14,7 +17,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
+  - Wa
   - 
   - 
   - 
