@@ -66295,7 +66295,7 @@ GameObject:
   - component: {fileID: 274103420}
   - component: {fileID: 274103419}
   - component: {fileID: 274103418}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HIddenFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66396,7 +66396,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 274103416}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -68571,8 +68571,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4054304042127255456, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
+      propertyPath: wallJumpForce
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054304042127255456, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
       propertyPath: whatIsWall.m_Bits
-      value: 0
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 4054304042127255456, guid: dea92180259b97c42b825b4a3d2130b6, type: 3}
       propertyPath: whatIsGround.m_Bits
@@ -118151,8 +118155,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ~> [E] <~
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8dc8ff844ac922d4383eecf3541f5831, type: 2}
+  m_sharedMaterial: {fileID: 8361637162527573326, guid: 8dc8ff844ac922d4383eecf3541f5831, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -118248,7 +118252,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 8361637162527573326, guid: 8dc8ff844ac922d4383eecf3541f5831, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -543999,7 +544003,7 @@ GameObject:
   - component: {fileID: 2079597897}
   - component: {fileID: 2079597896}
   - component: {fileID: 2079597895}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallDestroy1
   m_TagString: WallToDestroy
   m_Icon: {fileID: 0}
