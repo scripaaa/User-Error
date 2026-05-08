@@ -29,7 +29,7 @@ public class MinigameBuilder : MonoBehaviour
         GameObject bgObj = new GameObject("Background");
         bgObj.transform.SetParent(canvasObj.transform);
         Image bgImg = bgObj.AddComponent<Image>();
-        bgImg.color = new Color(0.01f, 0.01f, 0.03f, 0.99f);
+        bgImg.color = new Color(0f, 0f, 0f, 1f);
         RectTransform bgRect = bgObj.GetComponent<RectTransform>();
         bgRect.anchorMin = Vector2.zero; bgRect.anchorMax = Vector2.one;
         bgRect.sizeDelta = Vector2.zero; bgRect.anchoredPosition = Vector2.zero;
