@@ -2,20 +2,29 @@ using UnityEngine;
 
 public class Crusher : MonoBehaviour
 {
-    public Transform block;          // CrusherBlock
-    public float upDistance = 3f;    // Насколько высоко поднимается
-    public float speed = 5f;         // Скорость движения
-    public float waitTime = 0.5f;    // Пауза перед падением
+    [Header("Block")]
+    public Transform block;
+    public float upDistance = 3f;
+    public float speed = 5f;
+    public float waitTime = 0.5f;
 
-    private Vector3 startPos;
-    private Vector3 upPos;
+    [Header("Sounds")]
+    [SerializeField] private AudioClip impactSound;
+    [SerializeField] private AudioClip riseSound;
+
+    private AudioSource audioSource;
+    private Vector3 startPos, upPos;
     private bool goingUp = true;
     private float timer = 0f;
+    private bool hasHit = false; // чтобы не играть звук несколько раз за одно падение
 
     void Start()
     {
         startPos = block.position;
         upPos = startPos + Vector3.up * upDistance;
+
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.spatialBlend = 0f;
     }
 
     void Update()
@@ -30,7 +39,11 @@ public class Crusher : MonoBehaviour
                 if (timer >= waitTime)
                 {
                     goingUp = false;
+                    hasHit = false; // сброс — готов к следующему удару
                     timer = 0f;
+
+                    if (riseSound != null)
+                        audioSource.PlayOneShot(riseSound);
                 }
             }
         }
@@ -40,6 +53,13 @@ public class Crusher : MonoBehaviour
 
             if (Vector3.Distance(block.position, startPos) < 0.01f)
             {
+                if (!hasHit)
+                {
+                    hasHit = true;
+                    if (impactSound != null)
+                        audioSource.PlayOneShot(impactSound);
+                }
+
                 timer += Time.deltaTime;
                 if (timer >= waitTime)
                 {
