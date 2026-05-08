@@ -107,22 +107,22 @@ public class AudioController : MonoBehaviour
 
     void LoadGameTracks()
     {
-        AudioClip[] tracks = new AudioClip[4];
-        tracks[0] = LoadClipFromResources("SomeSounds/Broken Promise Broken Dream 76 BPM Loop");
-        tracks[1] = LoadClipFromResources("SomeSounds/Cave of the Sisterhood 131 BPM Loop");
-        tracks[2] = LoadClipFromResources("SomeSounds/Silver Creek 117 BPM Loop");
-        tracks[3] = LoadClipFromResources("SomeSounds/Far From Home 112 BPM Loop");
+        // Загружаем треки через Resources.Load
+        AudioClip track0 = Resources.Load<AudioClip>("SomeSounds/Broken Promise Broken Dream 76 BPM Loop");
+        AudioClip track1 = Resources.Load<AudioClip>("SomeSounds/Cave of the Sisterhood 131 BPM Loop");
+        AudioClip track2 = Resources.Load<AudioClip>("SomeSounds/Silver Creek 117 BPM Loop");
+        AudioClip track3 = Resources.Load<AudioClip>("SomeSounds/Far From Home 112 BPM Loop");
 
-        if (tracks[0] == null)
+        musicTracks = new AudioClip[] { track0, track1, track2, track3 };
+
+        // [OPTIONAL] Логируем только то, что действительно загрузилось
+        for (int i = 0; i < musicTracks.Length; i++)
         {
-            tracks[0] = LoadClipFromPath("Assets/SomeSounds/Broken Promise Broken Dream 76 BPM Loop.wav");
-            tracks[1] = LoadClipFromPath("Assets/SomeSounds/Cave of the Sisterhood 131 BPM Loop.wav");
-            tracks[2] = LoadClipFromPath("Assets/SomeSounds/Silver Creek 117 BPM Loop.wav");
-            tracks[3] = LoadClipFromPath("Assets/SomeSounds/Far From Home 112 BPM Loop.wav");
+            if (musicTracks[i] == null)
+                Debug.LogWarning($"[AudioController] Трек {i} не загрузился! (проверьте: Resources/SomeSounds/...)");
+            else
+                Debug.Log($"[AudioController] Трек {i} загружен: {musicTracks[i].name}");
         }
-
-        musicTracks = tracks;
-        Debug.Log("[AudioController] Загружены игровые треки: " + tracks.Length + " шт.");
     }
 
     AudioClip LoadClipFromResources(string resourceName)
@@ -360,32 +360,39 @@ public class AudioController : MonoBehaviour
             return;
         }
 
-        GameObject sliderObj = GameObject.Find("Slider");
+        // Если слайдер всё ещё не назначен в инспекторе, пробуем найти через тег
+        GameObject sliderObj = GameObject.FindGameObjectWithTag("MusicSlider");
         if (sliderObj != null)
         {
             musicSlider = sliderObj.GetComponent<Slider>();
             if (musicSlider != null)
             {
                 musicSlider.value = musicVolume;
-                Debug.Log("[AudioController] Ползунок найден по имени: " + sliderObj.name);
+                musicSlider.onValueChanged.AddListener(OnMusicSliderChanged);
+                Debug.Log("[AudioController] Ползунок найден по тегу");
                 return;
             }
         }
 
+        // Если не помогает — ищем в активных Canvas
         Canvas[] canvases = FindObjectsOfType<Canvas>();
         foreach (var canvas in canvases)
         {
             Slider[] sliders = canvas.GetComponentsInChildren<Slider>(true);
-            if (sliders.Length > 0)
+            foreach (var slider in sliders)
             {
-                musicSlider = sliders[0];
-                musicSlider.value = musicVolume;
-                Debug.Log("[AudioController] Ползунок найден в Canvas: " + musicSlider.gameObject.name);
-                return;
+                if (slider.name == "MusicSlider" || slider.CompareTag("MusicSlider"))
+                {
+                    musicSlider = slider;
+                    musicSlider.value = musicVolume;
+                    musicSlider.onValueChanged.AddListener(OnMusicSliderChanged);
+                    Debug.Log($"[AudioController] Ползунок найден в Canvas: {slider.name}");
+                    return;
+                }
             }
         }
 
-        Debug.LogWarning("[AudioController] Ползунок НЕ найден! Назначьте его вручную в AudioController.MusicSlider");
+        Debug.LogWarning("[AudioController] Ползунок НЕ найден! Назначьте его вручную.");
     }
 
     void EnsureAudioSources()
