@@ -1,99 +1,92 @@
-using UnityEngine;
+п»їusing UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MonitorUIManager : MonoBehaviour
 {
-    [Header("Окна монитора")]
-    public GameObject mainPanel;    // главное меню (с кнопками выбора разделов)
-    public GameObject panel1;       // раздел 1
-    public GameObject panel2;       // раздел 2
-    public GameObject panel3;       // раздел 3
+    [Header("UI Panels")]
+    public GameObject mainPanel;
+    public GameObject panel1;
+    public GameObject panel2;
+    public GameObject panel3;
 
-    private bool isMonitorOpen = false;
+    [Header("Hero")]
+    public Hero hero;
 
- 
+    private bool isMonitorOpen;
 
     void Update()
     {
-        // Открыть/закрыть по E
         if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (isMonitorOpen)
-                CloseMonitor();
-            else
-                OpenMonitor();
-        }
+            ToggleMonitor();
 
-        // Закрыть монитор по Escape
         if (isMonitorOpen && Input.GetKeyDown(KeyCode.Escape))
-        {
             CloseMonitor();
-        }
     }
 
-    // Открыть монитор – показываем главное меню
+    void ToggleMonitor()
+    {
+        if (isMonitorOpen)
+            CloseMonitor();
+        else
+            OpenMonitor();
+    }
+
+    // ======================
+    // OPEN
+    // ======================
+
     public void OpenMonitor()
     {
-        if (mainPanel != null) mainPanel.SetActive(true);
-        // Скрываем все панели на всякий случай
-        if (panel1 != null) panel1.SetActive(false);
-        if (panel2 != null) panel2.SetActive(false);
-        if (panel3 != null) panel3.SetActive(false);
-
-        Time.timeScale = 0f;
         isMonitorOpen = true;
+
+        ShowOnly(mainPanel);
+
+        if (hero != null)
+            hero.CanControl = false;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
-    // Полностью закрыть монитор
+    // ======================
+    // CLOSE
+    // ======================
+
     public void CloseMonitor()
     {
-        if (mainPanel != null) mainPanel.SetActive(false);
-        if (panel1 != null) panel1.SetActive(false);
-        if (panel2 != null) panel2.SetActive(false);
-        if (panel3 != null) panel3.SetActive(false);
-
-        Time.timeScale = 1f;
         isMonitorOpen = false;
+
+        ShowOnly(null);
+
+        if (hero != null)
+        {
+            hero.CanControl = true;
+
+            hero.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+        }
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
-    // Кнопка MAIN MENU – возвращает в главное меню из любого раздела
-    public void GoToMainMenu()
+    // ======================
+    // PANELS
+    // ======================
+
+    void ShowOnly(GameObject target)
     {
-        if (mainPanel != null) mainPanel.SetActive(true);
-        if (panel1 != null) panel1.SetActive(false);
-        if (panel2 != null) panel2.SetActive(false);
-        if (panel3 != null) panel3.SetActive(false);
+        if (mainPanel) mainPanel.SetActive(target == mainPanel);
+        if (panel1) panel1.SetActive(target == panel1);
+        if (panel2) panel2.SetActive(target == panel2);
+        if (panel3) panel3.SetActive(target == panel3);
     }
 
-    // Показать раздел 1
-    public void ShowPanel1()
-    {
-        if (mainPanel != null) mainPanel.SetActive(false);
-        if (panel1 != null) panel1.SetActive(true);
-        if (panel2 != null) panel2.SetActive(false);
-        if (panel3 != null) panel3.SetActive(false);
-    }
-
-    // Показать раздел 2
-    public void ShowPanel2()
-    {
-        if (mainPanel != null) mainPanel.SetActive(false);
-        if (panel1 != null) panel1.SetActive(false);
-        if (panel2 != null) panel2.SetActive(true);
-        if (panel3 != null) panel3.SetActive(false);
-    }
-
-    // Показать раздел 3
-    public void ShowPanel3()
-    {
-        if (mainPanel != null) mainPanel.SetActive(false);
-        if (panel1 != null) panel1.SetActive(false);
-        if (panel2 != null) panel2.SetActive(false);
-        if (panel3 != null) panel3.SetActive(true);
-    }
+    public void GoToMainMenu() => ShowOnly(mainPanel);
+    public void ShowPanel1() => ShowOnly(panel1);
+    public void ShowPanel2() => ShowOnly(panel2);
+    public void ShowPanel3() => ShowOnly(panel3);
 }
