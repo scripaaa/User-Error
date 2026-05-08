@@ -25,6 +25,7 @@ public class FinalScene : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource musicSource;
     [SerializeField] private SoundEffect[] soundClips;
 
 
@@ -46,14 +47,20 @@ public class FinalScene : MonoBehaviour
 
     public IEnumerator CompleteStartSequence()
     {
+        backgroundImage.sprite = null;
+        backgroundImage.color = Color.black;
+
+        yield return new WaitForSeconds(3f);
+        backgroundImage.color = Color.white;
         backgroundImage.sprite = sceneSprites[0];
         yield return new WaitForSeconds(4f);
 
         backgroundImage.sprite = sceneSprites[1];
         PlaySoundEffect(soundClips[0]);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
         backgroundImage.sprite = sceneSprites[2];
 
+        PlayMusic(soundClips[10]);
         dialoglines = new string[] { "Приветик!~", "Ну что, доигрались?~", "Знаешь, я должна тебя поблагодарить." };
         yield return StartCoroutine(StartDialogAndWait(dialoglines));
         backgroundImage.sprite = sceneSprites[3];
@@ -146,6 +153,7 @@ public class FinalScene : MonoBehaviour
         backgroundImage.sprite = null;
         backgroundImage.color = Color.black;
 
+        yield return StartCoroutine(StopMusicWithFade(1.5f));
         yield return new WaitForSeconds(2.0f);
         panel1.SetActive(true);
 
@@ -168,7 +176,26 @@ public class FinalScene : MonoBehaviour
             yield return null;
         }
     }
+    private void PlayMusic(SoundEffect music)
+    {
+        if (musicSource == null || music.clip == null) return;
 
+        musicSource.clip = music.clip;       // назначить клип
+        musicSource.volume = music.volume;   // установить громкость
+        musicSource.Play();                  // запустить воспроизведение
+    }
+    IEnumerator StopMusicWithFade(float fadeDuration)
+    {
+        if (musicSource == null) yield break;
+        float startVolume = musicSource.volume;
+        while (musicSource.volume > 0)
+        {
+            musicSource.volume -= startVolume * Time.deltaTime / fadeDuration;
+            yield return null;
+        }
+        musicSource.Stop();
+        musicSource.volume = startVolume; // восстанавливаем громкость на будущее
+    }
     private void PlaySoundEffect(SoundEffect effect)
     {
         if (effect.clip != null)
