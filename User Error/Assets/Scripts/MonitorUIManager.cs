@@ -7,6 +7,8 @@ public class MonitorUIManager : MonoBehaviour
     public GameObject panel1;
     public GameObject panel2;
     public GameObject panel3;
+    public GameObject panel4;
+
 
     private bool isOpen;
 
@@ -79,4 +81,27 @@ public class MonitorUIManager : MonoBehaviour
     public void ShowPanel1() => ShowOnly(panel1);
     public void ShowPanel2() => ShowOnly(panel2);
     public void ShowPanel3() => ShowOnly(panel3);
+    public void ShowPanel4() => ShowOnly(panel4);
+
+
+    public void OpenPanelByProgress()
+    {
+        if (CollectionCounter.instance == null)
+        {
+            ShowOnly(panel1);
+            return;
+        }
+
+        int collected = CollectionCounter.instance.Count;
+
+        if (collected >= 5)
+        {
+            ShowOnly(panel1); // все предметы собраны
+        }
+        else
+        {
+            ShowOnly(panel2); // предметов мало
+        }
+    }
+
 }
