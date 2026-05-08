@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Crusher : MonoBehaviour
+public class CrusherRoot : MonoBehaviour
 {
     [Header("Block")]
     public Transform block;
@@ -16,7 +16,7 @@ public class Crusher : MonoBehaviour
     private Vector3 startPos, upPos;
     private bool goingUp = true;
     private float timer = 0f;
-    private bool hasHit = false; // чтобы не играть звук несколько раз за одно падение
+    private bool hasHit = false; // Г·ГІГ®ГЎГ» Г­ГҐ ГЁГЈГ°Г ГІГј Г§ГўГіГЄ Г­ГҐГ±ГЄГ®Г«ГјГЄГ® Г°Г Г§ Г§Г  Г®Г¤Г­Г® ГЇГ Г¤ГҐГ­ГЁГҐ
 
     void Start()
     {
@@ -39,7 +39,7 @@ public class Crusher : MonoBehaviour
                 if (timer >= waitTime)
                 {
                     goingUp = false;
-                    hasHit = false; // сброс — готов к следующему удару
+                    hasHit = false; // Г±ГЎГ°Г®Г± вЂ” ГЈГ®ГІГ®Гў ГЄ Г±Г«ГҐГ¤ГіГѕГ№ГҐГ¬Гі ГіГ¤Г Г°Гі
                     timer = 0f;
 
                     if (riseSound != null)
