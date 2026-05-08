@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-
+using UnityEngine.SceneManagement;
 public class MonitorUIManager : MonoBehaviour
 {
     public GameObject mainPanel;
@@ -75,6 +75,8 @@ public class MonitorUIManager : MonoBehaviour
         if (panel1) panel1.SetActive(target == panel1);
         if (panel2) panel2.SetActive(target == panel2);
         if (panel3) panel3.SetActive(target == panel3);
+        if (panel4) panel4.SetActive(target == panel4);
+
     }
 
     public void GoToMainMenu() => ShowOnly(mainPanel);
@@ -102,6 +104,13 @@ public class MonitorUIManager : MonoBehaviour
         {
             ShowOnly(panel2); // предметов мало
         }
+    }
+
+    public void GetAccess()
+    {
+        CloseMonitor();
+
+        SceneManager.LoadScene("FinalScene");
     }
 
 }

@@ -16,7 +16,7 @@ public class CrusherRoot : MonoBehaviour
     private Vector3 startPos, upPos;
     private bool goingUp = true;
     private float timer = 0f;
-    private bool hasHit = false; // чтобы не играть звук несколько раз за одно падение
+    private bool hasHit = false; // Г·ГІГ®ГЎГ» Г­ГҐ ГЁГЈГ°Г ГІГј Г§ГўГіГЄ Г­ГҐГ±ГЄГ®Г«ГјГЄГ® Г°Г Г§ Г§Г  Г®Г¤Г­Г® ГЇГ Г¤ГҐГ­ГЁГҐ
 
     void Start()
     {
@@ -24,10 +24,7 @@ public class CrusherRoot : MonoBehaviour
         upPos = startPos + Vector3.up * upDistance;
 
         audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.spatialBlend = 1f;        // 3D звук
-        audioSource.rolloffMode = AudioRolloffMode.Linear;
-        audioSource.minDistance = 3f;         // на этом расстоянии полная громкость
-        audioSource.maxDistance = 15f;
+        audioSource.spatialBlend = 0f;
     }
 
     void Update()
@@ -42,7 +39,7 @@ public class CrusherRoot : MonoBehaviour
                 if (timer >= waitTime)
                 {
                     goingUp = false;
-                    hasHit = false; // сброс — готов к следующему удару
+                    hasHit = false; // Г±ГЎГ°Г®Г± вЂ” ГЈГ®ГІГ®Гў ГЄ Г±Г«ГҐГ¤ГіГѕГ№ГҐГ¬Гі ГіГ¤Г Г°Гі
                     timer = 0f;
 
                     if (riseSound != null)
