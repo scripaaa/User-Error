@@ -65,6 +65,8 @@ public class MonitorUIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         EventSystem.current.SetSelectedGameObject(null);
+
+        SceneManager.LoadScene("SecondFinall");
     }
 
     // ======================
@@ -108,7 +110,7 @@ public class MonitorUIManager : MonoBehaviour
 
     public void GetAccess()
     {
-        CloseMonitor();
+        
 
         SceneManager.LoadScene("FinalScene");
     }

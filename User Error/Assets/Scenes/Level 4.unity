@@ -57102,7 +57102,6 @@ GameObject:
   - component: {fileID: 1006571143}
   - component: {fileID: 1006571145}
   - component: {fileID: 1006571146}
-  - component: {fileID: 1006571147}
   m_Layer: 0
   m_Name: Purple Portal Sprite Sheet_1 (1)
   m_TagString: Untagged
@@ -57244,28 +57243,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.21000004, y: 0.43}
   m_EdgeRadius: 0
---- !u!95 &1006571147
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1006571142}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ae19166e884504a48bc71ca2fcda540f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1017741375
 GameObject:
   m_ObjectHideFlags: 0
@@ -152106,7 +152083,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1568848731}
   - component: {fileID: 1568848730}
-  - component: {fileID: 1568848732}
   m_Layer: 0
   m_Name: Purple Portal Sprite Sheet_1
   m_TagString: Untagged
@@ -152187,28 +152163,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 332459890}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90.819}
---- !u!95 &1568848732
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1568848729}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ae19166e884504a48bc71ca2fcda540f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1570652791
 GameObject:
   m_ObjectHideFlags: 0
