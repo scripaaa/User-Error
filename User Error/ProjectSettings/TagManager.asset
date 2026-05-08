@@ -4,12 +4,9 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - RoomCenter
-  - Enemy
-  - Barrier
-  - ItemCounter
-  - ItemCounterText
   - WallToDestroy
+  - ItemCounterText
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -17,7 +14,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - Wall
+  - 
   - 
   - 
   - 
@@ -46,6 +43,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 575566315
     locked: 0
   m_RenderingLayers:
   - Default

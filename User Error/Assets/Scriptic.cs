@@ -5,43 +5,35 @@ public class InventoryUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI counterText;
 
-    // Срабатывает каждый раз, когда ты открываешь инвентарь
-    private void OnEnable()
+    private void OnEnable()   // это всё равно пригодится при открытии инвентаря
     {
         RefreshVisuals();
         RefreshIcons();
     }
 
-    // Добавим старт на всякий случай
+    // Start можно оставить пустым или удалить, если обновление идёт через OnEnable и событие сцены
     private void Start()
     {
-        RefreshVisuals();
-        RefreshIcons();
-
-    }
-
-    public void RefreshIcons()
-    {
-        // cellIcons — List<Image> из InventoryManager
-        // просто заполни по списку
-        if (InventoryManager.instance == null) return;
-
-        InventoryManager.instance.RedrawFromList(CollectionCounter.collectedItems);
+        // теперь не критично
     }
 
     public void RefreshVisuals()
     {
-        // Если "вечный" счетчик существует, берем у него число
         if (CollectionCounter.instance != null && counterText != null)
         {
             counterText.text = $"{CollectionCounter.instance.Count}/5";
-            Debug.Log("Инвентарь обновил текст: " + counterText.text);
         }
+    }
+
+    public void RefreshIcons()
+    {
+        if (InventoryManager.instance != null)
+            InventoryManager.instance.RedrawFromList(CollectionCounter.collectedItems);
     }
 
     public void ToggleInventory()
     {
         gameObject.SetActive(!gameObject.activeSelf);
-        if (gameObject.activeSelf) RefreshVisuals();
+        if (gameObject.activeSelf) RefreshVisuals(); // уже есть OnEnable
     }
 }
