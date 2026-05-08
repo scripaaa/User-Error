@@ -3,29 +3,25 @@ using UnityEngine.EventSystems;
 
 public class MonitorUIManager : MonoBehaviour
 {
-    [Header("UI Panels")]
     public GameObject mainPanel;
     public GameObject panel1;
     public GameObject panel2;
     public GameObject panel3;
 
-    [Header("Hero")]
-    public Hero hero;
-
-    private bool isMonitorOpen;
+    private bool isOpen;
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
             ToggleMonitor();
 
-        if (isMonitorOpen && Input.GetKeyDown(KeyCode.Escape))
+        if (isOpen && Input.GetKeyDown(KeyCode.Escape))
             CloseMonitor();
     }
 
     void ToggleMonitor()
     {
-        if (isMonitorOpen)
+        if (isOpen)
             CloseMonitor();
         else
             OpenMonitor();
@@ -37,15 +33,15 @@ public class MonitorUIManager : MonoBehaviour
 
     public void OpenMonitor()
     {
-        isMonitorOpen = true;
+        isOpen = true;
 
         ShowOnly(mainPanel);
 
-        if (hero != null)
-            hero.CanControl = false;
+        // ⭐ СТАВИМ ИГРУ НА ПАУЗУ
+        Time.timeScale = 0f;
 
-        Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
 
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -56,25 +52,19 @@ public class MonitorUIManager : MonoBehaviour
 
     public void CloseMonitor()
     {
-        isMonitorOpen = false;
+        isOpen = false;
 
         ShowOnly(null);
 
-        if (hero != null)
-        {
-            hero.CanControl = true;
+        // ⭐ ВОЗВРАЩАЕМ ИГРУ
+        Time.timeScale = 1f;
 
-            hero.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-        }
-
-        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
         EventSystem.current.SetSelectedGameObject(null);
     }
 
-    // ======================
-    // PANELS
     // ======================
 
     void ShowOnly(GameObject target)
